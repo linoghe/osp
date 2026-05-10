@@ -159,3 +159,189 @@ OSP_PASSWORD="new-password" npm run build
 # Then redeploy dist/ to gh-pages
 ```
 Users will need to re-enter the new password (old "Remember me" cookies won't work).
+
+---
+
+## Google Workspace Integration for AI Agents
+
+OSP uses Google Workspace exclusively. To let an AI agent (OpenAI Codex, ChatGPT, etc.) read and write Google Sheets, Drive, Calendar, and other Workspace products, you need to connect via MCP.
+
+### Option A: Google's Official Remote MCP Servers (Recommended)
+
+Google provides hosted remote MCP servers for each Workspace product. No local server to install — just configure your agent to connect via HTTP.
+
+| Product | Remote MCP URL |
+|---|---|
+| Google Drive | `https://drivemcp.googleapis.com/mcp/v1` |
+| Google Calendar | `https://calendarmcp.googleapis.com/mcp/v1` |
+| Gmail | `https://gmailmcp.googleapis.com/mcp/v1` |
+| Google Chat | `https://chatmcp.googleapis.com/mcp/v1` |
+| People / Contacts | `https://people.googleapis.com/mcp/v1` |
+
+Google Sheets is accessed through the **Drive MCP server** (`drive.read_file_content`, `drive.search_files`).
+
+#### Setup steps
+
+1. **Create a Google Cloud project** (or use an existing one)
+   - Go to https://console.cloud.google.com
+
+2. **Enable the APIs and MCP services**
+   ```bash
+   gcloud services enable \
+     gmail.googleapis.com \
+     drive.googleapis.com \
+     calendar-json.googleapis.com \
+     chat.googleapis.com \
+     people.googleapis.com \
+     gmailmcp.googleapis.com \
+     drivemcp.googleapis.com \
+     calendarmcp.googleapis.com \
+     chatmcp.googleapis.com \
+     --project=YOUR_PROJECT_ID
+   ```
+
+3. **Set up OAuth consent screen**
+   - Go to Google Auth Platform > Branding in the Cloud Console
+   - Add required scopes (see below)
+   - Add yourself as a test user if the app is in "Testing" mode
+
+4. **Create an OAuth 2.0 Client ID**
+   - For **Codex CLI**: Create a "Desktop app" client
+   - For **Claude / web-based agents**: Create a "Web application" client with the appropriate redirect URI
+   - Copy the Client ID and Client Secret
+
+5. **Configure your agent** (see platform-specific instructions below)
+
+#### OAuth scopes you'll need
+
+For this project, you primarily need **Sheets (via Drive)** access. Add more as needed.
+
+**Minimum (Sheets read/write):**
+```
+https://www.googleapis.com/auth/drive.file
+https://www.googleapis.com/auth/spreadsheets
+```
+
+**Full Workspace (if the agent needs email, calendar, etc.):**
+```
+https://www.googleapis.com/auth/gmail.readonly
+https://www.googleapis.com/auth/gmail.compose
+https://www.googleapis.com/auth/drive.readonly
+https://www.googleapis.com/auth/drive.file
+https://www.googleapis.com/auth/calendar.events.readonly
+https://www.googleapis.com/auth/calendar.events.freebusy
+https://www.googleapis.com/auth/chat.messages.readonly
+https://www.googleapis.com/auth/chat.messages.create
+```
+
+### Option B: Local MCP Server (STDIO)
+
+If you prefer a local server (runs as a process on your machine), use the community `mcp-google-sheets` package:
+
+```bash
+npm install -g @anthropic/mcp-google-sheets
+```
+
+This requires OAuth2 Desktop App credentials. The included `auth-sheets.js` script handles the one-time OAuth flow:
+
+```bash
+# One-time setup: install googleapis for the auth script
+npm install googleapis
+
+# Run the auth flow (opens browser for consent)
+node auth-sheets.js
+
+# This saves tokens to ~/.config/gcloud/sheets-mcp-token.json
+```
+
+Then configure your agent to use the STDIO server.
+
+---
+
+## Configuring OpenAI Codex
+
+OpenAI Codex stores MCP configuration in `~/.codex/config.toml` (global) or `.codex/config.toml` (project-scoped).
+
+### Using Google's Remote MCP Servers with Codex
+
+Add to `~/.codex/config.toml`:
+
+```toml
+# Google Drive (includes Sheets access)
+[mcp_servers.google-drive]
+url = "https://drivemcp.googleapis.com/mcp/v1"
+
+# Google Sheets (direct read/write via local STDIO server)
+# Use this instead of Drive if you want cell-level Sheets operations
+[mcp_servers.google-sheets]
+command = "npx"
+args = ["-y", "@anthropic/mcp-google-sheets"]
+
+[mcp_servers.google-sheets.env]
+CREDENTIALS_PATH = "/path/to/your/sheets-mcp-oauth.json"
+TOKEN_PATH = "/path/to/your/sheets-mcp-token.json"
+
+# Optional: Gmail, Calendar, Chat
+[mcp_servers.gmail]
+url = "https://gmailmcp.googleapis.com/mcp/v1"
+
+[mcp_servers.google-calendar]
+url = "https://calendarmcp.googleapis.com/mcp/v1"
+```
+
+### Authenticate remote servers
+
+```bash
+codex mcp login google-drive
+codex mcp login gmail
+codex mcp login google-calendar
+```
+
+Each command opens a browser for OAuth consent. You only need to do this once.
+
+### Verify the connection
+
+```bash
+codex mcp list
+```
+
+You should see green status indicators for each configured server.
+
+### Project-scoped config
+
+For this project specifically, you can create `.codex/config.toml` in the repo root:
+
+```toml
+# Project-specific: Google Sheets for the pricing model
+[mcp_servers.google-sheets]
+command = "npx"
+args = ["-y", "@anthropic/mcp-google-sheets"]
+
+[mcp_servers.google-sheets.env]
+CREDENTIALS_PATH = "/path/to/your/sheets-mcp-oauth.json"
+TOKEN_PATH = "/path/to/your/sheets-mcp-token.json"
+```
+
+---
+
+## Key Sheet Reference for Agents
+
+When connected, the agent can read/write the pricing sheet directly.
+
+**Sheet ID:** `1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA`
+
+**Common agent tasks:**
+- "Add a task to the Gantt tab" → Insert a row with id, phase, task, days, start, end, dependencies, team, color
+- "Change the hourly rate for Sr. Consultant" → Edit Baseline Matrix tab
+- "What's the total project cost?" → Read cell T3 on the Gantt tab
+- "What's OSP's margin?" → Read cell T5 on the Gantt tab
+- "Zero out technical implementation costs" → Set days to 0 for all `tp-*` rows in the Gantt tab
+
+---
+
+## Reference Links
+
+- [Google Workspace MCP setup guide](https://developers.google.com/workspace/guides/configure-mcp-servers)
+- [OpenAI Codex MCP documentation](https://developers.openai.com/codex/mcp)
+- [Google Workspace MCP + Codex walkthrough](https://thinhdanggroup.github.io/google-workspace-mcp-for-codex/)
+- [Google Cloud Console](https://console.cloud.google.com)
