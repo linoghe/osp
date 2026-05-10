@@ -13,26 +13,15 @@
     .app-main {
       max-width: none;
     }
-    .gantt-outer {
-      position: relative;
+    .gantt-wrapper {
       margin: 24px 0;
       border: 1px solid var(--c-border);
       border-radius: var(--radius-lg);
       background: var(--c-surface);
     }
-    .gantt-header-clone {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      overflow: hidden;
-      border-bottom: 2px solid var(--c-border);
-      background: var(--c-surface-alt);
-    }
-    .gantt-header-clone svg {
-      display: block;
-    }
-    .gantt-wrapper {
-      overflow-x: auto;
+    .gantt-wrapper .gantt-container {
+      height: calc(100vh - 220px) !important;
+      overflow: auto !important;
     }
     .gantt-wrapper svg {
       display: block;
@@ -200,12 +189,9 @@
         <button class="view-btn" data-view="Month">Month</button>
       </div>
 
-      <div class="gantt-outer">
-        <div class="gantt-header-clone" id="ganttHeaderClone"></div>
-        <div class="gantt-wrapper" id="ganttWrapper">
-          <div class="gantt-loading" id="ganttLoading">Loading timeline from Google Sheets...</div>
-          <div id="ganttTarget"></div>
-        </div>
+      <div class="gantt-wrapper">
+        <div class="gantt-loading" id="ganttLoading">Loading timeline from Google Sheets...</div>
+        <div id="ganttTarget"></div>
       </div>
     </section>
   </main>
@@ -243,6 +229,7 @@
   <script>
     var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
     var ganttChart = null;
+    var ganttStartDate = null;
 
     function parseDate(str) {
       if (!str) return null;
@@ -310,52 +297,6 @@
       });
     }
 
-    function buildStickyHeader() {
-      var svg = document.querySelector('#ganttTarget .gantt');
-      if (!svg) return;
-
-      var headerRect = svg.querySelector('.grid-header');
-      if (!headerRect) return;
-      var headerH = parseFloat(headerRect.getAttribute('height')) || 50;
-
-      var svgW = svg.getAttribute('width') || svg.getBBox().width;
-      var clone = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      clone.setAttribute('width', svgW);
-      clone.setAttribute('height', headerH + 4);
-      clone.setAttribute('viewBox', '0 0 ' + svgW + ' ' + (headerH + 4));
-      clone.setAttribute('class', 'gantt');
-
-      var bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      bg.setAttribute('width', svgW);
-      bg.setAttribute('height', headerH + 4);
-      bg.setAttribute('fill', '#f8fafc');
-      clone.appendChild(bg);
-
-      if (headerRect) clone.appendChild(headerRect.cloneNode(true));
-
-      svg.querySelectorAll('.upper-text').forEach(function(el) {
-        clone.appendChild(el.cloneNode(true));
-      });
-      svg.querySelectorAll('.lower-text').forEach(function(el) {
-        clone.appendChild(el.cloneNode(true));
-      });
-
-      var gridLines = svg.querySelectorAll('.grid .tick');
-      gridLines.forEach(function(el) {
-        var lineClone = el.cloneNode(true);
-        lineClone.setAttribute('y2', String(headerH + 4));
-        clone.appendChild(lineClone);
-      });
-
-      var container = document.getElementById('ganttHeaderClone');
-      container.innerHTML = '';
-      container.appendChild(clone);
-
-      var wrapper = document.getElementById('ganttWrapper');
-      wrapper.addEventListener('scroll', function() {
-        container.scrollLeft = wrapper.scrollLeft;
-      });
-    }
 
     function renderGantt(tasks) {
       document.getElementById('ganttLoading').style.display = 'none';
@@ -366,6 +307,7 @@
       }
 
       var minStart = tasks.reduce(function(min, t) { return t.start < min ? t.start : min; }, tasks[0].start);
+      ganttStartDate = minStart;
 
       ganttChart = new Gantt('#ganttTarget', tasks, {
         view_mode: 'Day',
@@ -380,8 +322,54 @@
 
       setTimeout(function() {
         moveLabelsOutside();
-        buildStickyHeader();
+        colorMonthColumns();
       }, 150);
+    }
+
+    function colorMonthColumns() {
+      var container = document.querySelector('#ganttTarget .gantt-container');
+      if (!container) return;
+
+      var oldBands = container.querySelectorAll('.month-band');
+      oldBands.forEach(function(b) { b.remove(); });
+
+      var dateCells = container.querySelectorAll('.lower-header .lower-text[class*="date_"]');
+      if (!dateCells.length) return;
+
+      var containerH = container.scrollHeight;
+      var headerEl = container.querySelector('.grid-header');
+      var headerH = headerEl ? headerEl.offsetHeight : 50;
+
+      var months = {};
+      dateCells.forEach(function(cell) {
+        var match = cell.className.match(/date_(\d{4})-(\d{2})-(\d{2})/);
+        if (!match) return;
+        var monthKey = match[1] + '-' + match[2];
+        var left = parseFloat(cell.style.left) || 0;
+        var width = cell.offsetWidth;
+        if (!months[monthKey]) {
+          months[monthKey] = { month: parseInt(match[2]), minX: left, maxX: left + width };
+        } else {
+          if (left < months[monthKey].minX) months[monthKey].minX = left;
+          if (left + width > months[monthKey].maxX) months[monthKey].maxX = left + width;
+        }
+      });
+
+      Object.keys(months).forEach(function(key) {
+        var m = months[key];
+        if (m.month % 2 !== 0) return;
+        var band = document.createElement('div');
+        band.className = 'month-band';
+        band.style.position = 'absolute';
+        band.style.top = headerH + 'px';
+        band.style.left = m.minX + 'px';
+        band.style.width = (m.maxX - m.minX) + 'px';
+        band.style.height = (containerH - headerH) + 'px';
+        band.style.background = 'rgba(0, 90, 156, 0.07)';
+        band.style.pointerEvents = 'none';
+        band.style.zIndex = '1';
+        container.appendChild(band);
+      });
     }
 
     // View controls
@@ -393,7 +381,7 @@
           ganttChart.change_view_mode(btn.dataset.view);
           setTimeout(function() {
             moveLabelsOutside();
-            buildStickyHeader();
+            colorMonthColumns();
           }, 150);
         }
       });
