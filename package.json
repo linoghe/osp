@@ -6,13 +6,10 @@
   "scripts": {
     "encrypt": "node encrypt.js",
     "build": "node encrypt.js",
-    "serve": "npx serve dist"
+    "serve": "npx serve dist",
+    "dev": "npx serve ."
   },
   "devDependencies": {
     "staticrypt": "^3.5.4"
-  },
-  "dependencies": {
-    "googleapis": "^171.4.0",
-    "open": "^11.0.0"
   }
 }
