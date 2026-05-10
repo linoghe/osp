@@ -1,0 +1,18 @@
+{
+  "name": "osp-peer-review",
+  "version": "1.0.0",
+  "description": "OSP Peer Pricing Review — password-protected multi-page app for GitHub Pages",
+  "private": true,
+  "scripts": {
+    "encrypt": "node encrypt.js",
+    "build": "node encrypt.js",
+    "serve": "npx serve dist"
+  },
+  "devDependencies": {
+    "staticrypt": "^3.5.4"
+  },
+  "dependencies": {
+    "googleapis": "^171.4.0",
+    "open": "^11.0.0"
+  }
+}

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timeline | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@1.2.2/dist/frappe-gantt.css">
+  <style>
+    .app-main {
+      max-width: none;
+    }
+    .gantt-wrapper {
+      margin: 24px 0;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      overflow-x: auto;
+      background: var(--c-surface);
+    }
+    .gantt-wrapper svg {
+      display: block;
+    }
+    /* Override Frappe Gantt styles to match OSP branding */
+    .gantt .bar {
+      fill: var(--c-blue) !important;
+    }
+    .gantt .bar-label {
+      font-family: var(--font-body);
+      font-size: 13px;
+      fill: var(--c-text) !important;
+    }
+    .gantt .grid-header {
+      fill: var(--c-surface-alt);
+    }
+    .gantt .lower-text, .gantt .upper-text {
+      font-family: var(--font-body);
+      font-size: 12px;
+    }
+    /* Task bar colors driven by "color" column in Sheet */
+    .gantt .bar-wrapper.bar-blue .bar { fill: var(--c-blue) !important; }
+    .gantt .bar-wrapper.bar-teal .bar { fill: var(--c-teal) !important; }
+    .gantt .bar-wrapper.bar-coral .bar { fill: var(--c-coral) !important; }
+    .gantt .bar-wrapper.bar-amber .bar { fill: var(--c-amber) !important; }
+    .gantt .bar-wrapper.bar-green .bar { fill: #16a34a !important; }
+    .gantt .bar-wrapper.bar-purple .bar { fill: #7c3aed !important; }
+    .gantt .bar-wrapper.bar-gray .bar { fill: var(--c-text-light) !important; }
+    .gantt-loading {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--c-text-light);
+      font-size: 14px;
+    }
+    .gantt-legend {
+      display: flex;
+      gap: 24px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: var(--c-text-mid);
+    }
+    .gantt-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .gantt-legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+    }
+    .gantt-legend-dot--sr { background: var(--c-blue); }
+    .gantt-legend-dot--content { background: var(--c-teal); }
+    .gantt-legend-dot--tech { background: var(--c-coral); }
+    .gantt-legend-dot--pm { background: #7c3aed; }
+
+    .view-controls {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .view-btn {
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      background: var(--c-surface);
+      color: var(--c-text-mid);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .view-btn:hover {
+      border-color: var(--c-blue);
+      color: var(--c-blue);
+    }
+    .view-btn.active {
+      background: var(--c-blue);
+      border-color: var(--c-blue);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link">
+      <span class="nav-num">00</span> Hub
+    </a>
+    <a href="engagement.html" class="nav-link">
+      <span class="nav-num">01</span> Engagement
+    </a>
+    <a href="scope.html" class="nav-link">
+      <span class="nav-num">02</span> Phased Scope
+    </a>
+    <a href="scope-markdown.html" class="nav-link">
+      <span class="nav-num">03</span> Markdown Site
+    </a>
+    <a href="effort.html" class="nav-link">
+      <span class="nav-num">04</span> Effort & Role
+    </a>
+    <a href="context.html" class="nav-link">
+      <span class="nav-num">05</span> Pricing Context
+    </a>
+    <a href="questions.html" class="nav-link">
+      <span class="nav-num">06</span> Pricing Guidance
+    </a>
+    <a href="pricing-model.html" class="nav-link">
+      <span class="nav-num">07</span> Pricing Model
+    </a>
+    <a href="gantt.html" class="nav-link active">
+      <span class="nav-num">08</span> Timeline
+    </a>
+    <a href="whitepaper.html" class="nav-link">
+      <span class="nav-num">09</span> Why a Site Mirror
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">08</span> Timeline</p>
+      <h1 class="page-title">Project Gantt</h1>
+      <p class="page-subtitle">Combined timeline across four teams — Sr. Consultant, Content, Technical, and PM — with dependency arrows. Live from Google Sheets.</p>
+    </div>
+
+    <section class="section" id="gantt-section">
+      <div class="section-label"><span class="section-num">8.01</span> Gantt Chart</div>
+      <h2 class="section-title">Combined Program Timeline</h2>
+
+      <div class="gantt-legend">
+        <div class="gantt-legend-item">
+          <div class="gantt-legend-dot gantt-legend-dot--sr"></div>
+          <span>OSP-Sr. Consultant</span>
+        </div>
+        <div class="gantt-legend-item">
+          <div class="gantt-legend-dot gantt-legend-dot--content"></div>
+          <span>OSP-Content</span>
+        </div>
+        <div class="gantt-legend-item">
+          <div class="gantt-legend-dot gantt-legend-dot--tech"></div>
+          <span>Ext-Technical</span>
+        </div>
+        <div class="gantt-legend-item">
+          <div class="gantt-legend-dot gantt-legend-dot--pm"></div>
+          <span>PM</span>
+        </div>
+      </div>
+
+      <div class="view-controls">
+        <button class="view-btn active" data-view="Day">Day</button>
+        <button class="view-btn" data-view="Week">Week</button>
+        <button class="view-btn" data-view="Month">Month</button>
+      </div>
+
+      <div class="gantt-wrapper">
+        <div class="gantt-loading" id="ganttLoading">Loading timeline from Google Sheets...</div>
+        <div id="ganttTarget"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="pricing-model.html" class="footer-link"><span class="arrow">&larr;</span> Pricing Model</a>
+    </div>
+    <div class="footer-nav">
+      <a href="whitepaper.html" class="footer-link">Next: Why a Site Mirror <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@1.2.2/dist/frappe-gantt.umd.js"></script>
+  <script>
+    var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
+    var ganttChart = null;
+
+    function parseDate(str) {
+      if (!str) return null;
+      // Handle M/D/YYYY format from Google Sheets
+      var parts = str.split('/');
+      if (parts.length === 3) {
+        return parts[2] + '-' + parts[0].padStart(2, '0') + '-' + parts[1].padStart(2, '0');
+      }
+      // Already YYYY-MM-DD
+      return str;
+    }
+
+    function buildTasks(rows) {
+      var headers = rows[0].map(function(h) { return h.toLowerCase().replace(/"/g, ''); });
+      var idIdx = headers.indexOf('id');
+      var nameIdx = headers.indexOf('name');
+      var startIdx = headers.indexOf('start');
+      var endIdx = headers.indexOf('end');
+      var depsIdx = headers.indexOf('dependencies');
+      var progressIdx = headers.indexOf('progress');
+      var colorIdx = headers.indexOf('color');
+
+      var tasks = [];
+      for (var i = 1; i < rows.length; i++) {
+        var row = rows[i];
+        var id = (row[idIdx] || '').replace(/"/g, '').trim();
+        var name = (row[nameIdx] || '').replace(/"/g, '').trim();
+        var start = parseDate((row[startIdx] || '').replace(/"/g, '').trim());
+        var end = parseDate((row[endIdx] || '').replace(/"/g, '').trim());
+        var deps = (row[depsIdx] || '').replace(/"/g, '').trim();
+        var progress = parseInt((row[progressIdx] || '0').replace(/"/g, ''), 10) || 0;
+        var color = colorIdx !== -1 ? (row[colorIdx] || '').replace(/"/g, '').trim().toLowerCase() : '';
+
+        if (!id || !name || !start || !end) continue;
+
+        // Determine bar class: use "color" column if present, else fall back to id prefix
+        var barClass = color ? 'bar-' + color : (id.indexOf('lo') === 0 ? 'bar-lo' : 'bar-jam');
+
+        var task = {
+          id: id,
+          name: name,
+          start: start,
+          end: end,
+          progress: progress,
+          dependencies: deps || undefined,
+          custom_class: barClass
+        };
+        tasks.push(task);
+      }
+      return tasks;
+    }
+
+    function moveLabelsOutside() {
+      var labels = document.querySelectorAll('.gantt .bar-label');
+      labels.forEach(function(label) {
+        var group = label.closest('.bar-wrapper');
+        if (!group) return;
+        var bar = group.querySelector('.bar');
+        if (!bar) return;
+        var barX = parseFloat(bar.getAttribute('x')) || 0;
+        var barWidth = parseFloat(bar.getAttribute('width')) || 0;
+        label.setAttribute('x', barX + barWidth + 8);
+        label.setAttribute('text-anchor', 'start');
+        label.setAttribute('dominant-baseline', 'central');
+      });
+    }
+
+    function renderGantt(tasks) {
+      document.getElementById('ganttLoading').style.display = 'none';
+      if (!tasks.length) {
+        document.getElementById('ganttLoading').textContent = 'No tasks found in the Gantt tab.';
+        document.getElementById('ganttLoading').style.display = '';
+        return;
+      }
+
+      var minStart = tasks.reduce(function(min, t) { return t.start < min ? t.start : min; }, tasks[0].start);
+
+      ganttChart = new Gantt('#ganttTarget', tasks, {
+        view_mode: 'Day',
+        date_format: 'YYYY-MM-DD',
+        language: 'en',
+        readonly: true,
+        scroll_to: minStart,
+        infinite_padding: false,
+        today_button: false,
+        column_width: 50
+      });
+
+      setTimeout(moveLabelsOutside, 100);
+    }
+
+    // View controls
+    document.querySelectorAll('.view-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.view-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        if (ganttChart) {
+          ganttChart.change_view_mode(btn.dataset.view);
+          setTimeout(moveLabelsOutside, 100);
+        }
+      });
+    });
+
+    function parseCSV(text) {
+      var rows = [];
+      var current = '';
+      var inQuotes = false;
+      var row = [];
+      for (var i = 0; i < text.length; i++) {
+        var ch = text[i];
+        if (ch === '"') {
+          if (inQuotes && text[i + 1] === '"') { current += '"'; i++; }
+          else { inQuotes = !inQuotes; }
+        } else if (ch === ',' && !inQuotes) {
+          row.push(current.trim()); current = '';
+        } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+          if (ch === '\r' && text[i + 1] === '\n') i++;
+          row.push(current.trim()); current = '';
+          if (row.length > 1 || row[0] !== '') rows.push(row);
+          row = [];
+        } else {
+          current += ch;
+        }
+      }
+      if (current || row.length) { row.push(current.trim()); rows.push(row); }
+      return rows;
+    }
+
+    function loadGantt() {
+      var csvUrl = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:csv';
+
+      fetch(csvUrl)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(function(csv) {
+          var rows = parseCSV(csv);
+          var tasks = buildTasks(rows);
+          renderGantt(tasks);
+        })
+        .catch(function() {
+          // CORS fallback via JSONP
+          loadGanttViaJsonp();
+        });
+    }
+
+    function loadGanttViaJsonp() {
+      var callbackName = '_ospGanttCallback_' + Date.now();
+      var timeout = setTimeout(function() {
+        delete window[callbackName];
+        document.getElementById('ganttLoading').textContent = 'Could not connect to Google Sheets.';
+      }, 10000);
+
+      window[callbackName] = function(response) {
+        clearTimeout(timeout);
+        delete window[callbackName];
+        try {
+          var table = response.table;
+          var rows = [];
+          var headerRow = table.cols.map(function(col) { return col.label || ''; });
+          var hasLabels = headerRow.some(function(l) { return l.length > 0; });
+
+          table.rows.forEach(function(row) {
+            var r = row.c.map(function(cell) {
+              if (!cell) return '';
+              return cell.f || (cell.v != null ? String(cell.v) : '');
+            });
+            rows.push(r);
+          });
+
+          if (hasLabels) {
+            rows.unshift(headerRow);
+          }
+
+          var tasks = buildTasks(rows);
+          renderGantt(tasks);
+        } catch(e) {
+          document.getElementById('ganttLoading').textContent = 'Error parsing Gantt data.';
+        }
+      };
+
+      var script = document.createElement('script');
+      script.src = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID +
+        '/gviz/tq?sheet=Gantt&headers=1&tqx=out:json;responseHandler:' + callbackName;
+      document.head.appendChild(script);
+    }
+
+    loadGantt();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why a Site Mirror | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .layer-card {
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid var(--c-border);
+      margin-bottom: 16px;
+    }
+    .layer-card__label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    .layer-card__title {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .layer-card__desc {
+      font-size: 14px;
+      color: var(--c-text-mid);
+      line-height: 1.6;
+    }
+    .layer-card--a { background: var(--c-blue-light); }
+    .layer-card--a .layer-card__label { color: var(--c-blue); }
+    .layer-card--a .layer-card__title { color: var(--c-blue); }
+    .layer-card--b { background: var(--c-teal-light); }
+    .layer-card--b .layer-card__label { color: var(--c-teal); }
+    .layer-card--b .layer-card__title { color: var(--c-teal); }
+    .layer-card--c { background: #f3e8ff; }
+    .layer-card--c .layer-card__label { color: #7c3aed; }
+    .layer-card--c .layer-card__title { color: #7c3aed; }
+
+    .vs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+    .vs-table thead th {
+      background: var(--c-surface-alt);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--c-text-light);
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 2px solid var(--c-border);
+    }
+    .vs-table thead th:first-child { min-width: 180px; }
+    .vs-table tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--c-border-light);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .vs-table tbody tr:last-child td { border-bottom: none; }
+    .vs-table .col-llms { color: var(--c-text-mid); }
+    .vs-table .col-mirror { color: var(--c-teal); font-weight: 500; }
+
+    .source-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+      font-size: 13px;
+      color: var(--c-text-mid);
+    }
+    .source-list li {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--c-border-light);
+    }
+    .source-list li:last-child { border-bottom: none; }
+    .source-list a { color: var(--c-blue); text-decoration: none; }
+    .source-list a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link">
+      <span class="nav-num">00</span> Hub
+    </a>
+    <a href="engagement.html" class="nav-link">
+      <span class="nav-num">01</span> Engagement
+    </a>
+    <a href="scope.html" class="nav-link">
+      <span class="nav-num">02</span> Phased Scope
+    </a>
+    <a href="scope-markdown.html" class="nav-link">
+      <span class="nav-num">03</span> Markdown Site
+    </a>
+    <a href="effort.html" class="nav-link">
+      <span class="nav-num">04</span> Effort & Role
+    </a>
+    <a href="context.html" class="nav-link">
+      <span class="nav-num">05</span> Pricing Context
+    </a>
+    <a href="questions.html" class="nav-link">
+      <span class="nav-num">06</span> Pricing Guidance
+    </a>
+    <a href="pricing-model.html" class="nav-link">
+      <span class="nav-num">07</span> Pricing Model
+    </a>
+    <a href="gantt.html" class="nav-link">
+      <span class="nav-num">08</span> Timeline
+    </a>
+    <a href="whitepaper.html" class="nav-link active">
+      <span class="nav-num">09</span> Why a Site Mirror
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">09</span> Strategic Rationale</p>
+      <h1 class="page-title">Beyond <code>llms.txt</code>: Why a Full AI Site Mirror</h1>
+      <p class="page-subtitle">A mini-whitepaper on why a curated index file is a starting point, not a strategy &mdash; and what a complete machine-readable site representation looks like for businesses with dynamic, localized data.</p>
+    </div>
+
+    <!-- 9.01 THE PROBLEM -->
+    <section class="section" id="problem">
+      <div class="section-label"><span class="section-num">9.01</span> The Problem</div>
+      <h2 class="section-title">AI Engines Can't Read Your Website</h2>
+      <div class="section-body">
+        <p>When ChatGPT, Perplexity, Gemini, or an AI Overview crawls a webpage, it doesn't see what a human sees. It receives raw HTML &mdash; navigation menus, cookie banners, JavaScript bundles, advertising scripts, footer links &mdash; and must extract meaning from a document where the actual content competes with structural noise for a finite context window.</p>
+        <p>For a local service business with hundreds of locations, each rendered by a JavaScript framework, the problem compounds. An AI engine querying "oil change near me open now" would need to:</p>
+        <ul class="spec-list">
+          <li><strong>Execute client-side JavaScript</strong> to render the page at all</li>
+          <li><strong>Parse through nav chrome, marketing boilerplate, and layout containers</strong> to find the hours</li>
+          <li><strong>Repeat this for every location page</strong> to compare</li>
+          <li><strong>Hope the data is current</strong> &mdash; hours change, overrides expire, offers rotate</li>
+        </ul>
+        <p>This is the problem the <code>llms.txt</code> proposal set out to address. And it's a good instinct. But for businesses with dynamic, entity-rich content, the proposal solves roughly 10% of the problem.</p>
+      </div>
+    </section>
+
+    <!-- 9.02 WHAT LLMS.TXT DOES -->
+    <section class="section" id="llms-txt">
+      <div class="section-label"><span class="section-num">9.02</span> What llms.txt Does Well</div>
+      <h2 class="section-title">A Curated Index &mdash; Not a Content Strategy</h2>
+      <div class="section-body">
+        <p>Jeremy Howard's <a href="https://llmstxt.org/" target="_blank" rel="noopener">llms.txt proposal</a> (September 2024) is elegant: place a markdown file at your site root that gives AI tools a structured, low-noise map of your most important content. An H1, a summary, section headings, and annotated links. It's a sitemap for language models.</p>
+        <p><strong>Where it works well:</strong></p>
+        <ul class="spec-list">
+          <li><strong>Developer documentation</strong> &mdash; Cursor, Copilot, and Claude fetch it in real time to load the right API reference pages</li>
+          <li><strong>Static content sites</strong> &mdash; blogs, landing pages, knowledge bases with stable content</li>
+          <li><strong>Token efficiency</strong> &mdash; a 10x reduction in token overhead vs. parsing raw HTML</li>
+        </ul>
+        <p><strong>Where it falls short:</strong></p>
+        <ul class="spec-list">
+          <li><strong>No dynamic data.</strong> It's a static file. It can't express that a shop's hours changed yesterday, or that an override expires Friday.</li>
+          <li><strong>No entity structure.</strong> It links to pages &mdash; it doesn't describe entities (locations, services, offers) with their relationships and attributes.</li>
+          <li><strong>No incremental refresh.</strong> When one of 600 locations updates its hours, the entire file must be regenerated and re-ingested.</li>
+          <li><strong>No provenance.</strong> No <code>last_updated</code>, no source system attribution, no way for a consumer to know if the data is stale.</li>
+          <li><strong>No confirmed adoption.</strong> As of Q1 2026, no major AI provider &mdash; OpenAI, Google, Anthropic, Meta &mdash; has publicly confirmed production-system use. Google's John Mueller stated no Google Search system reads it. An SE Ranking study of 300,000 domains found no correlation between having an llms.txt and AI citation frequency.</li>
+        </ul>
+      </div>
+      <div class="highlight-box amber">
+        <strong>The honest assessment:</strong> llms.txt is a low-cost, low-risk hygiene step worth taking &mdash; but treating it as an AI search strategy is like treating a sitemap.xml as an SEO strategy. The index is not the content.
+      </div>
+    </section>
+
+    <!-- 9.03 WHY PLAIN TEXT, NOT SCHEMA -->
+    <section class="section" id="schema-vs-prose">
+      <div class="section-label"><span class="section-num">9.03</span> The Key Distinction</div>
+      <h2 class="section-title">Schema.org Describes. The Mirror Narrates.</h2>
+      <div class="section-body">
+        <p>A common and understandable instinct is to think: <em>"We're already adding schema.org markup and JSON-LD to every HTML page &mdash; isn't that the machine-readable version?"</em> It isn't. Schema.org and a markdown mirror serve fundamentally different functions, and conflating them leaves a critical gap in AI visibility.</p>
+
+        <h3 style="margin-top: 24px; font-size: 16px; color: var(--c-blue);">Schema.org on the HTML site</h3>
+        <p>Schema markup is <strong>structured metadata</strong> embedded in the HTML page as JSON-LD. It tells search engines and AI systems <em>what entities exist</em> and <em>how they relate</em>: this is a Hotel, it is part of this HotelCollection, it offers these Services, it is located at these Coordinates. This is essential. It powers rich results, knowledge panels, and entity recognition.</p>
+        <p>But schema is a <strong>classification system, not content</strong>. A <code>LocalBusiness</code> JSON-LD block can express that a hotel has a spa. It cannot express what makes the spa special, what the signature treatment involves, why a guest would choose it over the property next door. Schema gives an AI engine a database record. It does not give it a paragraph to quote.</p>
+
+        <h3 style="margin-top: 24px; font-size: 16px; color: var(--c-teal);">The markdown mirror</h3>
+        <p>The mirror is <strong>clean, consistently structured prose</strong> &mdash; the same information a human would want, stripped of HTML navigation, booking widgets, cookie banners, and JavaScript dependencies. When an AI engine needs to <em>cite</em> a source, it needs quotable text, not a JSON-LD block. When it needs to <em>synthesize</em> an answer ("Tell me about the spa at [hotel]"), it needs readable prose with clear headings, not a schema property list.</p>
+        <p>AI models are trained on text. They reason in text. They generate answers in text. The mirror speaks their native language.</p>
+
+        <h3 style="margin-top: 24px; font-size: 16px; color: var(--c-ink);">They are complementary, not interchangeable</h3>
+        <table class="vs-table" style="margin-top: 12px;">
+          <thead>
+            <tr>
+              <th>Function</th>
+              <th>Schema.org (on HTML pages)</th>
+              <th>Markdown Mirror</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Purpose</strong></td>
+              <td class="col-llms">Entity classification &amp; relationships</td>
+              <td class="col-mirror">Readable, quotable, citable content</td>
+            </tr>
+            <tr>
+              <td><strong>Format</strong></td>
+              <td class="col-llms">JSON-LD embedded in HTML <code>&lt;script&gt;</code> tags</td>
+              <td class="col-mirror">Plain markdown with structured front matter</td>
+            </tr>
+            <tr>
+              <td><strong>AI engines use it to&hellip;</strong></td>
+              <td class="col-llms">Identify what an entity <em>is</em></td>
+              <td class="col-mirror">Understand what an entity <em>means</em> and generate answers about it</td>
+            </tr>
+            <tr>
+              <td><strong>Can an AI quote it?</strong></td>
+              <td class="col-llms">No &mdash; it's structured data, not prose</td>
+              <td class="col-mirror">Yes &mdash; that's the point</td>
+            </tr>
+            <tr>
+              <td><strong>Requires JS execution?</strong></td>
+              <td class="col-llms">Depends on the rendering model</td>
+              <td class="col-mirror">Never &mdash; static files, no dependencies</td>
+            </tr>
+            <tr>
+              <td><strong>Where it lives</strong></td>
+              <td class="col-llms">Inside the existing HTML pages</td>
+              <td class="col-mirror">Separate path (<code>/llms/</code> or <code>/ai/</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="highlight-box green">
+        <strong>The rule of thumb:</strong> Schema.org goes on the HTML site &mdash; keep it, improve it, extend it. The mirror is a <em>separate</em> deliverable: plain-text documents at their own URLs, structured for AI consumption. Don't put schema.org in the mirror. Don't expect schema.org on the HTML pages to do what the mirror does. They solve different halves of the same problem.
+      </div>
+    </section>
+
+    <!-- 9.04 THE CASE FOR A FULL MIRROR -->
+    <section class="section" id="mirror-case">
+      <div class="section-label"><span class="section-num">9.04</span> The Case for a Full Mirror</div>
+      <h2 class="section-title">From Index to Architecture</h2>
+      <div class="section-body">
+        <p>The real question isn't "should we have an llms.txt?" &mdash; it's <strong>"how do we make our entire site machine-readable without requiring AI engines to execute JavaScript, parse HTML, or guess at data freshness?"</strong></p>
+        <p>An AI Site Mirror is a three-layer architecture that publishes a complete, machine-efficient representation of a business &mdash; structured data, readable documents, and a discovery mechanism &mdash; all derived from a single canonical source of truth.</p>
+
+        <div class="layer-card layer-card--a">
+          <div class="layer-card__label">Layer A</div>
+          <div class="layer-card__title">Canonical Structured Feed</div>
+          <div class="layer-card__desc">A normalized JSON/JSONL dataset representing every entity: locations (with effective NAP, hours, overrides, applicable offers), services, knowledge content. Stable IDs, source provenance, <code>last_updated</code> timestamps. Schema.org-compatible, publishable as a <code>DataFeed</code>. This is the single source of truth &mdash; the mirror documents are derived from it, not the other way around.</div>
+        </div>
+
+        <div class="layer-card layer-card--b">
+          <div class="layer-card__label">Layer B</div>
+          <div class="layer-card__title">AI-Readable Document Views</div>
+          <div class="layer-card__desc">One compact document per entity &mdash; <code>/ai/locations/&lt;id&gt;.md</code> &mdash; with a standard metadata header (id, type, locale, last_updated, canonical_url) and structured sections. No nav chrome, no marketing boilerplate. Optimized for fast AI parsing. Reproducible deterministically from Layer A; no business logic lives only in the mirror.</div>
+        </div>
+
+        <div class="layer-card layer-card--c">
+          <div class="layer-card__label">Layer C</div>
+          <div class="layer-card__title">Discovery Index</div>
+          <div class="layer-card__desc"><code>/ai/index.json</code> enumerates every entity with type, locale, and <code>last_updated</code>. Segmented by entity type and locale. <code>/.well-known/feeddata-toc</code> publishes Schema.org Feeds-style discovery. Supports incremental refresh &mdash; consumers fetch only what changed, not the entire corpus.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9.04 COMPARISON TABLE -->
+    <section class="section" id="comparison">
+      <div class="section-label"><span class="section-num">9.05</span> Side-by-Side</div>
+      <h2 class="section-title">llms.txt vs. AI Site Mirror</h2>
+      <div class="section-body">
+        <table class="vs-table">
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>llms.txt</th>
+              <th>AI Site Mirror</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Content model</strong></td>
+              <td class="col-llms">Links to pages</td>
+              <td class="col-mirror">Structured entities with relationships</td>
+            </tr>
+            <tr>
+              <td><strong>Dynamic data</strong></td>
+              <td class="col-llms">Static file; manual regeneration</td>
+              <td class="col-mirror">Incremental refresh per entity; <code>last_updated</code> on every record</td>
+            </tr>
+            <tr>
+              <td><strong>Entity scale</strong></td>
+              <td class="col-llms">Curated list of 10&ndash;50 pages</td>
+              <td class="col-mirror">Every location, service, offer, and content entity</td>
+            </tr>
+            <tr>
+              <td><strong>Hours / overrides</strong></td>
+              <td class="col-llms">Not expressible</td>
+              <td class="col-mirror">Effective hours computed after precedence rules, matching the live site</td>
+            </tr>
+            <tr>
+              <td><strong>Multilingual</strong></td>
+              <td class="col-llms">One file, one language</td>
+              <td class="col-mirror">Per-locale documents with explicit fallback rules</td>
+            </tr>
+            <tr>
+              <td><strong>Schema.org alignment</strong></td>
+              <td class="col-llms">None</td>
+              <td class="col-mirror">Feed publishable as <code>DataFeed</code>; <code>.well-known/feeddata-toc</code> discovery</td>
+            </tr>
+            <tr>
+              <td><strong>AI engine compatibility</strong></td>
+              <td class="col-llms">Unconfirmed by major providers</td>
+              <td class="col-mirror">Schema markup drives 60% of AI Overview citations (2025 research)</td>
+            </tr>
+            <tr>
+              <td><strong>Observability</strong></td>
+              <td class="col-llms">None</td>
+              <td class="col-mirror">Publication freshness, coverage gaps, error logging per build cycle</td>
+            </tr>
+            <tr>
+              <td><strong>Use case fit</strong></td>
+              <td class="col-llms">Dev docs, static content sites</td>
+              <td class="col-mirror">Multi-location businesses, dynamic inventory, enterprise content</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 9.05 CX-FIRST ARGUMENT -->
+    <section class="section" id="cx-first">
+      <div class="section-label"><span class="section-num">9.06</span> The CX-First Argument</div>
+      <h2 class="section-title">Design for the Customer. The Rankings Follow.</h2>
+      <div class="section-body">
+        <p>The strategic foundation for a site mirror is the same argument that governs how we think about web design in 2026: <strong>the distinction between designing for customers and designing for algorithms has collapsed, and the search engines resolved it in the customer's favor.</strong></p>
+        <p>Google's own documentation defines "search engine-first content" as a failure mode. Bing's 2026 Webmaster Guidelines state: <em>"Content that is discoverable, accurate, well-structured, and created for users performs best across all search experiences."</em> Both engines now measure what happens <em>after</em> the click &mdash; bounce rate, pogo-sticking, scroll depth, task completion &mdash; and these behavioral signals directly affect rankings.</p>
+        <p>The mirror extends this principle to the AI era:</p>
+        <ul class="spec-list">
+          <li><strong>Schema.org markup is how AI engines understand entity relationships.</strong> Pages with comprehensive schema receive 28% more AI citations than pages without it.</li>
+          <li><strong>AI systems need content that stands without external context.</strong> Bing's guidelines: <em>"URLs are more likely to be selected for grounding queries when content stands on its own."</em></li>
+          <li><strong>Structured data is the comprehension layer.</strong> 60% of AI Overview citations come from pages with schema markup, vs. 38% for unstructured HTML alone.</li>
+          <li><strong>The mirror makes schema work citable.</strong> Schema tells engines what entities exist. The markdown mirror gives them clean prose to quote. Neither alone achieves what both together deliver.</li>
+        </ul>
+      </div>
+      <div class="highlight-box green">
+        <strong>The synthesis:</strong> Schema makes a site <em>describable</em> to machines. The markdown mirror makes it <em>readable</em> by machines. Together they create a complete AI-search presence &mdash; structured metadata for entity recognition, plus clean prose for citation and synthesis.
+      </div>
+    </section>
+
+    <!-- 9.07 HOTEL PRODUCT CATALOG -->
+    <section class="section" id="hotel-context">
+      <div class="section-label"><span class="section-num">9.07</span> Application</div>
+      <h2 class="section-title">A Hotel's "Product Catalog" in the Mirror</h2>
+      <div class="section-body">
+        <p>The client's website runs on Symfony/Contao, rendering pages with server-side logic. An AI engine querying <em>"luxury hotel spa packages in [city]"</em> would need to crawl rendered HTML, parse through navigation and booking widgets, and hope the content it extracts is current and correctly attributed across German and English. The mirror eliminates this entirely.</p>
+
+        <p>A hotel's product catalog is its rooms, packages, dining, spa, events, and seasonal offers. Each becomes its own markdown document, organized under an AI-focused information architecture that does <strong>not</strong> mirror the website's nav hierarchy.</p>
+
+        <h3 style="margin-top: 20px; font-size: 16px;">Entity types for a hotel mirror</h3>
+        <table class="vs-table" style="margin-top: 12px;">
+          <thead>
+            <tr>
+              <th>Entity</th>
+              <th>Example Path</th>
+              <th>What It Contains</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Property</strong></td>
+              <td><code>/ai/property.md</code></td>
+              <td>Hotel summary, star rating, collection membership, location, contact, accessibility</td>
+            </tr>
+            <tr>
+              <td><strong>Room type</strong></td>
+              <td><code>/ai/rooms/deluxe-suite.md</code></td>
+              <td>Description, capacity, amenities, view, size, base rate range, booking CTA</td>
+            </tr>
+            <tr>
+              <td><strong>Restaurant / bar</strong></td>
+              <td><code>/ai/dining/restaurant.md</code></td>
+              <td>Cuisine, hours, dress code, reservation, signature dishes</td>
+            </tr>
+            <tr>
+              <td><strong>Spa / wellness</strong></td>
+              <td><code>/ai/spa/overview.md</code></td>
+              <td>Facilities, signature treatments, hours, booking info</td>
+            </tr>
+            <tr>
+              <td><strong>Package / offer</strong></td>
+              <td><code>/ai/offers/summer-2026.md</code></td>
+              <td>Inclusions, validity window, pricing, conditions, applicable room types</td>
+            </tr>
+            <tr>
+              <td><strong>Event space</strong></td>
+              <td><code>/ai/events/ballroom.md</code></td>
+              <td>Capacity, configurations, catering, AV, contact</td>
+            </tr>
+            <tr>
+              <td><strong>Local area</strong></td>
+              <td><code>/ai/area/overview.md</code></td>
+              <td>Curated proximity info (transport, landmarks, activities) &mdash; not marketing fluff</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 style="margin-top: 24px; font-size: 16px;">What a document looks like</h3>
+        <div style="background: var(--c-surface-alt); border: 1px solid var(--c-border); border-radius: var(--radius-lg); padding: 20px; margin: 12px 0; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; white-space: pre-wrap; color: var(--c-text-mid);">---
+id: room-deluxe-suite
+type: Room
+locale: en
+canonical_url: https://hotelsite.com/rooms/deluxe-suite
+last_updated: 2026-05-09
+parent_entity: property
+---
+
+# Deluxe Suite
+
+Two-room suite with separate living area, king bed, and
+south-facing balcony overlooking [landmark]. 65 m&sup2;,
+accommodates up to 3 guests.
+
+## Amenities
+- Nespresso machine, minibar, twice-daily housekeeping
+- Rain shower + soaking tub, heated bathroom floors
+- 55&Prime; smart TV, complimentary high-speed WiFi
+
+## Rates
+Starting from &euro;320/night (low season) to &euro;480/night
+(peak). Includes breakfast buffet. Half-board available.
+
+## Booking
+[Book this room](https://hotelsite.com/rooms/deluxe-suite#book)</div>
+
+        <h3 style="margin-top: 24px; font-size: 16px;">Why this works for AI engines</h3>
+        <ul class="spec-list">
+          <li><strong>Quotable prose.</strong> An AI answering "best suites near [city]" can cite the description, the price range, the amenity list &mdash; verbatim. It cannot quote a <code>schema.org/HotelRoom</code> JSON-LD block.</li>
+          <li><strong>Front matter for machine parsing.</strong> <code>type</code>, <code>locale</code>, <code>last_updated</code>, <code>canonical_url</code> let engines filter, timestamp-check, and link back without scraping HTML.</li>
+          <li><strong>Bilingual without contamination.</strong> <code>/ai/en/rooms/deluxe-suite.md</code> and <code>/ai/de/rooms/deluxe-suite.md</code> &mdash; same structure, separate files, explicit locale tag. No risk of the engine quoting German in an English answer.</li>
+          <li><strong>Seasonal content handled cleanly.</strong> When a summer package expires, its document gets removed or flagged <code>status: expired</code>. The discovery index reflects the change immediately. No stale citation.</li>
+          <li><strong>Effective truth, not raw CMS data.</strong> The offer document says "valid June 1 &ndash; August 31, 2026" because the mirror computed that from the CMS &mdash; the consumer never interprets date ranges or override logic.</li>
+        </ul>
+
+        <h3 style="margin-top: 24px; font-size: 16px;">The mirror's IA is not the website's IA</h3>
+        <p>The website organizes for human browsing: nav &rarr; rooms &rarr; suites. The mirror organizes for AI retrieval &mdash; flat, one entity per document, with cross-references via <code>parent_entity</code> and <code>applies_to</code> fields in front matter. An AI engine answering "hotel with spa and suites under &euro;400" can scan the discovery index, pull the property doc, the spa doc, and the relevant room docs &mdash; three targeted fetches, no crawling.</p>
+      </div>
+      <div class="highlight-box green">
+        <strong>Schema makes the property findable.</strong> The mirror makes it <strong>quotable</strong>. An AI engine answering "best spa hotel near [city]" can cite specific room descriptions, current pricing, and seasonal availability &mdash; in the correct language &mdash; because the mirror provides exactly the content it needs in a format it can parse without executing JavaScript.
+      </div>
+    </section>
+
+    <!-- 9.07 IMPLEMENTATION ARCHITECTURE -->
+    <section class="section" id="architecture">
+      <div class="section-label"><span class="section-num">9.08</span> Implementation</div>
+      <h2 class="section-title">Architecture at a Glance</h2>
+      <div class="section-body">
+        <p>The implementation pattern proven at enterprise scale (600+ locations) follows a strict separation of concerns:</p>
+        <ul class="spec-list">
+          <li><strong>Feed is canonical; mirror is derived.</strong> The structured feed is the source of truth. Mirror documents are reproducible from the feed with no extra business logic living only in the mirror layer.</li>
+          <li><strong>Effective truth, not raw data.</strong> The feed computes the same precedence rules used on the live site &mdash; temporary overrides, special hours, offer eligibility &mdash; so downstream consumers never need to reimplement business logic.</li>
+          <li><strong>Deterministic, cacheable outputs.</strong> No client-side rendering dependencies. Stable URLs, CDN-friendly caching, static file outputs.</li>
+          <li><strong>Incremental refresh.</strong> When one entity changes, only that entity's feed record and mirror document regenerate. No full-site rebuilds.</li>
+          <li><strong>Observability.</strong> Publication freshness, coverage gaps, and generation failures logged on every build cycle.</li>
+        </ul>
+      </div>
+      <div class="highlight-box">
+        <strong>The deliverable for this engagement</strong> is the specification that makes this architecture buildable: the mirror IA, content schemas, front-matter definitions, rendering requirements, and validation criteria. The technical implementation can then be executed by OSP, the client's technical partner, or a subcontractor &mdash; because the spec is the blueprint.
+      </div>
+    </section>
+
+    <!-- 9.08 SOURCES -->
+    <section class="section" id="sources">
+      <div class="section-label"><span class="section-num">9.09</span> Sources</div>
+      <h2 class="section-title">References & Further Reading</h2>
+      <div class="section-body">
+        <ul class="source-list">
+          <li><strong>Howard, J.</strong> (2024). <a href="https://llmstxt.org/">The /llms.txt file</a> &mdash; Original proposal for LLM-friendly site index files.</li>
+          <li><strong>Google Search Central.</strong> <a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content">Creating Helpful, Reliable, People-First Content</a> &mdash; Defines "search engine-first content" as a failure mode.</li>
+          <li><strong>Bing Webmaster Guidelines</strong> (2026). <a href="https://www.bing.com/webmasters/help/webmasters-guidelines-30fba23a">Webmaster Guidelines</a> &mdash; Content must "fully satisfy user intent" for Copilot grounding.</li>
+          <li><strong>Rankeo.</strong> (2026). <a href="https://rankeo.io/blog/schema-markup-ai-engines-optimization">How to Optimize Schema Markup for AI Engines</a> &mdash; 60% of AI Overview citations from pages with schema; 28% more AI citations with comprehensive markup.</li>
+          <li><strong>SE Ranking.</strong> (2026). 300,000-domain study &mdash; No correlation between llms.txt presence and AI citation frequency.</li>
+          <li><strong>OtterlyAI.</strong> (2026). 90-day crawler experiment &mdash; 0.1% of AI crawler traffic targeted llms.txt.</li>
+          <li><strong>Derivatex Agency.</strong> (2026). <a href="https://derivatex.agency/blog/llms-txt-guide/">LLMs.txt Guide: What It Does and Doesn't Do</a> &mdash; Comprehensive analysis of adoption, limitations, and real-world impact.</li>
+          <li><strong>Schema.org.</strong> <a href="https://schema.org/DataFeed">DataFeed</a> &mdash; Structured feed specification for machine-readable entity catalogs.</li>
+          <li><strong>Ogden, L.</strong> (2026). <a href="https://lino-strategy-apps.vercel.app/t5/cx-first-vs-seo-first">Design for the Customer. The Rankings Follow.</a> &mdash; CX-first vs. SEO-first strategic brief with primary source analysis.</li>
+          <li><strong>Zenn / c12o.</strong> (2026). <a href="https://zenn.dev/c12o/articles/729af21b769bb1?locale=en">Why llms.txt Won't Boost Your AI Search Ranking</a> &mdash; AEO priorities beyond llms.txt.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="gantt.html" class="footer-link"><span class="arrow">&larr;</span> Timeline</a>
+    </div>
+    <div class="footer-nav"></div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+</body>
+</html>

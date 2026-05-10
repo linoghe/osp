@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phased Scope | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link">
+      <span class="nav-num">00</span> Hub
+    </a>
+    <a href="engagement.html" class="nav-link">
+      <span class="nav-num">01</span> Engagement
+    </a>
+    <a href="scope.html" class="nav-link active">
+      <span class="nav-num">02</span> Phased Scope
+    </a>
+    <a href="scope-markdown.html" class="nav-link">
+      <span class="nav-num">03</span> Markdown Site
+    </a>
+    <a href="effort.html" class="nav-link">
+      <span class="nav-num">04</span> Effort & Role
+    </a>
+    <a href="context.html" class="nav-link">
+      <span class="nav-num">05</span> Pricing Context
+    </a>
+    <a href="questions.html" class="nav-link">
+      <span class="nav-num">06</span> Pricing Guidance
+    </a>
+    <a href="pricing-model.html" class="nav-link">
+      <span class="nav-num">07</span> Pricing Model
+    </a>
+    <a href="gantt.html" class="nav-link">
+      <span class="nav-num">08</span> Timeline
+    </a>
+    <a href="whitepaper.html" class="nav-link">
+      <span class="nav-num">09</span> Why a Site Mirror
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">02</span> Phased Scope</p>
+      <h1 class="page-title">Workstreams &amp; Delivery</h1>
+      <p class="page-subtitle">Four parallel workstreams with dependency gates. Schema track drives architecture; Markdown Site and Technical run in parallel once specs are approved.</p>
+    </div>
+
+    <!-- WORKSTREAM STRIP -->
+    <div class="phase-strip">
+      <div class="phase-pill phase-pill--active" style="border-left: 3px solid var(--c-blue);">
+        <div class="phase-pill-label">Workstream 1</div>
+        <div class="phase-pill-name">Schema &amp; Structured Data</div>
+        <div class="phase-pill-effort">~15 days &middot; Phases 0&ndash;3</div>
+      </div>
+      <div class="phase-pill phase-pill--active" style="border-left: 3px solid var(--c-teal);">
+        <div class="phase-pill-label">Workstream 2</div>
+        <div class="phase-pill-name">Markdown Site</div>
+        <div class="phase-pill-effort">~5.75 days &middot; MD-1&ndash;MD-4</div>
+      </div>
+      <div class="phase-pill" style="border-left: 3px solid var(--c-coral);">
+        <div class="phase-pill-label">Workstream 3</div>
+        <div class="phase-pill-name">Technical Implementation</div>
+        <div class="phase-pill-effort">~9 days &middot; Optional subcontract</div>
+      </div>
+      <div class="phase-pill" style="border-left: 3px solid #7c3aed;">
+        <div class="phase-pill-label">Workstream 4</div>
+        <div class="phase-pill-name">PM &amp; Governance</div>
+        <div class="phase-pill-effort">~6 days &middot; 15% rider + meetings</div>
+      </div>
+    </div>
+
+    <!-- ABSTRACTED TIMELINE -->
+    <div class="workstream-timeline" style="margin: 32px 0; padding: 24px; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-lg);">
+      <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--c-text-light); margin-bottom: 16px;">Week &rarr;</div>
+      <div style="display: grid; grid-template-columns: 80px repeat(6, 1fr); gap: 6px 0; align-items: center; font-size: 13px;">
+        <!-- Header row -->
+        <div style="font-weight: 600; color: var(--c-text-light); font-size: 11px;"></div>
+        <div style="text-align: center; font-size: 11px; color: var(--c-text-light); font-weight: 500;">1</div>
+        <div style="text-align: center; font-size: 11px; color: var(--c-text-light); font-weight: 500;">2</div>
+        <div style="text-align: center; font-size: 11px; color: var(--c-text-light); font-weight: 500;">3</div>
+        <div style="text-align: center; font-size: 11px; color: var(--c-text-light); font-weight: 500;">4</div>
+        <div style="text-align: center; font-size: 11px; color: var(--c-text-light); font-weight: 500;">5</div>
+        <div style="text-align: center; font-size: 11px; color: var(--c-text-light); font-weight: 500;">6</div>
+
+        <!-- Schema track -->
+        <div style="font-size: 12px; font-weight: 600; color: var(--c-blue);">Schema</div>
+        <div style="background: var(--c-blue); height: 24px; border-radius: 4px 0 0 4px; opacity: 0.85; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">Ph 0</div>
+        <div style="background: var(--c-blue); height: 24px; opacity: 0.85; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">1A &rarr; 1B</div>
+        <div style="background: var(--c-blue); height: 24px; opacity: 0.7; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">1B</div>
+        <div style="background: var(--c-blue); height: 24px; opacity: 0.55; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">Ph 2</div>
+        <div style="background: var(--c-blue); height: 24px; border-radius: 0 4px 4px 0; opacity: 0.4; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">Ph 3</div>
+        <div></div>
+
+        <!-- Markdown Site track -->
+        <div style="font-size: 12px; font-weight: 600; color: var(--c-teal);">Markdown</div>
+        <div></div>
+        <div style="background: var(--c-teal); height: 24px; border-radius: 4px 0 0 4px; opacity: 0.85; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">MD-1 IA</div>
+        <div style="background: var(--c-teal); height: 24px; border-radius: 0 4px 4px 0; opacity: 0.7; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">MD-2 Spec</div>
+        <div></div>
+        <div style="background: var(--c-teal); height: 24px; border-radius: 4px; opacity: 0.6; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">MD-3/4</div>
+        <div></div>
+
+        <!-- Technical track -->
+        <div style="font-size: 12px; font-weight: 600; color: var(--c-coral);">Technical</div>
+        <div></div>
+        <div></div>
+        <div style="background: var(--c-coral); height: 24px; border-radius: 4px 0 0 4px; opacity: 0.85; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">Build</div>
+        <div style="background: var(--c-coral); height: 24px; opacity: 0.7; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">Build</div>
+        <div style="background: var(--c-coral); height: 24px; border-radius: 0 4px 4px 0; opacity: 0.55; display: flex; align-items: center; padding-left: 8px; color: white; font-size: 10px; font-weight: 500;">Deploy</div>
+        <div></div>
+
+        <!-- PM track -->
+        <div style="font-size: 12px; font-weight: 600; color: #7c3aed;">PM</div>
+        <div style="background: #7c3aed; height: 24px; border-radius: 4px 0 0 4px; opacity: 0.3; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">&#9679;</div>
+        <div style="background: #7c3aed; height: 24px; opacity: 0.3; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">&#9679;</div>
+        <div style="background: #7c3aed; height: 24px; opacity: 0.3; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">&#9679;</div>
+        <div style="background: #7c3aed; height: 24px; opacity: 0.3; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">&#9679;</div>
+        <div style="background: #7c3aed; height: 24px; opacity: 0.3; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">&#9679;</div>
+        <div style="background: #7c3aed; height: 24px; border-radius: 0 4px 4px 0; opacity: 0.3; display: flex; align-items: center; justify-content: center; color: white; font-size: 10px;">&#9679;</div>
+      </div>
+      <div style="margin-top: 12px; font-size: 11px; color: var(--c-text-light);">
+        Arrows indicate dependencies: Markdown Site starts after Schema 1A sign-off; Technical starts after Markdown Site specs; Validation runs concurrently in week 5&ndash;6.
+      </div>
+    </div>
+
+    <!-- PHASE 0 -->
+    <section class="section" id="phase-0">
+      <div class="section-label"><span class="section-num">2.01</span> Baseline Capture</div>
+      <h2 class="section-title" id="phase-0-title">Phase 0: ~3 Senior Consultant Days</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>Inventory and validation of existing structured data</strong> (what's there, what's valid, what's missing)</li>
+          <li><strong>Google Search Console snapshot</strong> for an agreed query set</li>
+          <li><strong>Organic ranking baseline</strong> for ~10-15 segment-relevant queries</li>
+          <li><strong>Documented behavior of 5 AI engines</strong> (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews) on 10-15 segment queries, with screenshots and transcripts</li>
+          <li><strong>Short baseline write-up</strong> for comparison in Phase 3</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PHASE 1A -->
+    <section class="section" id="phase-1a">
+      <div class="section-label"><span class="section-num">2.02</span> Architecture & Route Selection</div>
+      <h2 class="section-title" id="phase-1a-title">Phase 1A: ~3 Senior Consultant Days</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>Schema architecture across ~6-7 page-type variants</strong> (Hotel root, room/lodging-unit, restaurant, spa/wellness, FAQ, event, breadcrumb enrichment)</li>
+          <li><strong>Entity-graph relationship design</strong> defining how types connect across the property's page structure</li>
+          <li><strong>Architectural route recommendation</strong> to the technical partner (native JSON-LD vs. CMS extension config vs. hybrid)</li>
+          <li><strong>AI-engine optimization layer: research</strong> on best practices, citation-friendly patterns, and llms.txt structure</li>
+          <li><strong>Sign-off gate:</strong> client and technical partner approve the architecture before content drafting begins</li>
+        </ul>
+      </div>
+      <div class="highlight-box">
+        <strong>Deliverable:</strong> Architecture document with schema type map, entity relationships, and recommended implementation route. Approved before Phase 1B begins.
+      </div>
+    </section>
+
+    <!-- PHASE 1B -->
+    <section class="section" id="phase-1b">
+      <div class="section-label"><span class="section-num">2.03</span> Content & Specification</div>
+      <h2 class="section-title" id="phase-1b-title">Phase 1B: ~5 Senior Consultant Days</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>Bilingual content values (DE + EN)</strong> for every schema block; every block has text copy that needs drafting in two languages</li>
+          <li><strong>Page-by-page specification document,</strong> JSON-LD blocks ready to implement per the approved architecture</li>
+          <li><strong>llms.txt and llms-full.txt</strong> drafting, citation-friendly content recommendations</li>
+          <li><strong>Coordination with the technical partner</strong> on implementation specifics as they arise from content</li>
+        </ul>
+      </div>
+      <div class="highlight-box amber">
+        <strong>Iteration clause:</strong> Up to one architectural revision pass is included if content drafting reveals structural gaps in the 1A schema design. Revisions beyond one pass are scoped as a separate addendum.
+      </div>
+    </section>
+
+    <!-- PHASE 2 -->
+    <section class="section" id="phase-2">
+      <div class="section-label"><span class="section-num">2.04</span> Implementation Coordination</div>
+      <h2 class="section-title" id="phase-2-title">Phase 2: ~2 Senior Consultant Days</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>Handoff session with technical partner</strong> on the finalized spec</li>
+          <li><strong>Async QA support during implementation,</strong> up to 3 rounds of review (clarifications, partial checks)</li>
+          <li><strong>Final QA of deployed markup against the spec;</strong> validation pass DE + EN, sample checks across page types</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PHASE 3 -->
+    <section class="section" id="phase-3">
+      <div class="section-label"><span class="section-num">2.05</span> Validation & Handover</div>
+      <h2 class="section-title" id="phase-3-title">Phase 3: ~2 Senior Consultant Days</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>Re-run the same AI-engine query set</strong> from Phase 0 against the live, marked-up site, using the same engines and the same queries, with screenshots and transcripts (3-4 months after Phase 0)</li>
+          <li><strong>Rich Results Test and Schema.org Validator</strong> full-site pass (DE + EN)</li>
+          <li><strong>Comparison report</strong> against Phase 0 baseline</li>
+          <li><strong>Living-spec handover documentation</strong> that the client can extend to future pages</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PARALLEL TRACK — MARKDOWN SITE -->
+    <section class="section" id="markdown-site">
+      <div class="section-label"><span class="section-num">2.06</span> Parallel Track — Markdown Site</div>
+      <h2 class="section-title" id="markdown-site-title">Parallel Track: Machine-Readable Markdown Mirror</h2>
+      <div class="section-body">
+        <p>Alongside the schema phases above, a parallel track designs and specifies a machine-readable markdown mirror of the site optimized for LLM and AI-engine consumption.</p>
+        <ul class="spec-list">
+          <li><strong>Runs in parallel starting after Phase 1A sign-off</strong> — the schema architecture decisions gate the markdown structure</li>
+          <li><strong>Detailed on the <a href="scope-markdown.html">Markdown Site</a> page</strong> (page 03)</li>
+          <li><strong>Depends on Phase 1A architecture decisions</strong> — entity relationships, page-type taxonomy, and route selection inform the markdown hierarchy</li>
+          <li><strong>Technical implementation (pipeline build)</strong> is optionally subcontracted or handled by the client's technical partner</li>
+          <li><strong>Validation (MD-3) runs alongside Phase 3</strong> using the same methodology and engines from the baseline query set</li>
+        </ul>
+      </div>
+      <div class="highlight-box blue">
+        <strong>Track 2 leverages Track 1's architecture.</strong> Together they give AI engines both structured descriptions (schema) and readable content (markdown mirror).
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="engagement.html" class="footer-link"><span class="arrow">&larr;</span> Engagement</a>
+    </div>
+    <div class="footer-nav">
+      <a href="scope-markdown.html" class="footer-link">Next: Markdown Site <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+</body>
+</html>

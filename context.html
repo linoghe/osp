@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Context | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link">
+      <span class="nav-num">00</span> Hub
+    </a>
+    <a href="engagement.html" class="nav-link">
+      <span class="nav-num">01</span> Engagement
+    </a>
+    <a href="scope.html" class="nav-link">
+      <span class="nav-num">02</span> Phased Scope
+    </a>
+    <a href="scope-markdown.html" class="nav-link">
+      <span class="nav-num">03</span> Markdown Site
+    </a>
+    <a href="effort.html" class="nav-link">
+      <span class="nav-num">04</span> Effort & Role
+    </a>
+    <a href="context.html" class="nav-link active">
+      <span class="nav-num">05</span> Pricing Context
+    </a>
+    <a href="questions.html" class="nav-link">
+      <span class="nav-num">06</span> Pricing Guidance
+    </a>
+    <a href="pricing-model.html" class="nav-link">
+      <span class="nav-num">07</span> Pricing Model
+    </a>
+    <a href="gantt.html" class="nav-link">
+      <span class="nav-num">08</span> Timeline
+    </a>
+    <a href="whitepaper.html" class="nav-link">
+      <span class="nav-num">09</span> Why a Site Mirror
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">05</span> Pricing Context</p>
+      <h1 class="page-title">Context Relevant to Pricing</h1>
+      <p class="page-subtitle">Exclusions, commercial terms, and differentiating factors that may shift the number.</p>
+    </div>
+
+    <!-- NOT IN SCOPE -->
+    <section class="section" id="exclusions">
+      <div class="section-label"><span class="section-num">5.01</span> Exclusions</div>
+      <h2 class="section-title" id="exclusions-title">What's NOT in Scope</h2>
+      <div class="section-body">
+        <p>Technical implementation — the render pipeline (CMS queries, markdown templating, build/deploy) — is <strong>optionally subcontracted</strong> by OSP or handled by the client's existing technical partner.</p>
+        <ul class="spec-list">
+          <li><strong>CMS queries &amp; data layer</strong> — wiring content models to templates</li>
+          <li><strong>Markdown templating &amp; build pipeline</strong> — static-site generation, CI/CD</li>
+          <li><strong>Hosting &amp; deployment</strong> — server configuration, performance tuning</li>
+          <li><strong>Ongoing site maintenance</strong> after handover</li>
+        </ul>
+      </div>
+      <div class="highlight-box coral">
+        <strong>The pricing model includes technical implementation costs, but those line items can be zeroed out</strong> if OSP does not subcontract the work (i.e., the client's own technical partner handles it). The total adjusts automatically.
+      </div>
+    </section>
+
+    <!-- COMMERCIAL TERMS -->
+    <section class="section" id="terms">
+      <div class="section-label"><span class="section-num">5.02</span> Commercial Terms</div>
+      <h2 class="section-title" id="terms-title">Payment & Structure</h2>
+      <div class="section-body">
+        <table class="spec-table">
+          <tbody>
+            <tr>
+              <td><strong>Jurisdiction</strong></td>
+              <td>Client is in EU; consultancy bills net of VAT under intra-EU B2B reverse-charge</td>
+            </tr>
+            <tr>
+              <td><strong>Currency</strong></td>
+              <td>EUR</td>
+            </tr>
+            <tr>
+              <td><strong>Engagement model</strong></td>
+              <td>
+                <ul class="spec-list" style="margin:0">
+                  <li>Fixed fee per phase</li>
+                  <li>Sign-off gate at each phase boundary</li>
+                  <li>Scope changes handled as separate addenda</li>
+                </ul>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Dynamic pricing note -->
+        <div class="highlight-box blue" style="margin-top:1.5rem">
+          <strong>Dynamic pricing model.</strong> Rates are pulled from a central rate sheet and costs are calculated per role. If OSP decides not to subcontract technical work, those line items zero out and the total adjusts automatically. A <strong>15% PM rider</strong> is applied to total program hours to cover governance overhead (scheduling, status reporting, cross-workstream coordination).
+        </div>
+
+        <!-- Payment timeline visual -->
+        <div class="payment-timeline">
+          <div class="payment-timeline-label">Payment Structure <span class="payment-terms">Net 14 on each invoice</span></div>
+          <div class="payment-track">
+            <div class="payment-node">
+              <div class="payment-bar"></div>
+              <div class="payment-dot"></div>
+              <div class="payment-pct">25%</div>
+              <div class="payment-trigger">Phase 0 kickoff</div>
+            </div>
+            <div class="payment-node">
+              <div class="payment-bar"></div>
+              <div class="payment-dot"></div>
+              <div class="payment-pct">25%</div>
+              <div class="payment-trigger">Phase 0 complete</div>
+            </div>
+            <div class="payment-node">
+              <div class="payment-bar"></div>
+              <div class="payment-dot"></div>
+              <div class="payment-pct">25%</div>
+              <div class="payment-trigger">Phase 1 complete</div>
+            </div>
+            <div class="payment-node">
+              <div class="payment-bar"></div>
+              <div class="payment-dot"></div>
+              <div class="payment-pct">25%</div>
+              <div class="payment-trigger">Phase 2 complete</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIFFERENTIATORS -->
+    <section class="section" id="differentiators">
+      <div class="section-label"><span class="section-num">5.03</span> Differentiating Factors</div>
+      <h2 class="section-title" id="differentiators-title">Why This May Price Higher</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>The schema/GEO and AI-search-readiness combination, executed bilingually, is a niche specialization.</strong></li>
+          <li><strong>Competitive audit of 7 peer properties</strong> (in the same hotel collection, plus the collection's own brand site) found that none currently emit the entity-graph schema relationship the spec will create.</li>
+          <li><strong>The validation phase produces evidence</strong> (specifically, a pre/post AI-engine query comparison segmented by language) that the client can use internally and with the parent brand collection.</li>
+        </ul>
+      </div>
+      <div class="highlight-box green">
+        <strong>The deliverable is a measurable competitive differentiator for the client, not a parity move.</strong> No peer property in the collection currently has this capability.
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="effort.html" class="footer-link"><span class="arrow">&larr;</span> Effort & Role</a>
+    </div>
+    <div class="footer-nav">
+      <a href="questions.html" class="footer-link">Next: Pricing Guidance <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questions | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link">
+      <span class="nav-num">00</span> Hub
+    </a>
+    <a href="engagement.html" class="nav-link">
+      <span class="nav-num">01</span> Engagement
+    </a>
+    <a href="scope.html" class="nav-link">
+      <span class="nav-num">02</span> Phased Scope
+    </a>
+    <a href="scope-markdown.html" class="nav-link">
+      <span class="nav-num">03</span> Markdown Site
+    </a>
+    <a href="effort.html" class="nav-link">
+      <span class="nav-num">04</span> Effort & Role
+    </a>
+    <a href="context.html" class="nav-link">
+      <span class="nav-num">05</span> Pricing Context
+    </a>
+    <a href="questions.html" class="nav-link active">
+      <span class="nav-num">06</span> Pricing Guidance
+    </a>
+    <a href="pricing-model.html" class="nav-link">
+      <span class="nav-num">07</span> Pricing Model
+    </a>
+    <a href="gantt.html" class="nav-link">
+      <span class="nav-num">08</span> Timeline
+    </a>
+    <a href="whitepaper.html" class="nav-link">
+      <span class="nav-num">09</span> Why a Site Mirror
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">06</span> Pricing Guidance</p>
+      <h1 class="page-title">Answers &amp; Recommendations</h1>
+      <p class="page-subtitle">Structured responses to Jam's three pricing questions, based on the engagement model and dynamic pricing plan built in this review.</p>
+    </div>
+
+    <!-- ANSWER 1 -->
+    <section class="section" id="q1">
+      <div class="section-label"><span class="section-num">6.01</span> Fixed-Fee Total</div>
+      <h2 class="section-title">How to arrive at your number</h2>
+      <div class="section-body">
+        <p>Don't pick a number out of the air. Build it from the bottom up using the Gantt tab of the pricing sheet. The model is already structured to give you this:</p>
+        <ul class="spec-list">
+          <li><strong>Start with level-of-effort.</strong> Each task has a day count based on realistic scoping. Adjust these if your experience says otherwise, but don't round down to be competitive.</li>
+          <li><strong>Apply the PM rider.</strong> A 15% coefficient on total program hours gives you governance overhead (kickoff, status meetings, risk tracking, coordination). This is non-negotiable for a multi-workstream engagement.</li>
+          <li><strong>Know your real costs.</strong> You need to know the fully-loaded cost of each person (salary, benefits, tools, overhead). The "OSP Cost" column in the sheet is where this lives. Your operating overhead (office, admin, insurance, bench time) should be expressed as a percentage on top of each person's direct cost.</li>
+          <li><strong>Target 50&ndash;60% margin.</strong> This is healthy for boutique consulting. Below 50% you're trading time for money with no buffer. Above 60% and you're pricing aggressively&mdash;defensible only with strong differentiation (which you have here).</li>
+          <li><strong>The sheet does the math.</strong> Revenue minus OSP cost = margin. Adjust rates until you hit the target margin band, then that's your fixed fee.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>The fee is an output, not an input.</strong> It falls out of the model once your costs, effort, and margin targets are set. The dynamic sheet means you can scenario-plan instantly.
+        </div>
+      </div>
+    </section>
+
+    <!-- ANSWER 2 -->
+    <section class="section" id="q2">
+      <div class="section-label"><span class="section-num">6.02</span> Day Rate</div>
+      <h2 class="section-title">How to set and apply your rate</h2>
+      <div class="section-body">
+        <p>Your day rate should be derived from your real costs (as above), not from market surveys or competitor signaling. That said, here's how to apply it cleanly:</p>
+        <ul class="spec-list">
+          <li><strong>For a project this size, charge in full-day increments.</strong> Fractional days (0.25, 0.5) are useful for internal planning granularity, but the client should see full days on the invoice. Preferably, price in full-week increments where possible.</li>
+          <li><strong>For larger projects,</strong> 0.5-day increments become reasonable depending on line-item granularity and how confident you are in your estimates.</li>
+          <li><strong>Percentage-of-allocation is equally valid.</strong> Price by week, but adjust the allocation percentage down for weeks you expect to be partial (e.g., 60% allocation in a taper-off week). This keeps the billing unit consistent (week) while reflecting reality.</li>
+          <li><strong>Always work in full weeks as the billing unit.</strong> Partial weeks invite scope creep and make time tracking a nightmare. If a task takes 2.5 days, that's a week at 50% allocation&mdash;not 2.5 separate day charges.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Rate &ne; price.</strong> Your rate is a building block. The client sees the fixed fee (6.01). The rate is how you verify internally that the fee covers your costs at the right margin.
+        </div>
+      </div>
+    </section>
+
+    <!-- ANSWER 3 -->
+    <section class="section" id="q3">
+      <div class="section-label"><span class="section-num">6.03</span> Risk Factors &amp; Guardrails</div>
+      <h2 class="section-title">What would make you walk, and how to protect the engagement</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>Client insists on their own project manager.</strong> This is a major risk factor. If you're accountable for delivery but don't control coordination, you'll eat overruns on someone else's miscommunication. Either own PM or walk.</li>
+          <li><strong>Implementation team overrides your spec.</strong> If the technical partner wants to rewrite your architecture or deviate from the agreed specification, that causes rework, scope creep, and broken validation. The spec is the contract&mdash;enforce it at the Phase 2 handoff gate.</li>
+          <li><strong>Implementation team doesn't have bandwidth.</strong> Confirm before kickoff that the technical partner can work within the defined Gantt plan (roughly). If they can't start for 6 weeks, your Phase 3 validation window shifts and your costs inflate.</li>
+          <li><strong>Build in a 12% contingency.</strong> This is standard practice for fixed-fee consulting. Add 12% to the total program cost as a contingency line. It covers the unknowns you can't scope (client delays, scope ambiguity, extra QA rounds). If you don't use it, it's margin. If you do, it saves the project.</li>
+          <li><strong>Never reduce price without reducing scope.</strong> If the client pushes back on cost, resist the instinct to discount. Instead, clarify the ROI they can expect from the full scope. If they still can't afford it, remove a workstream or reduce deliverable depth&mdash;don't absorb the loss.</li>
+        </ul>
+        <div class="highlight-box amber">
+          <strong>The 12% contingency and 15% PM rider are separate.</strong> PM is real work (meetings, tracking, coordination). Contingency is a buffer for unknowns. Both belong in the model.
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="section" id="closing">
+      <div class="section-body">
+        <div class="highlight-box green">
+          <strong>Summary:</strong> Build from the bottom up (effort &times; rate), layer in PM and contingency, target 50&ndash;60% margin, and protect scope at all costs. The dynamic pricing sheet does the arithmetic&mdash;your job is to set honest inputs and hold the line on scope.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="context.html" class="footer-link"><span class="arrow">&larr;</span> Pricing Context</a>
+    </div>
+    <div class="footer-nav">
+      <a href="pricing-model.html" class="footer-link">Next: Pricing Model <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+</body>
+</html>

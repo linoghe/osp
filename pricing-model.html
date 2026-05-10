@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Model | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Page-specific: pricing matrix */
+    .app-main {
+      max-width: none;
+    }
+    .fte-grid {
+      margin: 24px 0;
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .fte-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .fte-table thead th {
+      background: var(--c-surface-alt);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--c-text-light);
+      padding: 10px 12px;
+      text-align: center;
+      border-bottom: 2px solid var(--c-border);
+      white-space: nowrap;
+    }
+    .fte-table thead th:first-child {
+      text-align: left;
+      min-width: 150px;
+    }
+    .fte-table tbody td {
+      padding: 10px 12px;
+      text-align: center;
+      border-bottom: 1px solid var(--c-border-light);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .fte-table tbody td:first-child {
+      text-align: left;
+      font-family: var(--font-body);
+      font-weight: 600;
+      color: var(--c-ink);
+    }
+    .fte-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .fte-table tfoot td {
+      padding: 10px 12px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--c-ink);
+      border-top: 2px solid var(--c-border);
+      background: var(--c-surface-alt);
+    }
+    .fte-table tfoot td:first-child {
+      text-align: left;
+      font-family: var(--font-body);
+    }
+    .fte-cell { border-radius: 3px; }
+    .fte-cell--empty { color: var(--c-text-light); opacity: 0.3; }
+    .fte-cell--low { background: rgba(13,148,136,0.08); color: var(--c-teal); }
+    .fte-cell--med { background: rgba(13,148,136,0.18); color: var(--c-teal); }
+    .fte-cell--high { background: rgba(29,91,191,0.18); color: var(--c-blue); }
+    .fte-cell--full { background: rgba(29,91,191,0.28); color: var(--c-blue); font-weight: 700; }
+    .fte-cell--over { background: rgba(224,90,71,0.2); color: var(--c-coral); font-weight: 700; }
+
+    /* Summary comparison */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0 28px;
+    }
+    .comp-card {
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      border: 1px solid var(--c-border);
+    }
+    .comp-card--jam {
+      background: var(--c-blue-light);
+      border-color: rgba(29, 91, 191, 0.15);
+    }
+    .comp-card--md {
+      background: var(--c-teal-light);
+      border-color: rgba(13, 148, 136, 0.15);
+    }
+    .comp-card--tech {
+      background: var(--c-coral-light);
+      border-color: rgba(224, 90, 71, 0.15);
+    }
+    .comp-card--pm {
+      background: #f3e8ff;
+      border-color: rgba(124, 58, 237, 0.15);
+    }
+    .comp-card__label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .comp-card--jam .comp-card__label { color: var(--c-blue); }
+    .comp-card--md .comp-card__label { color: var(--c-teal); }
+    .comp-card--tech .comp-card__label { color: var(--c-coral); }
+    .comp-card--pm .comp-card__label { color: #7c3aed; }
+    .comp-card__total {
+      font-family: var(--font-mono);
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .comp-card--jam .comp-card__total { color: var(--c-blue); }
+    .comp-card--md .comp-card__total { color: var(--c-teal); }
+    .comp-card--tech .comp-card__total { color: var(--c-coral); }
+    .comp-card--pm .comp-card__total { color: #7c3aed; }
+    .comp-card__detail {
+      font-size: 13px;
+      color: var(--c-text-mid);
+    }
+
+    .phase-comparison {
+      margin: 0 0 12px;
+    }
+    .phase-alloc-row {
+      display: grid;
+      grid-template-columns: 170px 1fr 80px;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--c-border-light);
+    }
+    .phase-alloc-row:last-child { border-bottom: none; }
+    .phase-alloc__name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--c-ink);
+    }
+    .phase-alloc__bar {
+      height: 22px;
+      border-radius: 4px;
+      min-width: 2px;
+      transition: width 0.3s ease;
+      opacity: 0.8;
+    }
+    .phase-alloc__bar--schema { background: var(--c-blue); }
+    .phase-alloc__bar--md { background: var(--c-teal); }
+    .phase-alloc__bar--tech { background: var(--c-coral); }
+    .phase-alloc__bar--pm { background: #7c3aed; }
+    .phase-alloc__val {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--c-text-mid);
+      text-align: right;
+    }
+
+    .sheet-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--c-text-light);
+      margin-bottom: 16px;
+    }
+    .sheet-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--c-teal);
+    }
+    .sheet-dot.offline {
+      background: var(--c-amber);
+    }
+    .sheet-link {
+      font-size: 12px;
+      color: var(--c-blue);
+      text-decoration: none;
+      margin-left: auto;
+    }
+    .sheet-link:hover {
+      text-decoration: underline;
+    }
+
+    .matrix-loading {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--c-text-light);
+      font-size: 14px;
+    }
+
+    .config-box {
+      background: var(--c-surface-alt);
+      border: 1px dashed var(--c-border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 13px;
+      color: var(--c-text-mid);
+      line-height: 1.6;
+    }
+    .config-box code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 3px;
+      padding: 1px 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link">
+      <span class="nav-num">00</span> Hub
+    </a>
+    <a href="engagement.html" class="nav-link">
+      <span class="nav-num">01</span> Engagement
+    </a>
+    <a href="scope.html" class="nav-link">
+      <span class="nav-num">02</span> Phased Scope
+    </a>
+    <a href="scope-markdown.html" class="nav-link">
+      <span class="nav-num">03</span> Markdown Site
+    </a>
+    <a href="effort.html" class="nav-link">
+      <span class="nav-num">04</span> Effort & Role
+    </a>
+    <a href="context.html" class="nav-link">
+      <span class="nav-num">05</span> Pricing Context
+    </a>
+    <a href="questions.html" class="nav-link">
+      <span class="nav-num">06</span> Pricing Guidance
+    </a>
+    <a href="pricing-model.html" class="nav-link active">
+      <span class="nav-num">07</span> Pricing Model
+    </a>
+    <a href="gantt.html" class="nav-link">
+      <span class="nav-num">08</span> Timeline
+    </a>
+    <a href="whitepaper.html" class="nav-link">
+      <span class="nav-num">09</span> Why a Site Mirror
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">07</span> Pricing Model</p>
+      <h1 class="page-title">Pricing & Allocation Matrix</h1>
+      <p class="page-subtitle">Program cost summary and phase-by-phase spend allocation across all workstreams. Live data from Google Sheets.</p>
+    </div>
+
+    <section class="section" id="summary">
+      <div class="section-label"><span class="section-num">7.01</span> Program Cost</div>
+      <h2 class="section-title" id="summary-title">Cost Summary & Spend Allocation</h2>
+
+      <div class="comparison-grid" id="comparisonGrid">
+        <div class="comp-card comp-card--jam">
+          <div class="comp-card__label">Schema Track (Jam)</div>
+          <div class="comp-card__total" id="jamTotal">—</div>
+          <div class="comp-card__detail"><span id="jamDays">—</span> days &times; blended rate</div>
+        </div>
+        <div class="comp-card comp-card--md">
+          <div class="comp-card__label">Markdown Site</div>
+          <div class="comp-card__total" id="mdTotal">—</div>
+          <div class="comp-card__detail"><span id="mdDays">—</span> days &times; blended rate</div>
+        </div>
+        <div class="comp-card comp-card--tech">
+          <div class="comp-card__label">Technical (optional)</div>
+          <div class="comp-card__total" id="techTotal">—</div>
+          <div class="comp-card__detail"><span id="techDays">—</span> days &times; rate</div>
+        </div>
+        <div class="comp-card comp-card--pm">
+          <div class="comp-card__label">PM &amp; Governance</div>
+          <div class="comp-card__total" id="pmTotal">—</div>
+          <div class="comp-card__detail"><span id="pmDays">—</span> days (15% rider + meetings)</div>
+        </div>
+      </div>
+
+      <div class="phase-comparison" id="phaseComparison">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="section" id="matrix">
+      <div class="section-label"><span class="section-num">7.02</span> Resource Allocation</div>
+      <h2 class="section-title" id="matrix-title">Week-by-Week FTE Allocation</h2>
+
+      <div class="sheet-status">
+        <span class="sheet-dot" id="sheetDot"></span>
+        <span id="sheetStatusText">Connecting to sheet...</span>
+        <a href="" id="sheetLink" class="sheet-link" target="_blank" rel="noopener">Open in Google Sheets</a>
+      </div>
+
+      <div class="fte-grid">
+        <div class="matrix-loading" id="matrixLoading">Loading resource data from Google Sheets...</div>
+        <table class="fte-table" id="fteTable" style="display:none">
+          <thead id="fteHead"></thead>
+          <tbody id="fteBody"></tbody>
+          <tfoot id="fteFoot"></tfoot>
+        </table>
+      </div>
+
+      <div style="margin-top: 10px; font-size: 12px; color: var(--c-text-light);">
+        Values show % of a full-time equivalent (5 days/wk = 100%). Color intensity reflects utilization.
+      </div>
+    </section>
+
+    <section class="section" id="notes">
+      <div class="section-label"><span class="section-num">7.03</span> Notes</div>
+      <h2 class="section-title" id="notes-title">How to Use This</h2>
+      <div class="section-body">
+        <ul class="spec-list">
+          <li><strong>Dynamic pricing.</strong> All costs pull live from the Google Sheet. Adjust rates or zero out days and totals update instantly.</li>
+          <li><strong>Technical costs are optional.</strong> If OSP does not subcontract the pipeline build, zero out the Ext-Technical days and those costs disappear.</li>
+          <li><strong>PM rider (15%)</strong> is calculated on total program hours including technical, providing governance overhead.</li>
+          <li><strong>Data refreshes on page load.</strong> No caching. What's in the sheet is what renders here.</li>
+          <li><strong>Rate reference</strong> in the Baseline Matrix tab shows hourly rates and OSP costs per role.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SETUP CONFIG (only visible when no sheet ID is set) -->
+    <section class="section" id="setup" style="display:none">
+      <div class="section-label"><span class="section-num">7.04</span> Setup</div>
+      <h2 class="section-title" id="setup-title">Connect Your Google Sheet</h2>
+      <div class="config-box">
+        <p>To connect your sheet, set the <code>SHEET_ID</code> variable in this page's script to your Google Sheet ID.</p>
+        <p>Your sheet URL looks like: <code>https://docs.google.com/spreadsheets/d/<strong>SHEET_ID</strong>/edit</code></p>
+        <p>Make sure the sheet is published: File &rarr; Share &rarr; Publish to web &rarr; Entire Document &rarr; CSV.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="questions.html" class="footer-link"><span class="arrow">&larr;</span> Pricing Guidance</a>
+    </div>
+    <div class="footer-nav">
+      <a href="gantt.html" class="footer-link">Next: Timeline <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+  <script>
+    // ─── CONFIGURATION ─────────────────────────────────────────────
+    var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
+    // ────────────────────────────────────────────────────────────────
+
+    var sheetDot = document.getElementById('sheetDot');
+    var sheetStatusText = document.getElementById('sheetStatusText');
+    var sheetLink = document.getElementById('sheetLink');
+    var matrixLoading = document.getElementById('matrixLoading');
+    var setupSection = document.getElementById('setup');
+
+    function parseCSV(text) {
+      var rows = [];
+      var current = '';
+      var inQuotes = false;
+      var row = [];
+      for (var i = 0; i < text.length; i++) {
+        var ch = text[i];
+        if (ch === '"') {
+          if (inQuotes && text[i + 1] === '"') { current += '"'; i++; }
+          else { inQuotes = !inQuotes; }
+        } else if (ch === ',' && !inQuotes) {
+          row.push(current.trim()); current = '';
+        } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+          if (ch === '\r' && text[i + 1] === '\n') i++;
+          row.push(current.trim()); current = '';
+          if (row.length > 1 || row[0] !== '') rows.push(row);
+          row = [];
+        } else {
+          current += ch;
+        }
+      }
+      if (current || row.length) { row.push(current.trim()); rows.push(row); }
+      return rows;
+    }
+
+    function renderSpendAllocation(ganttRows) {
+      if (!ganttRows || ganttRows.length < 2) return;
+      var h = ganttRows[0];
+      var phaseIdx = -1, teamIdx = -1, costIdx = -1;
+      h.forEach(function(col, i) {
+        var cl = col.toLowerCase();
+        if (cl === 'phase') phaseIdx = i;
+        if (cl === 'team') teamIdx = i;
+        if (cl.indexOf('cost') !== -1 && cl.indexOf('osp') === -1) costIdx = i;
+      });
+      if (phaseIdx === -1 || teamIdx === -1 || costIdx === -1) return;
+
+      var phaseOrder = [];
+      var phaseMap = {};
+      ganttRows.slice(1).forEach(function(r) {
+        var phase = (r[phaseIdx] || '').trim();
+        var team = (r[teamIdx] || '').toLowerCase();
+        var cost = parseFloat((r[costIdx] || '0').replace(/[$,€]/g, '')) || 0;
+        if (!phase) return;
+
+        var stream;
+        if (team.indexOf('ext') !== -1 || team.indexOf('technical') !== -1) stream = 'tech';
+        else if (team === 'pm') stream = 'pm';
+        else if (phase.indexOf('MD-') !== -1 || phase.indexOf('md-') !== -1) stream = 'md';
+        else stream = 'schema';
+
+        if (!phaseMap[phase]) {
+          phaseMap[phase] = { cost: 0, stream: stream };
+          phaseOrder.push(phase);
+        }
+        phaseMap[phase].cost += cost;
+      });
+
+      var maxCost = 0;
+      phaseOrder.forEach(function(p) { if (phaseMap[p].cost > maxCost) maxCost = phaseMap[p].cost; });
+
+      var container = document.getElementById('phaseComparison');
+      container.innerHTML = '';
+
+      phaseOrder.forEach(function(phase) {
+        var d = phaseMap[phase];
+        var row = document.createElement('div');
+        row.className = 'phase-alloc-row';
+
+        var name = document.createElement('div');
+        name.className = 'phase-alloc__name';
+        name.textContent = phase;
+
+        var bar = document.createElement('div');
+        bar.className = 'phase-alloc__bar phase-alloc__bar--' + d.stream;
+        bar.style.width = maxCost > 0 ? Math.max(2, Math.round((d.cost / maxCost) * 100)) + '%' : '0%';
+
+        var val = document.createElement('div');
+        val.className = 'phase-alloc__val';
+        val.textContent = d.cost > 0 ? '$' + d.cost.toLocaleString() : '—';
+
+        row.appendChild(name);
+        row.appendChild(bar);
+        row.appendChild(val);
+        container.appendChild(row);
+      });
+    }
+
+    function renderFteTable(ganttRows) {
+      if (!ganttRows || ganttRows.length < 2) {
+        matrixLoading.textContent = 'No Gantt data found.';
+        return;
+      }
+
+      var h = ganttRows[0];
+      var daysIdx = -1, startIdx = -1, teamIdx = -1;
+      h.forEach(function(col, i) {
+        var cl = col.toLowerCase();
+        if (cl === 'days') daysIdx = i;
+        if (cl === 'start') startIdx = i;
+        if (cl === 'team') teamIdx = i;
+      });
+      if (daysIdx === -1 || startIdx === -1 || teamIdx === -1) return;
+
+      var roleMap = {
+        'osp-sr. consultant': 'Sr. Consultant',
+        'osp-content': 'Content',
+        'ext-technical': 'Ext-Technical',
+        'pm': 'PM'
+      };
+      var roleOrder = ['Sr. Consultant', 'Content', 'Ext-Technical', 'PM'];
+      var roleColors = {
+        'Sr. Consultant': 'blue',
+        'Content': 'teal',
+        'Ext-Technical': 'coral',
+        'PM': 'pm'
+      };
+
+      var projectStart = new Date(2026, 5, 1);
+      var numWeeks = 6;
+
+      function getWeekIndex(dateStr) {
+        var parts = dateStr.split('/');
+        var d = new Date(parseInt(parts[2]), parseInt(parts[0]) - 1, parseInt(parts[1]));
+        var diff = (d - projectStart) / (1000 * 60 * 60 * 24);
+        return Math.floor(diff / 7);
+      }
+
+      var grid = {};
+      roleOrder.forEach(function(r) { grid[r] = new Array(numWeeks).fill(0); });
+
+      ganttRows.slice(1).forEach(function(row) {
+        var team = (row[teamIdx] || '').toLowerCase().trim();
+        var role = roleMap[team];
+        if (!role) return;
+        var days = parseFloat((row[daysIdx] || '0').replace(/[$,]/g, '')) || 0;
+        var start = (row[startIdx] || '').trim();
+        if (!start) return;
+        var wk = getWeekIndex(start);
+        if (wk >= 0 && wk < numWeeks) {
+          grid[role][wk] += days;
+        }
+      });
+
+      function fteClass(pct) {
+        if (pct === 0) return 'fte-cell fte-cell--empty';
+        if (pct <= 20) return 'fte-cell fte-cell--low';
+        if (pct <= 50) return 'fte-cell fte-cell--med';
+        if (pct <= 80) return 'fte-cell fte-cell--high';
+        if (pct <= 100) return 'fte-cell fte-cell--full';
+        return 'fte-cell fte-cell--over';
+      }
+
+      var fteHead = document.getElementById('fteHead');
+      var fteBody = document.getElementById('fteBody');
+      var fteFoot = document.getElementById('fteFoot');
+
+      var headTr = document.createElement('tr');
+      var th0 = document.createElement('th');
+      th0.textContent = 'Role';
+      headTr.appendChild(th0);
+      var weekLabels = ['Jun 1', 'Jun 8', 'Jun 15', 'Jun 22', 'Jun 29', 'Jul 6'];
+      for (var w = 0; w < numWeeks; w++) {
+        var th = document.createElement('th');
+        th.textContent = 'Wk ' + (w + 1);
+        th.title = weekLabels[w] || '';
+        headTr.appendChild(th);
+      }
+      var thTotal = document.createElement('th');
+      thTotal.textContent = 'Total Days';
+      headTr.appendChild(thTotal);
+      fteHead.appendChild(headTr);
+
+      var weekTotals = new Array(numWeeks).fill(0);
+      var grandTotal = 0;
+
+      roleOrder.forEach(function(role) {
+        var tr = document.createElement('tr');
+        var tdName = document.createElement('td');
+        tdName.textContent = role;
+        tr.appendChild(tdName);
+
+        var rowTotal = 0;
+        for (var w = 0; w < numWeeks; w++) {
+          var days = grid[role][w];
+          var pct = Math.round((days / 5) * 100);
+          var td = document.createElement('td');
+          td.className = fteClass(pct);
+          td.textContent = pct > 0 ? pct + '%' : '—';
+          td.title = days + ' days (' + pct + '% FTE)';
+          tr.appendChild(td);
+          rowTotal += days;
+          weekTotals[w] += days;
+        }
+
+        var tdTotal = document.createElement('td');
+        tdTotal.style.fontWeight = '600';
+        tdTotal.textContent = rowTotal % 1 === 0 ? rowTotal : rowTotal.toFixed(1);
+        tr.appendChild(tdTotal);
+        grandTotal += rowTotal;
+        fteBody.appendChild(tr);
+      });
+
+      var footTr = document.createElement('tr');
+      var ftd0 = document.createElement('td');
+      ftd0.textContent = 'All Roles';
+      footTr.appendChild(ftd0);
+      for (var w = 0; w < numWeeks; w++) {
+        var ftd = document.createElement('td');
+        var totalPct = Math.round((weekTotals[w] / 5) * 100);
+        ftd.textContent = weekTotals[w] > 0 ? (weekTotals[w] % 1 === 0 ? weekTotals[w] : weekTotals[w].toFixed(1)) + 'd' : '—';
+        ftd.title = totalPct + '% combined FTE';
+        footTr.appendChild(ftd);
+      }
+      var ftdGrand = document.createElement('td');
+      ftdGrand.textContent = grandTotal % 1 === 0 ? grandTotal : grandTotal.toFixed(1);
+      footTr.appendChild(ftdGrand);
+      fteFoot.appendChild(footTr);
+
+      matrixLoading.style.display = 'none';
+      document.getElementById('fteTable').style.display = '';
+    }
+
+    if (SHEET_ID) {
+      sheetLink.href = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/edit';
+    } else {
+      sheetDot.className = 'sheet-dot offline';
+      sheetStatusText.textContent = 'No sheet connected.';
+      setupSection.style.display = '';
+    }
+
+    function populateGanttCards(rows) {
+      if (!rows || rows.length < 2) return;
+      var h = rows[0];
+      var idIdx = -1, daysIdx = -1, teamIdx = -1, costIdx = -1;
+      h.forEach(function(col, i) {
+        var cl = col.toLowerCase();
+        if (cl === 'id') idIdx = i;
+        if (cl === 'days') daysIdx = i;
+        if (cl === 'team') teamIdx = i;
+        if (cl.indexOf('cost') !== -1 && cl.indexOf('osp') === -1) costIdx = i;
+      });
+      if (daysIdx === -1 || teamIdx === -1 || costIdx === -1) return;
+
+      var schemaDays = 0, schemaCost = 0;
+      var mdDays = 0, mdCost = 0;
+      var techDays = 0, techCost = 0;
+      var pmDays = 0, pmCost = 0;
+
+      rows.slice(1).forEach(function(r) {
+        var id = (r[idIdx] || '').toLowerCase();
+        var team = (r[teamIdx] || '').toLowerCase();
+        var d = parseFloat((r[daysIdx] || '0').replace(/[$,]/g, '')) || 0;
+        var c = parseFloat((r[costIdx] || '0').replace(/[$,€]/g, '')) || 0;
+
+        if (id.indexOf('jam') === 0) { schemaDays += d; schemaCost += c; }
+        else if (id.indexOf('md') === 0) { mdDays += d; mdCost += c; }
+        else if (id.indexOf('tp') === 0) { techDays += d; techCost += c; }
+        else if (id.indexOf('pm') === 0 || id.indexOf('sr') === 0) { pmDays += d; pmCost += c; }
+      });
+
+      var fmt = function(n) { return '$' + n.toLocaleString(); };
+      var fmtDays = function(n) { return n % 1 === 0 ? n : n.toFixed(1); };
+
+      document.getElementById('jamTotal').textContent = fmt(schemaCost);
+      document.getElementById('jamDays').textContent = fmtDays(schemaDays);
+      document.getElementById('mdTotal').textContent = fmt(mdCost);
+      document.getElementById('mdDays').textContent = fmtDays(mdDays);
+      document.getElementById('techTotal').textContent = fmt(techCost);
+      document.getElementById('techDays').textContent = fmtDays(techDays);
+      document.getElementById('pmTotal').textContent = fmt(pmCost);
+      document.getElementById('pmDays').textContent = fmtDays(pmDays);
+
+      renderSpendAllocation(rows);
+      renderFteTable(rows);
+
+      sheetDot.className = 'sheet-dot';
+      sheetStatusText.textContent = 'Live from Google Sheets';
+    }
+
+    function loadGanttCards() {
+      var ganttCsvUrl = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:csv';
+      fetch(ganttCsvUrl)
+        .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+        .then(function(csv) { populateGanttCards(parseCSV(csv)); })
+        .catch(function() {
+          var cb = '_ospGanttCb_' + Date.now();
+          window[cb] = function(response) {
+            delete window[cb];
+            try {
+              var table = response.table;
+              var rows = [table.cols.map(function(c) { return c.label || ''; })];
+              table.rows.forEach(function(row) {
+                rows.push(row.c.map(function(cell) { return cell ? (cell.f || (cell.v != null ? String(cell.v) : '')) : ''; }));
+              });
+              populateGanttCards(rows);
+            } catch(e) {}
+          };
+          var s = document.createElement('script');
+          s.src = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:json;responseHandler:' + cb;
+          document.head.appendChild(s);
+        });
+    }
+
+    loadGanttCards();
+  </script>
+
+</body>
+</html>
