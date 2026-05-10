@@ -19,20 +19,31 @@ const HTML_FILES = [
   'whitepaper.html'
 ];
 
-const STATIC_FILES = ['_shared.css'];
+const CSS_FILE = '_shared.css';
+const PREP_DIR = path.join(__dirname, '.prep');
 
 if (fs.existsSync(OUT_DIR)) {
   fs.rmSync(OUT_DIR, { recursive: true });
 }
+if (fs.existsSync(PREP_DIR)) {
+  fs.rmSync(PREP_DIR, { recursive: true });
+}
 fs.mkdirSync(OUT_DIR, { recursive: true });
+fs.mkdirSync(PREP_DIR, { recursive: true });
 
-STATIC_FILES.forEach(file => {
-  fs.copyFileSync(path.join(SRC_DIR, file), path.join(OUT_DIR, file));
+const cssContent = fs.readFileSync(path.join(SRC_DIR, CSS_FILE), 'utf-8');
+const linkTag = /<link[^>]+_shared\.css[^>]*\/?>/i;
+
+HTML_FILES.forEach(file => {
+  let html = fs.readFileSync(path.join(SRC_DIR, file), 'utf-8');
+  html = html.replace(linkTag, `<style>\n${cssContent}\n</style>`);
+  fs.writeFileSync(path.join(PREP_DIR, file), html);
 });
 
-console.log(`\nEncrypting ${HTML_FILES.length} pages with Staticrypt...\n`);
+console.log(`\nInlined CSS into ${HTML_FILES.length} pages.`);
+console.log(`Encrypting with Staticrypt...\n`);
 
-const filePaths = HTML_FILES.map(f => `"${path.join(SRC_DIR, f)}"`).join(' ');
+const filePaths = HTML_FILES.map(f => `"${path.join(PREP_DIR, f)}"`).join(' ');
 
 const cmd = [
   'npx staticrypt',
@@ -59,4 +70,6 @@ try {
 } catch (err) {
   console.error('Encryption failed:', err.message);
   process.exit(1);
+} finally {
+  fs.rmSync(PREP_DIR, { recursive: true, force: true });
 }
