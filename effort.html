@@ -64,25 +64,25 @@
     <!-- EFFORT SUMMARY -->
     <section class="section" id="effort">
       <div class="section-label"><span class="section-num">4.01</span> Effort Summary</div>
-      <h2 class="section-title" id="effort-title">Combined Program: ~36 Days Across 4 Roles</h2>
+      <h2 class="section-title" id="effort-title">Combined Program: <span id="totalDays">~36</span> Days Across 4 Roles</h2>
       <div class="stat-row">
         <div class="stat-card">
-          <div class="stat-number">15</div>
+          <div class="stat-number" id="schemaDays">—</div>
           <div class="stat-label">Schema Track (Jam)</div>
           <div class="stat-detail">Sr. Consultant + Content</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">5.75</div>
+          <div class="stat-number" id="mdOspDays">—</div>
           <div class="stat-label">Markdown Site (OSP)</div>
           <div class="stat-detail">Sr. Consultant</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">9</div>
+          <div class="stat-number" id="mdTechDays">—</div>
           <div class="stat-label">Markdown Site (Tech)</div>
           <div class="stat-detail">Pipeline implementation</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">~6</div>
+          <div class="stat-number" id="pmDays">—</div>
           <div class="stat-label">PM & Governance</div>
           <div class="stat-detail">Oversight + meetings</div>
         </div>
@@ -95,7 +95,7 @@
     <!-- TIMING -->
     <section class="section" id="timing">
       <div class="section-label"><span class="section-num">4.02</span> Calendar Duration</div>
-      <h2 class="section-title" id="timing-title">~6 Calendar Weeks (Jun 1 – Jul 9, 2026)</h2>
+      <h2 class="section-title" id="timing-title"><span id="calWeeks">~6</span> Calendar Weeks (<span id="calRange">Jun 1 – Jul 9, 2026</span>)</h2>
       <div class="section-body">
         <ul class="spec-list">
           <li><strong>Schema Track completes in ~4 weeks</strong> — the core strategy, architecture, and content specification work wraps by end of June.</li>
@@ -104,7 +104,7 @@
         </ul>
       </div>
       <div class="highlight-box">
-        <strong>Distribution:</strong> The ~36 days of effort are concentrated early. OSP strategy and content work peaks in weeks 1-3, the tech partner build runs weeks 3-5, and validation closes weeks 5-6.
+        <strong>Distribution:</strong> The <span id="totalDays2">~36</span> days of effort are concentrated early. OSP strategy and content work peaks in weeks 1-3, the tech partner build runs weeks 3-5, and validation closes weeks 5-6.
       </div>
     </section>
 
@@ -174,6 +174,125 @@
       body.classList.toggle('nav-collapsed');
       localStorage.setItem(key, collapsed ? '1' : '0');
     });
+  })();
+
+  var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function parseCSV(text) {
+    var rows = [], row = [], cell = '', inQ = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (inQ) {
+        if (ch === '"' && text[i+1] === '"') { cell += '"'; i++; }
+        else if (ch === '"') inQ = false;
+        else cell += ch;
+      } else {
+        if (ch === '"') inQ = true;
+        else if (ch === ',') { row.push(cell); cell = ''; }
+        else if (ch === '\n' || (ch === '\r' && text[i+1] === '\n')) {
+          if (ch === '\r') i++;
+          row.push(cell); cell = '';
+          if (row.length > 1 || row[0] !== '') rows.push(row);
+          row = [];
+        } else cell += ch;
+      }
+    }
+    row.push(cell);
+    if (row.length > 1 || row[0] !== '') rows.push(row);
+    return rows;
+  }
+
+  function fmtDays(n) { return n % 1 === 0 ? String(n) : n.toFixed(1); }
+
+  function parseDate(s) {
+    if (!s) return null;
+    var d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function populateEffort(rows) {
+    if (!rows || rows.length < 2) return;
+    var h = rows[0];
+    var idIdx = -1, daysIdx = -1, teamIdx = -1, startIdx = -1, endIdx = -1;
+    h.forEach(function(col, i) {
+      var cl = col.toLowerCase();
+      if (cl === 'id') idIdx = i;
+      if (cl === 'days') daysIdx = i;
+      if (cl === 'team') teamIdx = i;
+      if (cl === 'start') startIdx = i;
+      if (cl === 'end') endIdx = i;
+    });
+    if (daysIdx === -1) return;
+
+    var schemaDays = 0, mdOspDays = 0, mdTechDays = 0, pmDays = 0;
+    var minDate = null, maxDate = null;
+
+    rows.slice(1).forEach(function(r) {
+      var id = (r[idIdx] || '').toLowerCase();
+      var team = (r[teamIdx] || '').toLowerCase();
+      var d = parseFloat((r[daysIdx] || '0').replace(/[$,]/g, '')) || 0;
+
+      if (id.indexOf('jam') === 0) schemaDays += d;
+      else if (id.indexOf('md') === 0 || id.indexOf('tp') === 0) {
+        if (team.indexOf('ext') !== -1) mdTechDays += d;
+        else mdOspDays += d;
+      }
+      else if (id.indexOf('pm') === 0 || id.indexOf('sr') === 0) pmDays += d;
+
+      if (startIdx !== -1) {
+        var sd = parseDate(r[startIdx]);
+        if (sd && (!minDate || sd < minDate)) minDate = sd;
+      }
+      if (endIdx !== -1) {
+        var ed = parseDate(r[endIdx]);
+        if (ed && (!maxDate || ed > maxDate)) maxDate = ed;
+      }
+    });
+
+    var total = schemaDays + mdOspDays + mdTechDays + pmDays;
+
+    document.getElementById('schemaDays').textContent = fmtDays(schemaDays);
+    document.getElementById('mdOspDays').textContent = fmtDays(mdOspDays);
+    document.getElementById('mdTechDays').textContent = fmtDays(mdTechDays);
+    document.getElementById('pmDays').textContent = fmtDays(pmDays);
+    document.getElementById('totalDays').textContent = '~' + fmtDays(total);
+    document.getElementById('totalDays2').textContent = '~' + fmtDays(total);
+
+    if (minDate && maxDate) {
+      var diffMs = maxDate - minDate;
+      var weeks = Math.ceil(diffMs / (7 * 24 * 60 * 60 * 1000));
+      document.getElementById('calWeeks').textContent = '~' + weeks;
+      var fmt = function(dt) { return MONTHS[dt.getMonth()] + ' ' + dt.getDate() + ', ' + dt.getFullYear(); };
+      document.getElementById('calRange').textContent = fmt(minDate) + ' – ' + fmt(maxDate);
+    }
+  }
+
+  function loadEffortData() {
+    var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:csv';
+    fetch(url)
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function(csv) { populateEffort(parseCSV(csv)); })
+      .catch(function() {
+        var cb = '_ospEffortCb_' + Date.now();
+        window[cb] = function(response) {
+          delete window[cb];
+          try {
+            var table = response.table;
+            var rows = [table.cols.map(function(c) { return c.label || ''; })];
+            table.rows.forEach(function(row) {
+              rows.push(row.c.map(function(cell) { return cell ? (cell.f || (cell.v != null ? String(cell.v) : '')) : ''; }));
+            });
+            populateEffort(rows);
+          } catch(e) {}
+        };
+        var s = document.createElement('script');
+        s.src = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:json;responseHandler:' + cb;
+        document.head.appendChild(s);
+      });
+  }
+
+  loadEffortData();
   })();
   </script>
 

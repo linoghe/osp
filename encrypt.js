@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PASSWORD = process.env.OSP_PASSWORD || 'changeme';
+const SALT = 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6';
 const SRC_DIR = __dirname;
 const OUT_DIR = path.join(__dirname, 'dist');
 
@@ -49,6 +50,7 @@ const cmd = [
   'npx staticrypt',
   filePaths,
   `-p "${PASSWORD}"`,
+  `-s ${SALT}`,
   `-d "${OUT_DIR}"`,
   '--short',
   '--remember 7',
