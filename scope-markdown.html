@@ -178,13 +178,13 @@
     </div>
 
     <div class="highlight-box green">
-      <strong>Relationship to Jam's scope:</strong> This track runs in parallel. MD-1 aligns with Jam's Phase 1A (needs the site IA). MD-2 can begin during Jam's 1B. MD-3 piggybacks on Jam's Phase 3 validation methodology. OSP consulting: ~5.75 days · Technical build: ~9 days · Total track: ~14.75 days.
+      <strong>Relationship to Jam's scope:</strong> This track runs in parallel. MD-1 aligns with Jam's Phase 1A (needs the site IA). MD-2 can begin during Jam's 1B. MD-3 piggybacks on Jam's Phase 3 validation methodology. OSP consulting: <span id="hl-osp-days">~5.75</span> days · Technical build: <span id="hl-tech-days">~9</span> days · Total track: <span id="hl-total-days">~14.75</span> days.
     </div>
 
     <!-- MD-1 -->
     <section class="section" id="md-1">
       <div class="section-label"><span class="section-num">3.01</span> Mirror IA & Content Schema</div>
-      <h2 class="section-title" id="md-1-title">MD-1: ~1.25 Days <span style="font-weight:400; font-size:.85em; opacity:.7">(OSP)</span></h2>
+      <h2 class="section-title" id="md-1-title">MD-1: <span id="md1-days">~1.25</span> Days <span style="font-weight:400; font-size:.85em; opacity:.7">(OSP)</span></h2>
       <div class="section-body">
         <p>OSP defines the information architecture and schemas for the machine-readable site mirror — the blueprint everything else builds on.</p>
         <ul class="spec-list">
@@ -205,10 +205,10 @@
     <!-- MD-2 -->
     <section class="section" id="md-2">
       <div class="section-label"><span class="section-num">3.02</span> Render Pipeline</div>
-      <h2 class="section-title" id="md-2-title">MD-2: ~10.5 Days</h2>
+      <h2 class="section-title" id="md-2-title">MD-2: <span id="md2-days">~10.5</span> Days</h2>
       <div class="section-body">
 
-        <h3 style="margin-top:0">Part A — OSP Spec Work <span style="font-weight:400; font-size:.85em; opacity:.7">(~1.5 days)</span></h3>
+        <h3 style="margin-top:0">Part A — OSP Spec Work <span style="font-weight:400; font-size:.85em; opacity:.7">(<span id="md2a-days">~1.5</span> days)</span></h3>
         <p>OSP writes the requirements and acceptance criteria that govern the pipeline build.</p>
         <ul class="spec-list">
           <li><strong>CMS query requirements doc</strong> — which endpoints or queries, auth, data shape per page type, pagination/multilingual handling</li>
@@ -216,7 +216,7 @@
           <li><strong>Build/deploy requirements</strong> — trigger mechanism (webhook, cron, manual), output path (<code>/llms/</code>), CDN/subdomain, <code>llms.txt</code> index spec</li>
         </ul>
 
-        <h3>Part B — Technical Implementation <span style="font-weight:400; font-size:.85em; opacity:.7">(~9 days · optionally subcontracted)</span></h3>
+        <h3>Part B — Technical Implementation <span style="font-weight:400; font-size:.85em; opacity:.7">(<span id="md2b-days">~9</span> days · optionally subcontracted)</span></h3>
         <p>Hands-on engineering that builds the automated pipeline from OSP's spec — can be delivered by OSP, the client's technical partner, or a subcontractor.</p>
         <ul class="spec-list">
           <li><strong>Headless CMS query layer</strong> — API calls or database queries to extract content per page type from the Contao stack</li>
@@ -234,7 +234,7 @@
     <!-- MD-3 -->
     <section class="section" id="md-3">
       <div class="section-label"><span class="section-num">3.03</span> Output Validation</div>
-      <h2 class="section-title" id="md-3-title">MD-3: ~2 Days <span style="font-weight:400; font-size:.85em; opacity:.7">(OSP)</span></h2>
+      <h2 class="section-title" id="md-3-title">MD-3: <span id="md3-days">~2</span> Days <span style="font-weight:400; font-size:.85em; opacity:.7">(OSP)</span></h2>
       <div class="section-body">
         <p>OSP validates the pipeline's output — testing AI-engine citation, comparing schema vs. mirror quality, and iterating on templates.</p>
         <ul class="spec-list">
@@ -253,7 +253,7 @@
     <!-- MD-4 -->
     <section class="section" id="md-4">
       <div class="section-label"><span class="section-num">3.04</span> Maintenance Handover</div>
-      <h2 class="section-title" id="md-4-title">MD-4: ~1 Day <span style="font-weight:400; font-size:.85em; opacity:.7">(OSP)</span></h2>
+      <h2 class="section-title" id="md-4-title">MD-4: <span id="md4-days">~1</span> Day <span style="font-weight:400; font-size:.85em; opacity:.7">(OSP)</span></h2>
       <div class="section-body">
         <p>OSP writes handover documentation so the client's technical partner can maintain and extend the mirror without ongoing consultant involvement.</p>
         <ul class="spec-list">
@@ -271,15 +271,15 @@
       <div class="section-body">
         <div class="stat-row">
           <div class="stat-card">
-            <div class="stat-number green">~5.75</div>
+            <div class="stat-number green" id="sum-osp-days">—</div>
             <div class="stat-label">OSP consulting days</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number amber">~9</div>
+            <div class="stat-number amber" id="sum-tech-days">—</div>
             <div class="stat-label">Technical build days (optional subcontract)</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">~14.75</div>
+            <div class="stat-number" id="sum-total-days">—</div>
             <div class="stat-label">Total track days</div>
           </div>
         </div>
@@ -319,6 +319,119 @@
       body.classList.toggle('nav-collapsed');
       localStorage.setItem(key, collapsed ? '1' : '0');
     });
+
+  var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
+
+  function parseCSV(text) {
+    var rows = [], row = [], cell = '', inQ = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (inQ) {
+        if (ch === '"' && text[i+1] === '"') { cell += '"'; i++; }
+        else if (ch === '"') inQ = false;
+        else cell += ch;
+      } else {
+        if (ch === '"') inQ = true;
+        else if (ch === ',') { row.push(cell); cell = ''; }
+        else if (ch === '\n' || (ch === '\r' && text[i+1] === '\n')) {
+          if (ch === '\r') i++;
+          row.push(cell); cell = '';
+          if (row.length > 1 || row[0] !== '') rows.push(row);
+          row = [];
+        } else cell += ch;
+      }
+    }
+    row.push(cell);
+    if (row.length > 1 || row[0] !== '') rows.push(row);
+    return rows;
+  }
+
+  function fmt(n) { return '~' + (n % 1 === 0 ? String(n) : n.toFixed(1)); }
+
+  function populateMdScope(rows) {
+    if (!rows || rows.length < 2) return;
+    var h = rows[0];
+    var idIdx = -1, daysIdx = -1, teamIdx = -1;
+    h.forEach(function(col, i) {
+      var cl = col.toLowerCase();
+      if (cl === 'id') idIdx = i;
+      if (cl === 'days') daysIdx = i;
+      if (cl === 'team') teamIdx = i;
+    });
+    if (idIdx === -1 || daysIdx === -1) return;
+
+    var md1 = 0, md2aOsp = 0, md2bTech = 0, md3 = 0, md4 = 0;
+    var ospTotal = 0, techTotal = 0;
+
+    rows.slice(1).forEach(function(r) {
+      var id = (r[idIdx] || '').toLowerCase();
+      var team = (r[teamIdx] || '').toLowerCase();
+      var d = parseFloat((r[daysIdx] || '0').replace(/[$,]/g, '')) || 0;
+
+      var isMd = id.indexOf('md') === 0 || id.indexOf('tp') === 0;
+      if (!isMd) return;
+
+      var isExt = team.indexOf('ext') !== -1;
+
+      if (id.indexOf('md-1') === 0) { md1 += d; ospTotal += d; }
+      else if (id.indexOf('md-2') === 0 || id.indexOf('tp-2') === 0) {
+        if (isExt) { md2bTech += d; techTotal += d; }
+        else { md2aOsp += d; ospTotal += d; }
+      }
+      else if (id.indexOf('md-3') === 0 || id.indexOf('tp-3') === 0) {
+        if (isExt) techTotal += d;
+        else { md3 += d; ospTotal += d; }
+      }
+      else if (id.indexOf('md-4') === 0 || id.indexOf('tp-4') === 0) {
+        if (isExt) techTotal += d;
+        else { md4 += d; ospTotal += d; }
+      }
+    });
+
+    var md2Total = md2aOsp + md2bTech;
+    var trackTotal = ospTotal + techTotal;
+
+    document.getElementById('md1-days').textContent = fmt(md1);
+    document.getElementById('md2-days').textContent = fmt(md2Total);
+    document.getElementById('md2a-days').textContent = fmt(md2aOsp);
+    document.getElementById('md2b-days').textContent = fmt(md2bTech);
+    document.getElementById('md3-days').textContent = fmt(md3);
+    document.getElementById('md4-days').textContent = fmt(md4);
+
+    document.getElementById('hl-osp-days').textContent = fmt(ospTotal);
+    document.getElementById('hl-tech-days').textContent = fmt(techTotal);
+    document.getElementById('hl-total-days').textContent = fmt(trackTotal);
+
+    document.getElementById('sum-osp-days').textContent = fmt(ospTotal);
+    document.getElementById('sum-tech-days').textContent = fmt(techTotal);
+    document.getElementById('sum-total-days').textContent = fmt(trackTotal);
+  }
+
+  function loadMdScopeData() {
+    var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:csv';
+    fetch(url)
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function(csv) { populateMdScope(parseCSV(csv)); })
+      .catch(function() {
+        var cb = '_ospMdScopeCb_' + Date.now();
+        window[cb] = function(response) {
+          delete window[cb];
+          try {
+            var table = response.table;
+            var rows = [table.cols.map(function(c) { return c.label || ''; })];
+            table.rows.forEach(function(row) {
+              rows.push(row.c.map(function(cell) { return cell ? (cell.f || (cell.v != null ? String(cell.v) : '')) : ''; }));
+            });
+            populateMdScope(rows);
+          } catch(e) {}
+        };
+        var s = document.createElement('script');
+        s.src = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:json;responseHandler:' + cb;
+        document.head.appendChild(s);
+      });
+  }
+
+  loadMdScopeData();
   })();
   </script>
 

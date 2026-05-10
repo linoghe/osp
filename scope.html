@@ -66,22 +66,22 @@
       <div class="phase-pill phase-pill--active" style="border-left: 3px solid var(--c-blue);">
         <div class="phase-pill-label">Workstream 1</div>
         <div class="phase-pill-name">Schema &amp; Structured Data</div>
-        <div class="phase-pill-effort">~15 days &middot; Phases 0&ndash;3</div>
+        <div class="phase-pill-effort"><span id="ws-schema-days">~15</span> days &middot; Phases 0&ndash;3</div>
       </div>
       <div class="phase-pill phase-pill--active" style="border-left: 3px solid var(--c-teal);">
         <div class="phase-pill-label">Workstream 2</div>
         <div class="phase-pill-name">Markdown Site</div>
-        <div class="phase-pill-effort">~5.75 days &middot; MD-1&ndash;MD-4</div>
+        <div class="phase-pill-effort"><span id="ws-md-days">~5.75</span> days &middot; MD-1&ndash;MD-4</div>
       </div>
       <div class="phase-pill" style="border-left: 3px solid var(--c-coral);">
         <div class="phase-pill-label">Workstream 3</div>
         <div class="phase-pill-name">Technical Implementation</div>
-        <div class="phase-pill-effort">~9 days &middot; Optional subcontract</div>
+        <div class="phase-pill-effort"><span id="ws-tech-days">~9</span> days &middot; Optional subcontract</div>
       </div>
       <div class="phase-pill" style="border-left: 3px solid #7c3aed;">
         <div class="phase-pill-label">Workstream 4</div>
         <div class="phase-pill-name">PM &amp; Governance</div>
-        <div class="phase-pill-effort">~6 days &middot; 15% rider + meetings</div>
+        <div class="phase-pill-effort"><span id="ws-pm-days">~6</span> days &middot; 15% rider + meetings</div>
       </div>
     </div>
 
@@ -142,7 +142,7 @@
     <!-- PHASE 0 -->
     <section class="section" id="phase-0">
       <div class="section-label"><span class="section-num">2.01</span> Baseline Capture</div>
-      <h2 class="section-title" id="phase-0-title">Phase 0: ~3 Senior Consultant Days</h2>
+      <h2 class="section-title" id="phase-0-title">Phase 0: <span id="ph0-days">~3</span> Senior Consultant Days</h2>
       <div class="section-body">
         <ul class="spec-list">
           <li><strong>Inventory and validation of existing structured data</strong> (what's there, what's valid, what's missing)</li>
@@ -157,7 +157,7 @@
     <!-- PHASE 1A -->
     <section class="section" id="phase-1a">
       <div class="section-label"><span class="section-num">2.02</span> Architecture & Route Selection</div>
-      <h2 class="section-title" id="phase-1a-title">Phase 1A: ~3 Senior Consultant Days</h2>
+      <h2 class="section-title" id="phase-1a-title">Phase 1A: <span id="ph1a-days">~3</span> Senior Consultant Days</h2>
       <div class="section-body">
         <ul class="spec-list">
           <li><strong>Schema architecture across ~6-7 page-type variants</strong> (Hotel root, room/lodging-unit, restaurant, spa/wellness, FAQ, event, breadcrumb enrichment)</li>
@@ -175,7 +175,7 @@
     <!-- PHASE 1B -->
     <section class="section" id="phase-1b">
       <div class="section-label"><span class="section-num">2.03</span> Content & Specification</div>
-      <h2 class="section-title" id="phase-1b-title">Phase 1B: ~5 Senior Consultant Days</h2>
+      <h2 class="section-title" id="phase-1b-title">Phase 1B: <span id="ph1b-days">~5</span> Senior Consultant Days</h2>
       <div class="section-body">
         <ul class="spec-list">
           <li><strong>Bilingual content values (DE + EN)</strong> for every schema block; every block has text copy that needs drafting in two languages</li>
@@ -192,7 +192,7 @@
     <!-- PHASE 2 -->
     <section class="section" id="phase-2">
       <div class="section-label"><span class="section-num">2.04</span> Implementation Coordination</div>
-      <h2 class="section-title" id="phase-2-title">Phase 2: ~2 Senior Consultant Days</h2>
+      <h2 class="section-title" id="phase-2-title">Phase 2: <span id="ph2-days">~2</span> Senior Consultant Days</h2>
       <div class="section-body">
         <ul class="spec-list">
           <li><strong>Handoff session with technical partner</strong> on the finalized spec</li>
@@ -205,7 +205,7 @@
     <!-- PHASE 3 -->
     <section class="section" id="phase-3">
       <div class="section-label"><span class="section-num">2.05</span> Validation & Handover</div>
-      <h2 class="section-title" id="phase-3-title">Phase 3: ~2 Senior Consultant Days</h2>
+      <h2 class="section-title" id="phase-3-title">Phase 3: <span id="ph3-days">~2</span> Senior Consultant Days</h2>
       <div class="section-body">
         <ul class="spec-list">
           <li><strong>Re-run the same AI-engine query set</strong> from Phase 0 against the live, marked-up site, using the same engines and the same queries, with screenshots and transcripts (3-4 months after Phase 0)</li>
@@ -262,6 +262,103 @@
       body.classList.toggle('nav-collapsed');
       localStorage.setItem(key, collapsed ? '1' : '0');
     });
+
+  var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
+
+  function parseCSV(text) {
+    var rows = [], row = [], cell = '', inQ = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (inQ) {
+        if (ch === '"' && text[i+1] === '"') { cell += '"'; i++; }
+        else if (ch === '"') inQ = false;
+        else cell += ch;
+      } else {
+        if (ch === '"') inQ = true;
+        else if (ch === ',') { row.push(cell); cell = ''; }
+        else if (ch === '\n' || (ch === '\r' && text[i+1] === '\n')) {
+          if (ch === '\r') i++;
+          row.push(cell); cell = '';
+          if (row.length > 1 || row[0] !== '') rows.push(row);
+          row = [];
+        } else cell += ch;
+      }
+    }
+    row.push(cell);
+    if (row.length > 1 || row[0] !== '') rows.push(row);
+    return rows;
+  }
+
+  function fmt(n) { return '~' + (n % 1 === 0 ? String(n) : n.toFixed(1)); }
+
+  function populateScope(rows) {
+    if (!rows || rows.length < 2) return;
+    var h = rows[0];
+    var idIdx = -1, daysIdx = -1, teamIdx = -1;
+    h.forEach(function(col, i) {
+      var cl = col.toLowerCase();
+      if (cl === 'id') idIdx = i;
+      if (cl === 'days') daysIdx = i;
+      if (cl === 'team') teamIdx = i;
+    });
+    if (idIdx === -1 || daysIdx === -1) return;
+
+    var buckets = { schema: 0, mdOsp: 0, tech: 0, pm: 0 };
+    var phases = { 'jam-0': 0, 'jam-1a': 0, 'jam-1b': 0, 'jam-2': 0, 'jam-3': 0 };
+
+    rows.slice(1).forEach(function(r) {
+      var id = (r[idIdx] || '').toLowerCase();
+      var team = (r[teamIdx] || '').toLowerCase();
+      var d = parseFloat((r[daysIdx] || '0').replace(/[$,]/g, '')) || 0;
+
+      if (id.indexOf('jam') === 0) {
+        buckets.schema += d;
+        for (var p in phases) { if (id.indexOf(p) === 0) phases[p] += d; }
+      }
+      else if (id.indexOf('md') === 0 || id.indexOf('tp') === 0) {
+        if (team.indexOf('ext') !== -1) buckets.tech += d;
+        else buckets.mdOsp += d;
+      }
+      else if (id.indexOf('pm') === 0 || id.indexOf('sr') === 0) buckets.pm += d;
+    });
+
+    document.getElementById('ws-schema-days').textContent = fmt(buckets.schema);
+    document.getElementById('ws-md-days').textContent = fmt(buckets.mdOsp);
+    document.getElementById('ws-tech-days').textContent = fmt(buckets.tech);
+    document.getElementById('ws-pm-days').textContent = fmt(buckets.pm);
+
+    document.getElementById('ph0-days').textContent = fmt(phases['jam-0']);
+    document.getElementById('ph1a-days').textContent = fmt(phases['jam-1a']);
+    document.getElementById('ph1b-days').textContent = fmt(phases['jam-1b']);
+    document.getElementById('ph2-days').textContent = fmt(phases['jam-2']);
+    document.getElementById('ph3-days').textContent = fmt(phases['jam-3']);
+  }
+
+  function loadScopeData() {
+    var url = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:csv';
+    fetch(url)
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function(csv) { populateScope(parseCSV(csv)); })
+      .catch(function() {
+        var cb = '_ospScopeCb_' + Date.now();
+        window[cb] = function(response) {
+          delete window[cb];
+          try {
+            var table = response.table;
+            var rows = [table.cols.map(function(c) { return c.label || ''; })];
+            table.rows.forEach(function(row) {
+              rows.push(row.c.map(function(cell) { return cell ? (cell.f || (cell.v != null ? String(cell.v) : '')) : ''; }));
+            });
+            populateScope(rows);
+          } catch(e) {}
+        };
+        var s = document.createElement('script');
+        s.src = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=Gantt&headers=1&tqx=out:json;responseHandler:' + cb;
+        document.head.appendChild(s);
+      });
+  }
+
+  loadScopeData();
   })();
   </script>
 
