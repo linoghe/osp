@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Readiness | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .app-main {
+      max-width: 1080px;
+    }
+    /* RACI table */
+    .raci-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 20px 0 32px;
+    }
+    .raci-table thead th {
+      background: var(--c-surface-alt);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-text-light);
+      padding: 10px 12px;
+      text-align: center;
+      border-bottom: 2px solid var(--c-border);
+      white-space: nowrap;
+    }
+    .raci-table thead th.col-task {
+      text-align: left;
+      width: 26%;
+    }
+    .raci-table thead th.col-skill {
+      text-align: left;
+      width: 16%;
+    }
+    .raci-table tbody td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--c-border-light);
+      vertical-align: middle;
+    }
+    .raci-table tbody tr:hover {
+      background: var(--c-surface-alt);
+    }
+    .raci-table .cat-row td {
+      background: var(--c-surface-alt);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-mid);
+      padding: 8px 12px;
+      border-top: 2px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .raci-table .col-task {
+      text-align: left;
+      font-weight: 500;
+      color: var(--c-text);
+      line-height: 1.4;
+    }
+    .raci-table .col-skill {
+      font-size: 12px;
+      color: var(--c-text-mid);
+      text-align: left;
+    }
+    .raci-table .col-role {
+      text-align: center;
+    }
+    /* RACI badges */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+    }
+    .badge-R { background: var(--c-blue-light); color: var(--c-blue); }
+    .badge-A { background: #1e3a5f; color: #fff; }
+    .badge-C { background: var(--c-teal-light); color: var(--c-teal); }
+    .badge-I { background: var(--c-surface-alt); color: var(--c-text-light); border: 1px solid var(--c-border); }
+    .badge-RA { background: var(--c-blue); color: #fff; }
+    /* "Jam can own" column */
+    .own-yes  { color: #16a34a; font-weight: 600; font-size: 13px; }
+    .own-part { color: var(--c-amber); font-weight: 600; font-size: 13px; }
+    .own-no   { color: var(--c-coral); font-weight: 600; font-size: 13px; }
+    /* Pillar intro cards */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 20px 0 32px;
+    }
+    .pillar-card {
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      border: 1px solid var(--c-border);
+    }
+    .pillar-card__num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .pillar-card__title {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .pillar-card__desc {
+      font-size: 12px;
+      color: var(--c-text-mid);
+      line-height: 1.5;
+    }
+    .pillar-card--1 { background: var(--c-blue-light);   }
+    .pillar-card--1 .pillar-card__num, .pillar-card--1 .pillar-card__title { color: var(--c-blue); }
+    .pillar-card--2 { background: var(--c-teal-light);   }
+    .pillar-card--2 .pillar-card__num, .pillar-card--2 .pillar-card__title { color: var(--c-teal); }
+    .pillar-card--3 { background: #f3e8ff; }
+    .pillar-card--3 .pillar-card__num, .pillar-card--3 .pillar-card__title { color: #7c3aed; }
+    .pillar-card--4 { background: var(--c-amber-light);  }
+    .pillar-card--4 .pillar-card__num, .pillar-card--4 .pillar-card__title { color: var(--c-amber); }
+    .pillar-card--5 { background: #dcfce7; }
+    .pillar-card--5 .pillar-card__num, .pillar-card--5 .pillar-card__title { color: #16a34a; }
+    /* Legend */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 0 0 20px;
+      font-size: 13px;
+      color: var(--c-text-mid);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    /* Jam path summary */
+    .path-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .path-card {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid var(--c-border);
+    }
+    .path-card__label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .path-card__items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--c-text-mid);
+    }
+    .path-card__items li {
+      padding: 3px 0;
+      border-bottom: 1px solid var(--c-border-light);
+    }
+    .path-card__items li:last-child { border-bottom: none; }
+    .path-card--learn  { background: #dcfce7; }
+    .path-card--learn  .path-card__label { color: #16a34a; }
+    .path-card--ramp   { background: var(--c-amber-light); }
+    .path-card--ramp   .path-card__label { color: var(--c-amber); }
+    .path-card--outsource { background: var(--c-coral-light); }
+    .path-card--outsource .path-card__label { color: var(--c-coral); }
+    @media (max-width: 800px) {
+      .path-grid { grid-template-columns: 1fr; }
+      .pillar-grid { grid-template-columns: 1fr 1fr; }
+      .raci-table { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link">
+      <span class="nav-num">00</span> Hub
+    </a>
+    <a href="engagement.html" class="nav-link">
+      <span class="nav-num">01</span> Engagement
+    </a>
+    <a href="scope.html" class="nav-link">
+      <span class="nav-num">02</span> Phased Scope
+    </a>
+    <a href="scope-markdown.html" class="nav-link">
+      <span class="nav-num">03</span> Markdown Site
+    </a>
+    <a href="effort.html" class="nav-link">
+      <span class="nav-num">04</span> Effort &amp; Role
+    </a>
+    <a href="context.html" class="nav-link">
+      <span class="nav-num">05</span> Pricing Context
+    </a>
+    <a href="questions.html" class="nav-link">
+      <span class="nav-num">06</span> Pricing Guidance
+    </a>
+    <a href="pricing-model.html" class="nav-link">
+      <span class="nav-num">07</span> Pricing Model
+    </a>
+    <a href="gantt.html" class="nav-link">
+      <span class="nav-num">08</span> Timeline
+    </a>
+    <a href="whitepaper.html" class="nav-link">
+      <span class="nav-num">09</span> Why a Site Mirror
+    </a>
+    <a href="ai-readiness.html" class="nav-link active">
+      <span class="nav-num">10</span> AI Readiness
+    </a>
+    <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" class="nav-link" target="_blank" style="margin-top: 12px; border-top: 1px solid var(--c-border-light); padding-top: 12px;">
+      <span class="nav-num">&#x2197;</span> Google Sheet
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">10</span> AI Readiness</p>
+      <h1 class="page-title">AI Readiness that Supports Customers</h1>
+      <p class="page-subtitle">A checklist and RACI for making your digital presence work for AI-powered customers &mdash; with skillset requirements and a guide to what Jam and OSP can own versus what to outsource.</p>
+    </div>
+
+    <!-- 10.01 THE PHILOSOPHY -->
+    <section class="section" id="philosophy">
+      <div class="section-label"><span class="section-num">10.01</span> The Philosophy</div>
+      <h2 class="section-title">What "AI Readiness" actually means</h2>
+      <div class="section-body">
+        <p>AI engines &mdash; ChatGPT, Claude, Perplexity, Gemini &mdash; are now a discovery and decision-support layer for customers. When someone asks &ldquo;what&rsquo;s the best boutique hotel for a quiet romantic weekend in Lisbon?&rdquo; or &ldquo;who does the best structured data implementation for multi-location businesses?&rdquo;, an AI answers. Your website does not.</p>
+        <p>AI readiness is not about gaming those systems. It is about ensuring that when AI reads your content, it can accurately, completely, and helpfully represent you to the customers who asked. That requires three things:</p>
+        <ul class="spec-list">
+          <li><strong>Machine-readable content.</strong> Content that is structured, labeled, and written in plain language &mdash; not locked inside JavaScript, PDFs, or visual design that a crawler cannot parse.</li>
+          <li><strong>Semantic markup.</strong> Schema.org structured data that tells crawlers what your content <em>means</em>, not just what it says.</li>
+          <li><strong>An AI-native content layer.</strong> A parallel plain-text representation of your core content (the Markdown mirror) that any LLM can consume directly, without needing to render a browser or guess at your intent.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>The strategy scales, not the scope.</strong> The same five pillars apply to a 200-location auto parts group and a 12-room boutique hotel. The difference is the volume of content, the complexity of the schema types, and the number of people maintaining it &mdash; not the underlying approach.
+        </div>
+      </div>
+    </section>
+
+    <!-- FIVE PILLARS -->
+    <section class="section" id="pillars">
+      <div class="section-label"><span class="section-num">10.02</span> The Five Pillars</div>
+      <h2 class="section-title">What the program covers</h2>
+      <div class="section-body">
+        <div class="pillar-grid">
+          <div class="pillar-card pillar-card--1">
+            <div class="pillar-card__num">Pillar 1</div>
+            <div class="pillar-card__title">Knowledge Base</div>
+            <div class="pillar-card__desc">Structured documentation of who you are, what you offer, how you work, and what customers need to know.</div>
+          </div>
+          <div class="pillar-card pillar-card--2">
+            <div class="pillar-card__num">Pillar 2</div>
+            <div class="pillar-card__title">Schema.org</div>
+            <div class="pillar-card__desc">Semantic markup that tells crawlers and LLMs what your content <em>means</em> &mdash; organization, products, FAQs, locations, reviews.</div>
+          </div>
+          <div class="pillar-card pillar-card--3">
+            <div class="pillar-card__num">Pillar 3</div>
+            <div class="pillar-card__title">AI Site Mirror</div>
+            <div class="pillar-card__desc">A plain-text/Markdown parallel of your key content, hosted publicly, consumable by any LLM without rendering a browser.</div>
+          </div>
+          <div class="pillar-card pillar-card--4">
+            <div class="pillar-card__num">Pillar 4</div>
+            <div class="pillar-card__title">Testing &amp; Validation</div>
+            <div class="pillar-card__desc">Schema validation, AI query testing, and hallucination monitoring to confirm the strategy is working.</div>
+          </div>
+          <div class="pillar-card pillar-card--5">
+            <div class="pillar-card__num">Pillar 5</div>
+            <div class="pillar-card__title">Governance</div>
+            <div class="pillar-card__desc">The processes that keep your AI readiness current as your content, products, and team evolve.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.03 RACI TABLE -->
+    <section class="section" id="raci">
+      <div class="section-label"><span class="section-num">10.03</span> RACI &amp; Skillsets</div>
+      <h2 class="section-title">Who does what &mdash; and what it takes</h2>
+      <div class="section-body">
+        <p>Each task is mapped to four roles: OSP Strategy (Lindsay), OSP Content, Ext-Technical (Karim or equivalent), and Client-PM (Jam). The final column answers: can Jam own or learn this, or does it always need a specialist?</p>
+        <div class="legend">
+          <span class="legend-item"><span class="badge badge-R">R</span> Responsible &mdash; does the work</span>
+          <span class="legend-item"><span class="badge badge-A">A</span> Accountable &mdash; owns the outcome</span>
+          <span class="legend-item"><span class="badge badge-C">C</span> Consulted &mdash; provides input</span>
+          <span class="legend-item"><span class="badge badge-I">I</span> Informed &mdash; kept in the loop</span>
+          <span class="legend-item"><span class="own-yes">✓ Jam can own</span></span>
+          <span class="legend-item"><span class="own-part">~ Can learn with support</span></span>
+          <span class="legend-item"><span class="own-no">✗ Needs specialist</span></span>
+        </div>
+
+        <table class="raci-table">
+          <thead>
+            <tr>
+              <th class="col-task">Task / Deliverable</th>
+              <th class="col-skill">Skillset</th>
+              <th class="col-role">OSP<br>Strategy</th>
+              <th class="col-role">OSP<br>Content</th>
+              <th class="col-role">Ext-Tech<br>(Karim)</th>
+              <th class="col-role">Client<br>PM (Jam)</th>
+              <th class="col-role">Jam<br>can own?</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- AUDIT & DISCOVERY -->
+            <tr class="cat-row"><td colspan="7">Audit &amp; Discovery</td></tr>
+            <tr>
+              <td class="col-task">Content inventory &amp; audit</td>
+              <td class="col-skill">Content strategy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ tools exist</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">AI crawler audit &mdash; how LLMs currently represent you</td>
+              <td class="col-skill">AI literacy / SEO</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ learn the prompts</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Site architecture &amp; crawlability review</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-no">✗ specialist</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Customer question gap analysis &mdash; what people ask vs. what you answer</td>
+              <td class="col-skill">Content strategy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ with OSP template</span></td>
+            </tr>
+
+            <!-- KNOWLEDGE BASE -->
+            <tr class="cat-row"><td colspan="7">Knowledge Base Foundation (Pillar 1)</td></tr>
+            <tr>
+              <td class="col-task">Brand voice &amp; tone documentation</td>
+              <td class="col-skill">Content strategy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ after first draft</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Core narrative in plain text &mdash; who you are, what you do, why it matters</td>
+              <td class="col-skill">Copywriting</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ once templated</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Structured FAQ (30&ndash;50 Q&amp;As, customer-language)</td>
+              <td class="col-skill">Content strategy</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-yes">✓ high priority</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Product / service / room taxonomy</td>
+              <td class="col-skill">IA / content strategy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ with IA training</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Customer-facing glossary</td>
+              <td class="col-skill">Copywriting</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-yes">✓ own this</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Policy documents in plain text &mdash; cancellation, returns, T&amp;Cs, access</td>
+              <td class="col-skill">Copywriting / legal review</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ own &amp; maintain</span></td>
+            </tr>
+
+            <!-- SCHEMA.ORG -->
+            <tr class="cat-row"><td colspan="7">Schema.org Structured Data (Pillar 2)</td></tr>
+            <tr>
+              <td class="col-task">Schema strategy &amp; type selection</td>
+              <td class="col-skill">Structured data strategy</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ after OSP spec</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Organization / Brand schema</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ can validate</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Product / Room / Service schema per page type</td>
+              <td class="col-skill">Technical SEO / engineering</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-no">✗ specialist</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">FAQ schema markup</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ templates exist</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">LocalBusiness / LodgingBusiness / Organization schema</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ via JSON-LD tool</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Schema validation &amp; Rich Results testing</td>
+              <td class="col-skill">Technical QA</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ free tools, learnable</span></td>
+            </tr>
+
+            <!-- AI SITE MIRROR -->
+            <tr class="cat-row"><td colspan="7">AI Site Mirror &mdash; Markdown Layer (Pillar 3)</td></tr>
+            <tr>
+              <td class="col-task">Mirror strategy &mdash; which pages, what depth, update cadence</td>
+              <td class="col-skill">AI / content strategy</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ after OSP brief</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">llms.txt file &mdash; drafting &amp; maintenance</td>
+              <td class="col-skill">Content strategy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-yes">✓ once written, maintain it</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Page-by-page Markdown drafts &mdash; rooms, services, about, policies</td>
+              <td class="col-skill">Copywriting</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ with style guide</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Pipeline build: CMS &rarr; Markdown export (automated)</td>
+              <td class="col-skill">Engineering</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-no">✗ engineering</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Static hosting for Markdown files</td>
+              <td class="col-skill">DevOps</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-no">✗ engineering</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Ongoing content update &rarr; mirror sync workflow</td>
+              <td class="col-skill">Content ops</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ once documented</span></td>
+            </tr>
+
+            <!-- TECHNICAL INFRA -->
+            <tr class="cat-row"><td colspan="7">Technical Infrastructure</td></tr>
+            <tr>
+              <td class="col-task">robots.txt &mdash; AI crawler directives</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ once shown once</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">XML sitemap structure &amp; submission</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ with CMS plugin</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Schema implementation in CMS or codebase</td>
+              <td class="col-skill">Engineering</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-no">✗ engineering</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Google Search Console setup &amp; monitoring</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ own the account</span></td>
+            </tr>
+
+            <!-- TESTING & VALIDATION -->
+            <tr class="cat-row"><td colspan="7">Testing &amp; Validation (Pillar 4)</td></tr>
+            <tr>
+              <td class="col-task">Schema validation &mdash; Google Rich Results Test, schema.org validator</td>
+              <td class="col-skill">Technical QA</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ free tools</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Crawlability &amp; indexing checks</td>
+              <td class="col-skill">Technical SEO</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ with Screaming Frog</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">AI query testing &mdash; ask multiple LLMs about the client, evaluate accuracy</td>
+              <td class="col-skill">AI literacy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="own-yes">✓ critical to master</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Hallucination audit &mdash; identify wrong or missing info in AI outputs</td>
+              <td class="col-skill">AI literacy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="own-yes">✓ own this entirely</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Citation tracking &mdash; is the client appearing in AI answers for target queries?</td>
+              <td class="col-skill">AI literacy / analytics</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ own &amp; report</span></td>
+            </tr>
+
+            <!-- GOVERNANCE -->
+            <tr class="cat-row"><td colspan="7">Governance &amp; Ongoing Maintenance (Pillar 5)</td></tr>
+            <tr>
+              <td class="col-task">Content update &rarr; mirror sync process (written playbook)</td>
+              <td class="col-skill">Content ops</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ once written</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">New-content publish checklist &mdash; schema + Markdown per piece</td>
+              <td class="col-skill">Content ops</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-yes">✓ own &amp; enforce</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Quarterly AI readiness audit &mdash; run the test suite, update the mirror</td>
+              <td class="col-skill">Strategy + AI literacy</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-part">~ with OSP initially</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Team training &mdash; how to write AI-readable content</td>
+              <td class="col-skill">Training / content strategy</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-part">~ deliver it yourself eventually</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Annual full schema review &mdash; new schema types, deprecated markup cleanup</td>
+              <td class="col-skill">Technical SEO / strategy</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-no">✗ needs OSP or specialist</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 10.04 JAM'S PATH -->
+    <section class="section" id="jams-path">
+      <div class="section-label"><span class="section-num">10.04</span> Jam&rsquo;s Path</div>
+      <h2 class="section-title">What to insource, what to ramp up on, what to keep outsourcing</h2>
+      <div class="section-body">
+        <p>Based on the RACI above, here&rsquo;s a practical breakdown of where to invest your learning time and where to keep relying on specialists.</p>
+        <div class="path-grid">
+          <div class="path-card path-card--learn">
+            <div class="path-card__label">✓ Own these now</div>
+            <ul class="path-card__items">
+              <li>AI query testing &amp; hallucination audits</li>
+              <li>Citation tracking &mdash; is the client showing up?</li>
+              <li>Google Search Console</li>
+              <li>Schema validation (free tools)</li>
+              <li>FAQ development &amp; maintenance</li>
+              <li>Customer-facing glossary</li>
+              <li>Policy documents in plain text</li>
+              <li>llms.txt maintenance</li>
+              <li>New-content publish checklist</li>
+              <li>Content update &rarr; mirror sync</li>
+            </ul>
+          </div>
+          <div class="path-card path-card--ramp">
+            <div class="path-card__label">~ Ramp up with support</div>
+            <ul class="path-card__items">
+              <li>Content audit &amp; inventory</li>
+              <li>Customer question gap analysis</li>
+              <li>Brand voice &amp; tone</li>
+              <li>Core narrative copywriting</li>
+              <li>Schema strategy (after OSP spec)</li>
+              <li>robots.txt AI directives</li>
+              <li>Markdown page drafting (with style guide)</li>
+              <li>Quarterly AI readiness audit</li>
+              <li>Team training (deliver yourself eventually)</li>
+              <li>Crawlability checks (Screaming Frog)</li>
+            </ul>
+          </div>
+          <div class="path-card path-card--outsource">
+            <div class="path-card__label">✗ Keep outsourcing</div>
+            <ul class="path-card__items">
+              <li>Schema implementation in CMS/code</li>
+              <li>Product/room/service schema per page</li>
+              <li>Markdown pipeline build (automated)</li>
+              <li>Static hosting for mirror files</li>
+              <li>Site architecture &amp; crawlability review</li>
+              <li>Annual full schema review &amp; cleanup</li>
+              <li>Any engineering-layer technical SEO</li>
+            </ul>
+          </div>
+        </div>
+        <div class="highlight-box blue">
+          <strong>The pattern:</strong> Jam can own everything that requires business knowledge and AI literacy (what your brand says, what customers ask, whether AI is representing you accurately). OSP owns strategy and content quality. Karim owns anything that requires touching code, servers, or the CMS database layer.
+        </div>
+      </div>
+    </section>
+
+    <!-- 10.05 SCALE NOTE -->
+    <section class="section" id="scale">
+      <div class="section-label"><span class="section-num">10.05</span> Scale Note</div>
+      <h2 class="section-title">How this changes by client size</h2>
+      <div class="section-body">
+        <p>The five pillars and the RACI structure above apply universally. What changes is scope and resourcing:</p>
+        <ul class="spec-list">
+          <li><strong>Small / boutique (e.g., a 12-room hotel).</strong> One person (Jam) can manage most of the &ldquo;own now&rdquo; column directly. Content volume is low. Schema types are well-defined (LodgingBusiness, Room, Offer). Mirror is 30&ndash;50 files. Technical work is a small sprint for Karim.</li>
+          <li><strong>Mid-size (e.g., a regional services firm or growing startup).</strong> A dedicated content coordinator takes on the content ops layer. Schema becomes more complex (multiple service types, locations, FAQs per service line). Mirror grows to 100&ndash;300 files. Quarterly audits become part of a content calendar.</li>
+          <li><strong>Enterprise / multi-location (e.g., an auto parts group).</strong> A content ops team is needed. Schema implementation is a dev-sprint per vertical. Mirror requires an automated pipeline. The &ldquo;Jam&rdquo; role becomes a VP of Content or Marketing Ops with a team reporting to them. OSP stays at the strategy and QA layer. Karim&rsquo;s role becomes an internal engineering team or managed service.</li>
+        </ul>
+        <div class="highlight-box amber">
+          <strong>The pricing implication:</strong> OSP&rsquo;s engagement scope grows with content volume and page-type complexity, not with client revenue or company size. A small client with a deeply complex product catalog needs more schema work than a large client with simple, homogeneous services.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="whitepaper.html" class="footer-link"><span class="arrow">&larr;</span> Why a Site Mirror</a>
+    </div>
+    <div class="footer-nav">
+      <a href="index.html" class="footer-link">Back to Hub <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+</body>
+</html>

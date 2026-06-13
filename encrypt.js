@@ -17,7 +17,8 @@ const HTML_FILES = [
   'pricing-model.html',
   'scope-markdown.html',
   'gantt.html',
-  'whitepaper.html'
+  'whitepaper.html',
+  'ai-readiness.html'
 ];
 
 const CSS_FILE = '_shared.css';
