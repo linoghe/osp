@@ -51,75 +51,17 @@
     <a href="whitepaper.html" class="nav-link">
       <span class="nav-num">09</span> Why a Site Mirror
     </a>
-    <div class="nav-group" id="navGroup10">
-      <button class="nav-link nav-group__toggle" id="navItem10">
+    <details class="nav-group" id="navGroup10">
+      <summary class="nav-link nav-group__toggle">
         <span class="nav-num">10</span> AI Readiness Program <span class="nav-arrow">&#x203A;</span>
-      </button>
-      <div class="nav-group__children" id="navGroup10Children">
+      </summary>
+      <div class="nav-group__children">
         <a href="ai-readiness-overview.html" class="nav-link nav-child">Overview</a>
         <a href="ai-readiness.html" class="nav-link nav-child">RACI &amp; Roles</a>
         <a href="knowledge-hubs.html" class="nav-link nav-child">Knowledge Hubs</a>
         <a href="whitepaper.html" class="nav-link nav-child">Why a Site Mirror</a>
       </div>
-    </div>
-    <a href="knowledge-hubs.html" class="nav-link">
-      <span class="nav-num">11</span> Knowledge Hubs
-    </a>
-    <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" class="nav-link" target="_blank" style="margin-top: 12px; border-top: 1px solid var(--c-border-light); padding-top: 12px;">
-      <span class="nav-num">&#x2197;</span> Google Sheet
-    </a>
-      <a href="bibliography.html" class="nav-link" style="border-top: 1px solid var(--c-border-light); padding-top: 12px;">
-      <span class="nav-num">&#x2615;</span> Bibliography
-    </a>
-  </nav>
-
-  <!-- MAIN -->
-  <main class="app-main">
-    <div class="page-head">
-      <p class="page-eyebrow"><span class="num">00</span> Hub</p>
-      <h1 class="page-title">Peer Pricing Review</h1>
-      <p class="page-subtitle">Lindsay's perspective on how to approach, structure, and price a combined schema + AI site mirror engagement.</p>
-    </div>
-
-    <!-- PURPOSE -->
-    <section class="section" id="purpose">
-      <div class="section-label"><span class="section-num">0.01</span> Purpose</div>
-      <h2 class="section-title" id="purpose-title">What this document is for</h2>
-      <div class="section-body">
-        <p>This is my point of view on how to scope, structure, and price the engagement we've been discussing. It covers the full picture — Jam's schema track, the markdown site mirror I'm recommending, the optional technical implementation, and PM governance.</p>
-        <p>Everything here is dynamic: the pricing model, effort breakdowns, and timeline all pull live from a shared <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" target="_blank">Google Sheet</a>. Adjust the inputs and the outputs update in real time — day counts, costs, margins, and resource allocation all recalculate automatically.</p>
-      </div>
-      <div class="highlight-box green">
-        <strong>This is a working document.</strong> Tinker with the numbers in the <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" target="_blank">Sheet</a>, walk through the pages, and let me know where you land. I'm here to iterate.
-      </div>
-    </section>
-
-    <!-- AT A GLANCE -->
-    <section class="section" id="glance">
-      <div class="section-label"><span class="section-num">0.02</span> Overview</div>
-      <h2 class="section-title" id="glance-title">Engagement at a Glance</h2>
-      <div class="card-grid">
-        <div class="card card--blue">
-          <div class="card-label">Format</div>
-          <div class="card-title">Two-Track Parallel Delivery</div>
-          <div class="card-body">Track 1: Schema architecture &amp; structured data (5 phases). Track 2: Markdown Site for LLM readability (4 phases). Shared governance &amp; validation.</div>
-        </div>
-        <div class="card card--coral">
-          <div class="card-label">OSP Role</div>
-          <div class="card-title">Design, Spec, Coordinate, Validate</div>
-          <div class="card-body">OSP owns strategy, specification, and validation across both tracks. Technical implementation optionally subcontracted or handled by client's partner.</div>
-        </div>
-        <div class="card card--green">
-          <div class="card-label">Effort</div>
-          <div class="card-title">~36 Program Days, 4 Roles</div>
-          <div class="card-body">Sr. Consultant, Content, Technical, and PM across ~6 calendar weeks (Jun&ndash;Jul 2026). Dynamic pricing model adjusts if technical is excluded.</div>
-        </div>
-        <div class="card card--amber">
-          <div class="card-label">Discipline</div>
-          <div class="card-title">Schema + GEO/AEO + LLM Optimization</div>
-          <div class="card-body">Bilingual (DE + EN) structured-data architecture, AI-search optimization, and machine-readable markdown site mirror.</div>
-        </div>
-      </div>
+    </details>
     </section>
 
     <!-- NAVIGATION -->
@@ -242,41 +184,27 @@
       localStorage.setItem(key, collapsed ? '1' : '0');
     });
   })();
-  // Nav accordion for page 10
+  // Nav accordion
   (function() {
-    var group = document.getElementById('navGroup10');
-    var btn   = document.getElementById('navItem10');
-    var kids  = document.getElementById('navGroup10Children');
-    if (!group || !btn || !kids) return;
-
-    // Use the child links themselves as the authority on which pages belong here
-    // Normalize: server may strip .html from URL (clean URLs)
-    var raw = window.location.pathname.split('/').pop() || 'index';
-    var curPage = raw.replace(/\.html$/, '');
-    var onChild = false;
-    kids.querySelectorAll('a.nav-child').forEach(function(a) {
-      if (a.getAttribute('href').replace(/\.html$/, '') === curPage) {
+    var g = document.getElementById('navGroup10');
+    if (!g) return;
+    var cur = window.location.pathname.split('/').pop().replace(/\.html$/, '') || 'index';
+    var hit = false;
+    g.querySelectorAll('a.nav-child').forEach(function(a) {
+      if (a.getAttribute('href').replace(/\.html$/, '') === cur) {
         a.classList.add('active');
-        onChild = true;
+        g.querySelector('summary').classList.add('active');
+        hit = true;
       }
     });
-    if (onChild) { btn.classList.add('active'); }
-
-    // On a child page: always open AND keep localStorage in sync so it
-    // stays open as the user navigates between child pages.
-    if (onChild) {
-      group.classList.add('nav-group--open');
-      btn.setAttribute('aria-expanded', 'true');
-      localStorage.setItem('_osp_nav10_open', '1');
-    } else if (localStorage.getItem('_osp_nav10_open') === '1') {
-      group.classList.add('nav-group--open');
-      btn.setAttribute('aria-expanded', 'true');
+    if (hit) {
+      g.open = true;
+      localStorage.setItem('_osp_nav10', '1');
+    } else if (localStorage.getItem('_osp_nav10') === '1') {
+      g.open = true;
     }
-
-    btn.addEventListener('click', function() {
-      var open = group.classList.toggle('nav-group--open');
-      btn.setAttribute('aria-expanded', String(open));
-      localStorage.setItem('_osp_nav10_open', open ? '1' : '0');
+    g.addEventListener('toggle', function() {
+      localStorage.setItem('_osp_nav10', g.open ? '1' : '0');
     });
   })();
   </script>

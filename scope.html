@@ -51,59 +51,17 @@
     <a href="whitepaper.html" class="nav-link">
       <span class="nav-num">09</span> Why a Site Mirror
     </a>
-    <div class="nav-group" id="navGroup10">
-      <button class="nav-link nav-group__toggle" id="navItem10">
+    <details class="nav-group" id="navGroup10">
+      <summary class="nav-link nav-group__toggle">
         <span class="nav-num">10</span> AI Readiness Program <span class="nav-arrow">&#x203A;</span>
-      </button>
-      <div class="nav-group__children" id="navGroup10Children">
+      </summary>
+      <div class="nav-group__children">
         <a href="ai-readiness-overview.html" class="nav-link nav-child">Overview</a>
         <a href="ai-readiness.html" class="nav-link nav-child">RACI &amp; Roles</a>
         <a href="knowledge-hubs.html" class="nav-link nav-child">Knowledge Hubs</a>
         <a href="whitepaper.html" class="nav-link nav-child">Why a Site Mirror</a>
       </div>
-    </div>
-    <a href="knowledge-hubs.html" class="nav-link">
-      <span class="nav-num">11</span> Knowledge Hubs
-    </a>
-    <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" class="nav-link" target="_blank" style="margin-top: 12px; border-top: 1px solid var(--c-border-light); padding-top: 12px;">
-      <span class="nav-num">&#x2197;</span> Google Sheet
-    </a>
-      <a href="bibliography.html" class="nav-link" style="border-top: 1px solid var(--c-border-light); padding-top: 12px;">
-      <span class="nav-num">&#x2615;</span> Bibliography
-    </a>
-  </nav>
-
-  <!-- MAIN -->
-  <main class="app-main">
-    <div class="page-head">
-      <p class="page-eyebrow"><span class="num">02</span> Phased Scope</p>
-      <h1 class="page-title">Workstreams &amp; Delivery</h1>
-      <p class="page-subtitle">Four parallel workstreams with dependency gates. Schema track drives architecture; Markdown Site and Technical run in parallel once specs are approved.</p>
-    </div>
-
-    <!-- WORKSTREAM STRIP -->
-    <div class="phase-strip">
-      <div class="phase-pill phase-pill--active" style="border-left: 3px solid var(--c-blue);">
-        <div class="phase-pill-label">Workstream 1</div>
-        <div class="phase-pill-name">Schema &amp; Structured Data</div>
-        <div class="phase-pill-effort"><span id="ws-schema-days">~15</span> days &middot; Phases 0&ndash;3</div>
-      </div>
-      <div class="phase-pill phase-pill--active" style="border-left: 3px solid var(--c-teal);">
-        <div class="phase-pill-label">Workstream 2</div>
-        <div class="phase-pill-name">Markdown Site</div>
-        <div class="phase-pill-effort"><span id="ws-md-days">~5.75</span> days &middot; MD-1&ndash;MD-4</div>
-      </div>
-      <div class="phase-pill" style="border-left: 3px solid var(--c-coral);">
-        <div class="phase-pill-label">Workstream 3</div>
-        <div class="phase-pill-name">Technical Implementation</div>
-        <div class="phase-pill-effort"><span id="ws-tech-days">~9</span> days &middot; Optional subcontract</div>
-      </div>
-      <div class="phase-pill" style="border-left: 3px solid #7c3aed;">
-        <div class="phase-pill-label">Workstream 4</div>
-        <div class="phase-pill-name">PM &amp; Governance</div>
-        <div class="phase-pill-effort"><span id="ws-pm-days">~6</span> days &middot; 15% rider + meetings</div>
-      </div>
-    </div>
+    </details>
 
     <!-- ABSTRACTED TIMELINE -->
     <div class="workstream-timeline" style="margin: 32px 0; padding: 24px; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-lg);">
@@ -283,43 +241,6 @@
       localStorage.setItem(key, collapsed ? '1' : '0');
     });
 
-  // Nav accordion for page 10
-  (function() {
-    var group = document.getElementById('navGroup10');
-    var btn   = document.getElementById('navItem10');
-    var kids  = document.getElementById('navGroup10Children');
-    if (!group || !btn || !kids) return;
-
-    // Use the child links themselves as the authority on which pages belong here
-    // Normalize: server may strip .html from URL (clean URLs)
-    var raw = window.location.pathname.split('/').pop() || 'index';
-    var curPage = raw.replace(/\.html$/, '');
-    var onChild = false;
-    kids.querySelectorAll('a.nav-child').forEach(function(a) {
-      if (a.getAttribute('href').replace(/\.html$/, '') === curPage) {
-        a.classList.add('active');
-        onChild = true;
-      }
-    });
-    if (onChild) { btn.classList.add('active'); }
-
-    // On a child page: always open AND keep localStorage in sync so it
-    // stays open as the user navigates between child pages.
-    if (onChild) {
-      group.classList.add('nav-group--open');
-      btn.setAttribute('aria-expanded', 'true');
-      localStorage.setItem('_osp_nav10_open', '1');
-    } else if (localStorage.getItem('_osp_nav10_open') === '1') {
-      group.classList.add('nav-group--open');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-
-    btn.addEventListener('click', function() {
-      var open = group.classList.toggle('nav-group--open');
-      btn.setAttribute('aria-expanded', String(open));
-      localStorage.setItem('_osp_nav10_open', open ? '1' : '0');
-    });
-  })();
 
   var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
 
