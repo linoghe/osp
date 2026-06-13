@@ -69,7 +69,7 @@
       <span class="nav-num">&#x2197;</span> Google Sheet
     </a>
       <a href="bibliography.html" class="nav-link" style="border-top: 1px solid var(--c-border-light); padding-top: 12px;">
-      <span class="nav-num"></nav>#x2615;</span> Bibliography
+      <span class="nav-num">&#x2615;</span> Bibliography
     </a>
   </nav>
 
@@ -286,24 +286,37 @@
   // Nav accordion for page 10
   (function() {
     var group = document.getElementById('navGroup10');
-    var btn10 = document.getElementById('navItem10');
+    var btn   = document.getElementById('navItem10');
     var kids  = document.getElementById('navGroup10Children');
-    if (!group || !btn10 || !kids) return;
-    var ownPages = ['ai-readiness-overview.html', 'ai-readiness.html'];
-    var curPage  = window.location.pathname.split('/').pop() || 'index.html';
-    var isOwn    = ownPages.indexOf(curPage) !== -1;
-    if (isOwn) { btn10.classList.add('active'); }
-    kids.querySelectorAll('.nav-child').forEach(function(a) {
-      if (a.getAttribute('href') === curPage) { a.classList.add('active'); }
+    if (!group || !btn || !kids) return;
+
+    // Use the child links themselves as the authority on which pages belong here
+    // Normalize: server may strip .html from URL (clean URLs)
+    var raw = window.location.pathname.split('/').pop() || 'index';
+    var curPage = raw.replace(/\.html$/, '');
+    var onChild = false;
+    kids.querySelectorAll('a.nav-child').forEach(function(a) {
+      if (a.getAttribute('href').replace(/\.html$/, '') === curPage) {
+        a.classList.add('active');
+        onChild = true;
+      }
     });
-    var stored = localStorage.getItem('_osp_nav10_open');
-    if (isOwn || stored === '1') {
+    if (onChild) { btn.classList.add('active'); }
+
+    // On a child page: always open AND keep localStorage in sync so it
+    // stays open as the user navigates between child pages.
+    if (onChild) {
       group.classList.add('nav-group--open');
-      btn10.setAttribute('aria-expanded', 'true');
+      btn.setAttribute('aria-expanded', 'true');
+      localStorage.setItem('_osp_nav10_open', '1');
+    } else if (localStorage.getItem('_osp_nav10_open') === '1') {
+      group.classList.add('nav-group--open');
+      btn.setAttribute('aria-expanded', 'true');
     }
-    btn10.addEventListener('click', function() {
+
+    btn.addEventListener('click', function() {
       var open = group.classList.toggle('nav-group--open');
-      btn10.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-expanded', String(open));
       localStorage.setItem('_osp_nav10_open', open ? '1' : '0');
     });
   })();
