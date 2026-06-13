@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Readiness | Peer Pricing Review | OSP</title>
+  <title>AI Readiness Program | Peer Pricing Review | OSP</title>
   <link rel="stylesheet" href="_shared.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -232,7 +232,7 @@
       <span class="nav-num">09</span> Why a Site Mirror
     </a>
     <a href="ai-readiness.html" class="nav-link active">
-      <span class="nav-num">10</span> AI Readiness
+      <span class="nav-num">10</span> AI Readiness Program
     </a>
     <a href="knowledge-hubs.html" class="nav-link">
       <span class="nav-num">11</span> Knowledge Hubs
@@ -248,15 +248,15 @@
   <!-- MAIN -->
   <main class="app-main">
     <div class="page-head">
-      <p class="page-eyebrow"><span class="num">10</span> AI Readiness</p>
-      <h1 class="page-title">AI Readiness that Supports Customers</h1>
+      <p class="page-eyebrow"><span class="num">10</span> AI Readiness Program</p>
+      <h1 class="page-title">AI Readiness Program that Supports Customers</h1>
       <p class="page-subtitle">A checklist and RACI for making your digital presence work for AI-powered customers &mdash; with skillset requirements and a guide to what Jam and OSP can own versus what to outsource.</p>
     </div>
 
     <!-- 10.01 THE PHILOSOPHY -->
     <section class="section" id="philosophy">
       <div class="section-label"><span class="section-num">10.01</span> The Philosophy</div>
-      <h2 class="section-title">What "AI Readiness" actually means</h2>
+      <h2 class="section-title">What the "AI Readiness Program" actually means</h2>
       <div class="section-body">
         <p>AI engines &mdash; ChatGPT, Claude, Perplexity, Gemini &mdash; are now a discovery and decision-support layer for customers. When someone asks &ldquo;what&rsquo;s the best boutique hotel for a quiet romantic weekend in Lisbon?&rdquo; or &ldquo;who does the best structured data implementation for multi-location businesses?&rdquo;, an AI answers. Your website does not.</p>
         <p>Make your content work for the customers who find you through AI. Structure it so that when an AI reads your site, it can represent you accurately, completely, and helpfully &mdash; because you built it that way on purpose. That requires three things:</p>
@@ -277,11 +277,11 @@
       <h2 class="section-title">What the program covers</h2>
       <div class="section-body">
         <div class="pillar-grid">
-          <div class="pillar-card pillar-card--1">
+          <a href="knowledge-hubs.html" class="pillar-card pillar-card--1" style="text-decoration:none; display:block;">
             <div class="pillar-card__num">Pillar 1</div>
-            <div class="pillar-card__title">Knowledge Base</div>
+            <div class="pillar-card__title">Knowledge Base <span style="font-size:11px; font-weight:600; letter-spacing:0.04em; opacity:0.7;">&rarr;</span></div>
             <div class="pillar-card__desc">Structured documentation of who you are, what you offer, how you work, and what customers need to know.</div>
-          </div>
+          </a>
           <div class="pillar-card pillar-card--2">
             <div class="pillar-card__num">Pillar 2</div>
             <div class="pillar-card__title">Schema.org</div>
@@ -786,6 +786,33 @@
       var collapsed = nav.classList.toggle('collapsed');
       body.classList.toggle('nav-collapsed');
       localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  // Nav accordion for page 10
+  (function() {
+    var group = document.getElementById('navGroup10');
+    var btn   = document.getElementById('navItem10');
+    var kids  = document.getElementById('navGroup10Children');
+    if (!group || !btn || !kids) return;
+    var ownPages = ['ai-readiness-overview.html', 'ai-readiness.html'];
+    var curPage  = window.location.pathname.split('/').pop() || 'index.html';
+    var isOwn    = ownPages.indexOf(curPage) !== -1;
+    // Mark parent button active when on one of its own pages
+    if (isOwn) { btn.classList.add('active'); }
+    // Mark the matching child link active
+    kids.querySelectorAll('.nav-child').forEach(function(a) {
+      if (a.getAttribute('href') === curPage) { a.classList.add('active'); }
+    });
+    // Open if on own page, or localStorage says open
+    var stored = localStorage.getItem('_osp_nav10_open');
+    if (isOwn || stored === '1') {
+      group.classList.add('nav-group--open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+    btn.addEventListener('click', function() {
+      var open = group.classList.toggle('nav-group--open');
+      btn.setAttribute('aria-expanded', String(open));
+      localStorage.setItem('_osp_nav10_open', open ? '1' : '0');
     });
   })();
   </script>

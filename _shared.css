@@ -212,6 +212,109 @@ body {
   color: var(--c-blue-mid);
 }
 
+/* ── Nav accordion group ── */
+.nav-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-group__toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 24px;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--c-text-mid);
+  font-family: inherit;
+  text-align: left;
+  transition: color 0.15s, background 0.15s;
+}
+
+.nav-group__toggle:hover {
+  color: var(--c-ink);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.nav-group__toggle.active {
+  color: var(--c-blue);
+  border-left-color: var(--c-blue);
+  background: var(--c-blue-light);
+  font-weight: 600;
+}
+
+.nav-group__toggle.active .nav-num {
+  color: var(--c-blue-mid);
+}
+
+.nav-arrow {
+  margin-left: auto;
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.4;
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.nav-group--open .nav-arrow {
+  transform: rotate(90deg);
+}
+
+.nav-group__children {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.22s ease;
+}
+
+.nav-group--open .nav-group__children {
+  max-height: 300px;
+}
+
+.nav-child {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  padding: 7px 16px 7px 48px !important;
+  gap: 6px !important;
+  color: var(--c-text-mid) !important;
+  border-left: 3px solid transparent !important;
+}
+
+.nav-child:hover {
+  color: var(--c-ink) !important;
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+.nav-child.active {
+  color: var(--c-blue) !important;
+  border-left-color: var(--c-blue) !important;
+  background: var(--c-blue-light) !important;
+  font-weight: 600 !important;
+}
+
+/* Hide children when sidebar is collapsed */
+.app-nav.collapsed .nav-group__children {
+  max-height: 0 !important;
+}
+
+.app-nav.collapsed .nav-group__toggle {
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.app-nav.collapsed .nav-group__toggle .nav-arrow,
+.app-nav.collapsed .nav-group__toggle span:not(.nav-num) {
+  display: none;
+}
+
+.app-nav.collapsed .nav-group__toggle .nav-num {
+  min-width: auto;
+}
+
 /* --- MAIN CONTENT --- */
 .app-main {
   margin-left: 224px;

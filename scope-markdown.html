@@ -51,9 +51,17 @@
     <a href="whitepaper.html" class="nav-link">
       <span class="nav-num">09</span> Why a Site Mirror
     </a>
-    <a href="ai-readiness.html" class="nav-link">
-      <span class="nav-num">10</span> AI Readiness
-    </a>
+    <div class="nav-group" id="navGroup10">
+      <button class="nav-link nav-group__toggle" id="navItem10">
+        <span class="nav-num">10</span> AI Readiness Program <span class="nav-arrow">&#x203A;</span>
+      </button>
+      <div class="nav-group__children" id="navGroup10Children">
+        <a href="ai-readiness-overview.html" class="nav-link nav-child">Overview</a>
+        <a href="ai-readiness.html" class="nav-link nav-child">RACI &amp; Roles</a>
+        <a href="knowledge-hubs.html" class="nav-link nav-child">Knowledge Hubs</a>
+        <a href="whitepaper.html" class="nav-link nav-child">Why a Site Mirror</a>
+      </div>
+    </div>
     <a href="knowledge-hubs.html" class="nav-link">
       <span class="nav-num">11</span> Knowledge Hubs
     </a>
@@ -331,6 +339,31 @@
       body.classList.toggle('nav-collapsed');
       localStorage.setItem(key, collapsed ? '1' : '0');
     });
+
+  // Nav accordion for page 10
+  (function() {
+    var group = document.getElementById('navGroup10');
+    var btn10 = document.getElementById('navItem10');
+    var kids  = document.getElementById('navGroup10Children');
+    if (!group || !btn10 || !kids) return;
+    var ownPages = ['ai-readiness-overview.html', 'ai-readiness.html'];
+    var curPage  = window.location.pathname.split('/').pop() || 'index.html';
+    var isOwn    = ownPages.indexOf(curPage) !== -1;
+    if (isOwn) { btn10.classList.add('active'); }
+    kids.querySelectorAll('.nav-child').forEach(function(a) {
+      if (a.getAttribute('href') === curPage) { a.classList.add('active'); }
+    });
+    var stored = localStorage.getItem('_osp_nav10_open');
+    if (isOwn || stored === '1') {
+      group.classList.add('nav-group--open');
+      btn10.setAttribute('aria-expanded', 'true');
+    }
+    btn10.addEventListener('click', function() {
+      var open = group.classList.toggle('nav-group--open');
+      btn10.setAttribute('aria-expanded', String(open));
+      localStorage.setItem('_osp_nav10_open', open ? '1' : '0');
+    });
+  })();
 
   var SHEET_ID = '1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA';
 

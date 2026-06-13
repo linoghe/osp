@@ -51,8 +51,8 @@
     <a href="whitepaper.html" class="nav-link">
       <span class="nav-num">09</span> Why a Site Mirror
     </a>
-    <a href="ai-readiness.html" class="nav-link">
-      <span class="nav-num">10</span> AI Readiness
+    <a href="ai-readiness-overview.html" class="nav-link">
+      <span class="nav-num">10</span> AI Readiness Program
     </a>
     <a href="knowledge-hubs.html" class="nav-link">
       <span class="nav-num">11</span> Knowledge Hubs
@@ -185,6 +185,33 @@
       var collapsed = nav.classList.toggle('collapsed');
       body.classList.toggle('nav-collapsed');
       localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  // Nav accordion for page 10
+  (function() {
+    var group = document.getElementById('navGroup10');
+    var btn   = document.getElementById('navItem10');
+    var kids  = document.getElementById('navGroup10Children');
+    if (!group || !btn || !kids) return;
+    var ownPages = ['ai-readiness-overview.html', 'ai-readiness.html'];
+    var curPage  = window.location.pathname.split('/').pop() || 'index.html';
+    var isOwn    = ownPages.indexOf(curPage) !== -1;
+    // Mark parent button active when on one of its own pages
+    if (isOwn) { btn.classList.add('active'); }
+    // Mark the matching child link active
+    kids.querySelectorAll('.nav-child').forEach(function(a) {
+      if (a.getAttribute('href') === curPage) { a.classList.add('active'); }
+    });
+    // Open if on own page, or localStorage says open
+    var stored = localStorage.getItem('_osp_nav10_open');
+    if (isOwn || stored === '1') {
+      group.classList.add('nav-group--open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+    btn.addEventListener('click', function() {
+      var open = group.classList.toggle('nav-group--open');
+      btn.setAttribute('aria-expanded', String(open));
+      localStorage.setItem('_osp_nav10_open', open ? '1' : '0');
     });
   })();
 

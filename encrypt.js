@@ -18,6 +18,7 @@ const HTML_FILES = [
   'scope-markdown.html',
   'gantt.html',
   'whitepaper.html',
+  'ai-readiness-overview.html',
   'ai-readiness.html',
   'knowledge-hubs.html',
   'bibliography.html'
