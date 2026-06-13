@@ -18,7 +18,8 @@ const HTML_FILES = [
   'scope-markdown.html',
   'gantt.html',
   'whitepaper.html',
-  'ai-readiness.html'
+  'ai-readiness.html',
+  'knowledge-hubs.html'
 ];
 
 const CSS_FILE = '_shared.css';

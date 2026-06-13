@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knowledge Hubs | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Comparison table */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 20px 0 32px;
+    }
+    .compare-table thead th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 2px solid var(--c-border);
+    }
+    .compare-table thead th:first-child {
+      background: var(--c-surface-alt);
+      color: var(--c-text-light);
+      width: 22%;
+    }
+    .compare-table thead th.col-blog {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    .compare-table thead th.col-kh {
+      background: var(--c-blue-light);
+      color: var(--c-blue);
+    }
+    .compare-table tbody td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--c-border-light);
+      vertical-align: top;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+    .compare-table .row-label {
+      font-weight: 600;
+      color: var(--c-text-mid);
+      font-size: 13px;
+      background: var(--c-surface-alt);
+    }
+    .compare-table .col-blog-cell {
+      color: #7c2d12;
+      background: #fffbf7;
+    }
+    .compare-table .col-kh-cell {
+      color: #1e3a5f;
+      background: #f0f7ff;
+      font-weight: 500;
+    }
+
+    /* Website vs KH comparison — three columns */
+    .three-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0 32px;
+    }
+    .three-col-card {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid var(--c-border);
+    }
+    .three-col-card__label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    .three-col-card__title {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .three-col-card__desc {
+      font-size: 13px;
+      color: var(--c-text-mid);
+      line-height: 1.6;
+    }
+    .three-col-card--website { background: var(--c-surface-alt); }
+    .three-col-card--website .three-col-card__label { color: var(--c-text-light); }
+    .three-col-card--website .three-col-card__title { color: var(--c-text-mid); }
+    .three-col-card--kh { background: var(--c-blue-light); }
+    .three-col-card--kh .three-col-card__label { color: var(--c-blue); }
+    .three-col-card--kh .three-col-card__title { color: var(--c-blue); }
+    .three-col-card--both { background: var(--c-teal-light); }
+    .three-col-card--both .three-col-card__label { color: var(--c-teal); }
+    .three-col-card--both .three-col-card__title { color: var(--c-teal); }
+
+    /* Flow diagram for marketing alignment */
+    .flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 20px 0 32px;
+      overflow-x: auto;
+    }
+    .flow-node {
+      flex: 1;
+      min-width: 120px;
+      border-radius: var(--radius-lg);
+      padding: 16px 14px;
+      text-align: center;
+      font-size: 13px;
+      border: 1px solid var(--c-border);
+      position: relative;
+    }
+    .flow-node__label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .flow-node__title {
+      font-weight: 600;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+    .flow-node__sub {
+      font-size: 11px;
+      color: var(--c-text-mid);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      color: var(--c-text-light);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .flow-node--hub { background: var(--c-blue-light); border-color: var(--c-blue); }
+    .flow-node--hub .flow-node__label { color: var(--c-blue); }
+    .flow-node--hub .flow-node__title { color: var(--c-blue); }
+    .flow-node--out { background: var(--c-surface-alt); }
+    .flow-node--ai { background: var(--c-teal-light); border-color: var(--c-teal); }
+    .flow-node--ai .flow-node__label { color: var(--c-teal); }
+    .flow-node--ai .flow-node__title { color: var(--c-teal); }
+
+    /* OSP scope options */
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .scope-card {
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      border: 1px solid var(--c-border);
+    }
+    .scope-card__tier {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+    .scope-card__name {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .scope-card__items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 13px;
+      color: var(--c-text-mid);
+      line-height: 1.7;
+    }
+    .scope-card__items li::before {
+      content: "— ";
+      color: var(--c-border);
+    }
+    .scope-card--foundation { background: var(--c-surface-alt); }
+    .scope-card--foundation .scope-card__tier { color: var(--c-text-light); }
+    .scope-card--foundation .scope-card__name { color: var(--c-text-mid); }
+    .scope-card--build { background: var(--c-blue-light); }
+    .scope-card--build .scope-card__tier { color: var(--c-blue); }
+    .scope-card--build .scope-card__name { color: var(--c-blue); }
+    .scope-card--program { background: #f3e8ff; }
+    .scope-card--program .scope-card__tier { color: #7c3aed; }
+    .scope-card--program .scope-card__name { color: #7c3aed; }
+
+    @media (max-width: 800px) {
+      .three-col, .scope-grid { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); align-self: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link"><span class="nav-num">00</span> Hub</a>
+    <a href="engagement.html" class="nav-link"><span class="nav-num">01</span> Engagement</a>
+    <a href="scope.html" class="nav-link"><span class="nav-num">02</span> Phased Scope</a>
+    <a href="scope-markdown.html" class="nav-link"><span class="nav-num">03</span> Markdown Site</a>
+    <a href="effort.html" class="nav-link"><span class="nav-num">04</span> Effort &amp; Role</a>
+    <a href="context.html" class="nav-link"><span class="nav-num">05</span> Pricing Context</a>
+    <a href="questions.html" class="nav-link"><span class="nav-num">06</span> Pricing Guidance</a>
+    <a href="pricing-model.html" class="nav-link"><span class="nav-num">07</span> Pricing Model</a>
+    <a href="gantt.html" class="nav-link"><span class="nav-num">08</span> Timeline</a>
+    <a href="whitepaper.html" class="nav-link"><span class="nav-num">09</span> Why a Site Mirror</a>
+    <a href="ai-readiness.html" class="nav-link"><span class="nav-num">10</span> AI Readiness</a>
+    <a href="knowledge-hubs.html" class="nav-link active"><span class="nav-num">11</span> Knowledge Hubs</a>
+    <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" class="nav-link" target="_blank" style="margin-top: 12px; border-top: 1px solid var(--c-border-light); padding-top: 12px;">
+      <span class="nav-num">&#x2197;</span> Google Sheet
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow"><span class="num">11</span> Knowledge Hubs</p>
+      <h1 class="page-title">The Content Strategy that Actually Works</h1>
+      <p class="page-subtitle">Why a knowledge hub outperforms a blog, a resource library, and a conventional website for communicating professional expertise &mdash; and why it&rsquo;s the right foundation for AI readiness, marketing alignment, and lasting business value.</p>
+    </div>
+
+    <!-- 11.01 WHAT A KNOWLEDGE HUB IS -->
+    <section class="section" id="what">
+      <div class="section-label"><span class="section-num">11.01</span> The Concept</div>
+      <h2 class="section-title">What a knowledge hub is &mdash; and what it isn&rsquo;t</h2>
+      <div class="section-body">
+        <p>A knowledge hub is a structured, topically organized body of content built around one purpose: answering the real questions your customers, partners, and prospects have about your business, services, and domain. Every piece has a clear home in the architecture. Every question has a canonical answer. The whole thing holds together as a coherent body of expertise.</p>
+        <p>That&rsquo;s different from a blog (which is organized by date), a resource library (organized by format), or a FAQ page (a flat list of short answers). A knowledge hub is organized by <em>topic and intent</em> &mdash; the questions customers are actually asking at every stage of their relationship with you.</p>
+        <ul class="spec-list">
+          <li><strong>Written for depth, not volume.</strong> One thorough, well-structured article on &ldquo;how hotel structured data affects AI discoverability&rdquo; outperforms ten shallow posts on related keywords. The goal is to be the best answer on the topic, not to publish frequently.</li>
+          <li><strong>Organized by topic, not by date.</strong> The primary navigation is by subject matter. Recency is irrelevant. A piece written two years ago is as valuable as one written last week if the answer is still correct &mdash; and it should be maintained accordingly.</li>
+          <li><strong>Governed, not just created.</strong> A hub has an owner, a taxonomy, a review cycle, and a clear standard for what qualifies as a hub article vs. a news post vs. a case study. Without governance, it becomes a blog with better intentions.</li>
+          <li><strong>Evergreen by design.</strong> Articles are written to remain accurate and useful over time, then updated when circumstances change. This is the opposite of the campaign-driven content model, where pieces are created for a moment and then orphaned.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>The organizing question:</strong> &ldquo;What does someone need to understand to make a confident decision about working with us?&rdquo; Every article in the hub should answer a version of that question at a specific stage of understanding.
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.02 WHY NOT A BLOG -->
+    <section class="section" id="vs-blog">
+      <div class="section-label"><span class="section-num">11.02</span> The Case Against Blogging</div>
+      <h2 class="section-title">Why blogging doesn&rsquo;t build the asset you think it does</h2>
+      <div class="section-body">
+        <p>Most business blogs exist because someone said &ldquo;we need content.&rdquo; They accumulate posts over time, each one individually reasonable, but collectively incoherent &mdash; no shared architecture, no clear customer purpose, no connective tissue between pieces. The result is a content graveyard: high publishing cost, low cumulative value.</p>
+
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th class="col-label"></th>
+              <th class="col-blog">Blog</th>
+              <th class="col-kh">Knowledge Hub</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-label">Organizing principle</td>
+              <td class="col-blog-cell">Chronological &mdash; newest first</td>
+              <td class="col-kh-cell">Topical &mdash; organized by subject and intent</td>
+            </tr>
+            <tr>
+              <td class="row-label">Primary goal</td>
+              <td class="col-blog-cell">Traffic, SEO volume, social shares</td>
+              <td class="col-kh-cell">Answering customer questions with authority</td>
+            </tr>
+            <tr>
+              <td class="row-label">Content lifespan</td>
+              <td class="col-blog-cell">Short &mdash; decays without continued publishing</td>
+              <td class="col-kh-cell">Long &mdash; evergreen, maintained and updated</td>
+            </tr>
+            <tr>
+              <td class="row-label">Depth</td>
+              <td class="col-blog-cell">Shallow by convention; optimized for scroll</td>
+              <td class="col-kh-cell">Deep by design; optimized for understanding</td>
+            </tr>
+            <tr>
+              <td class="row-label">Coherence</td>
+              <td class="col-blog-cell">Low &mdash; posts exist independently</td>
+              <td class="col-kh-cell">High &mdash; articles connect and reinforce each other</td>
+            </tr>
+            <tr>
+              <td class="row-label">Voice &amp; POV</td>
+              <td class="col-blog-cell">Inconsistent across authors and campaigns</td>
+              <td class="col-kh-cell">Consistent &mdash; governed by editorial standards</td>
+            </tr>
+            <tr>
+              <td class="row-label">AI readiness</td>
+              <td class="col-blog-cell">Poor &mdash; fragmented, thin, no taxonomy</td>
+              <td class="col-kh-cell">Strong &mdash; structured, topical, citable</td>
+            </tr>
+            <tr>
+              <td class="row-label">Maintenance cost</td>
+              <td class="col-blog-cell">High &mdash; requires constant new output</td>
+              <td class="col-kh-cell">Lower over time &mdash; update existing, add deliberately</td>
+            </tr>
+            <tr>
+              <td class="row-label">Sales utility</td>
+              <td class="col-blog-cell">Low &mdash; hard to find the right piece to share</td>
+              <td class="col-kh-cell">High &mdash; every topic has a canonical, shareable answer</td>
+            </tr>
+            <tr>
+              <td class="row-label">Cumulative asset value</td>
+              <td class="col-blog-cell">Diminishing &mdash; older posts lose relevance</td>
+              <td class="col-kh-cell">Compounding &mdash; each article strengthens the whole</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="highlight-box amber">
+          <strong>Blogging isn&rsquo;t wrong, it&rsquo;s incomplete.</strong> A hub can have a news section, a &ldquo;what we&rsquo;re thinking about&rdquo; feed, or a roundup series. Timely content has its place. The problem is when it&rsquo;s the only content model &mdash; because it never accumulates into an asset, it just accumulates.
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.03 WHY NOT JUST A WEBSITE -->
+    <section class="section" id="vs-website">
+      <div class="section-label"><span class="section-num">11.03</span> Beyond the Website</div>
+      <h2 class="section-title">What a standard website can&rsquo;t do on its own</h2>
+      <div class="section-body">
+        <p>A well-designed website does one job exceptionally: it converts a visitor who already understands what you do into a lead or customer. It&rsquo;s built for the decision moment &mdash; short copy, clear hierarchy, strong calls to action. But that&rsquo;s only one moment in a much longer relationship.</p>
+        <p>Most customers &mdash; especially in B2B, professional services, or high-consideration hospitality &mdash; need to understand you before they&rsquo;re ready to convert. They have questions. They&rsquo;re doing research. They&rsquo;re comparing options and building trust. A standard website isn&rsquo;t designed for that stage. A knowledge hub is.</p>
+
+        <div class="three-col">
+          <div class="three-col-card three-col-card--website">
+            <div class="three-col-card__label">Standard Website</div>
+            <div class="three-col-card__title">Optimized to convert</div>
+            <div class="three-col-card__desc">Shallow by design. Copy is brief, hierarchy is visual, the goal is action. Excellent for the visitor who already knows what they want. Poor for the one still figuring it out.</div>
+          </div>
+          <div class="three-col-card three-col-card--kh">
+            <div class="three-col-card__label">Knowledge Hub</div>
+            <div class="three-col-card__title">Optimized to educate</div>
+            <div class="three-col-card__desc">Deep by design. Built for the reader doing research, evaluating options, or learning how to use what they&rsquo;ve bought. Builds trust before the conversion moment arrives.</div>
+          </div>
+          <div class="three-col-card three-col-card--both">
+            <div class="three-col-card__label">Both Together</div>
+            <div class="three-col-card__title">Full customer journey</div>
+            <div class="three-col-card__desc">Website converts. Hub educates, retains, and creates the conditions for conversion. They work together: hub content feeds the website, website drives visitors into the hub.</div>
+          </div>
+        </div>
+
+        <p>There&rsquo;s a clarity and purpose benefit beyond the customer journey, too. Building a knowledge hub forces a discipline that website projects rarely do: you have to articulate <em>what you actually know</em>, <em>who you know it for</em>, and <em>what questions you are uniquely positioned to answer</em>. That exercise sharpens positioning, clarifies differentiation, and often reveals gaps in how the business understands itself &mdash; before those gaps show up in sales conversations.</p>
+        <div class="highlight-box blue">
+          <strong>The discipline of the hub is the discipline of the strategy.</strong> You cannot build a coherent knowledge hub without first answering: what is our expertise, who is it for, and what do they need to understand to trust us? Those are the same questions a positioning exercise asks. The hub is the output.
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.04 AI READINESS -->
+    <section class="section" id="ai">
+      <div class="section-label"><span class="section-num">11.04</span> AI Readiness by Design</div>
+      <h2 class="section-title">Why knowledge hubs are the best foundation for AI-ready content</h2>
+      <div class="section-body">
+        <p>The same properties that make a knowledge hub valuable to a human reader make it exceptional source material for AI engines. Structured, topical, authoritative, deep &mdash; these are exactly the qualities that AI systems prioritize when deciding what to cite, summarize, and surface in response to a customer&rsquo;s question.</p>
+        <ul class="spec-list">
+          <li><strong>Hub articles become Markdown mirror pages.</strong> Each hub article maps 1:1 to a page in the AI site mirror. The work of writing the hub <em>is</em> the work of building the mirror. You&rsquo;re not creating two things &mdash; you&rsquo;re producing one body of content in two formats.</li>
+          <li><strong>Hub taxonomy becomes schema architecture.</strong> The topic structure of the hub maps directly to Schema.org types: FAQPage, Article, HowTo, Service, Product. A well-organized hub is halfway to a complete schema implementation.</li>
+          <li><strong>Hub depth is what AI cites.</strong> AI engines preferentially summarize and cite content that answers questions thoroughly, in plain language, with clear structure. Shallow blog posts get ignored. Deep hub articles get cited.</li>
+          <li><strong>Hub governance keeps AI accuracy current.</strong> When content is updated in the hub, the mirror updates. When schema is applied to the hub, it applies consistently across the whole body of knowledge. The hub is the single source of truth &mdash; for humans, search engines, and AI alike.</li>
+        </ul>
+        <div class="highlight-box green">
+          <strong>The layered picture:</strong> Website &rarr; attracts and converts. Knowledge Hub &rarr; educates and earns trust. AI Site Mirror &rarr; extends reach to AI-mediated discovery. Schema.org &rarr; tells machines what the content means. Each layer depends on the quality of the one below it. The hub is the foundation everything else is built on.
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.05 MARKETING ALIGNMENT -->
+    <section class="section" id="marketing">
+      <div class="section-label"><span class="section-num">11.05</span> Marketing Alignment</div>
+      <h2 class="section-title">The hub as the center of gravity for all outbound content</h2>
+      <div class="section-body">
+        <p>Most content marketing operates as a one-way flow: create content, push it out, hope it lands, never reference it again. A knowledge hub inverts that model. The hub is the home base. Everything else &mdash; social posts, newsletters, PR, sales materials, event talks &mdash; is distribution that points back to it.</p>
+
+        <div class="flow">
+          <div class="flow-node flow-node--hub">
+            <div class="flow-node__label">Home base</div>
+            <div class="flow-node__title">Knowledge Hub</div>
+            <div class="flow-node__sub">Canonical answers. Authoritative depth. Governed and evergreen.</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-node flow-node--out">
+            <div class="flow-node__label">Distribution</div>
+            <div class="flow-node__title">Social &amp; Newsletter</div>
+            <div class="flow-node__sub">Excerpts, highlights, &ldquo;we wrote about this&rdquo; &mdash; always linking back.</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-node flow-node--out">
+            <div class="flow-node__label">Sales enablement</div>
+            <div class="flow-node__title">Sales &amp; PR</div>
+            <div class="flow-node__sub">Every sales question has a hub article. Every PR pitch has a reference piece.</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-node flow-node--ai">
+            <div class="flow-node__label">AI-mediated discovery</div>
+            <div class="flow-node__title">AI Engines</div>
+            <div class="flow-node__sub">LLMs cite hub content. Customers find you through AI answers.</div>
+          </div>
+        </div>
+
+        <p>This model has measurable advantages over campaign-driven content:</p>
+        <ul class="spec-list">
+          <li><strong>Every channel reinforces the same positioning.</strong> Social posts don&rsquo;t have to carry the full argument &mdash; they tease it and send people to the hub. The hub does the heavy lifting. Messaging stays consistent because there&rsquo;s one source of truth.</li>
+          <li><strong>Sales has something to share.</strong> When a prospect asks &ldquo;how does your pricing work?&rdquo; or &ldquo;what&rsquo;s the difference between schema and a site mirror?&rdquo; &mdash; there&rsquo;s a hub article for that. Salespeople stop improvising answers and start curating references.</li>
+          <li><strong>Measurement gets cleaner.</strong> Instead of tracking dozens of individual blog posts, you track hub topics. Which topics drive time-on-site, pipeline, repeat visits, AI citations? That tells you where your expertise is landing and where to invest next.</li>
+          <li><strong>The website and hub pull in the same direction.</strong> Website copy should reference hub articles. Hub articles should link to relevant website pages. The two reinforce each other instead of existing in separate silos, often maintained by different teams with different goals.</li>
+        </ul>
+        <div class="highlight-box blue">
+          <strong>Marketing strategy and content strategy are the same strategy.</strong> A business that knows what it knows, has written it down clearly, and has made it easy to find &mdash; for humans and for AI &mdash; has a durable marketing advantage over one that publishes reactively and never builds the asset.
+        </div>
+      </div>
+    </section>
+
+    <!-- 11.06 OSP'S ROLE -->
+    <section class="section" id="osp">
+      <div class="section-label"><span class="section-num">11.06</span> OSP&rsquo;s Role</div>
+      <h2 class="section-title">Why this is what OSP does best</h2>
+      <div class="section-body">
+        <p>Building a knowledge hub requires three disciplines that are rarely combined in a single team: content strategy (knowing what to say and to whom), editorial craft (knowing how to say it with consistency and authority), and information architecture (knowing how to organize it so it compounds in value over time). Most content agencies have one of these. OSP has all three, and they operate as a system.</p>
+        <ul class="spec-list">
+          <li><strong>Strategy first.</strong> OSP starts with the questions the customer is actually asking &mdash; derived from sales conversations, support tickets, competitive positioning, and customer interviews &mdash; not from keyword tools or content calendars. The taxonomy comes from customer reality, not internal assumptions.</li>
+          <li><strong>Architecture before authorship.</strong> Before writing a single article, OSP builds the hub map: the full set of topics, the hierarchy between them, the gaps, the redundancies, and the sequencing. This is the work most teams skip &mdash; and the reason most content programs accumulate without compounding.</li>
+          <li><strong>Editorial standards that scale.</strong> A hub without a house style, a quality bar, and a review process drifts into inconsistency within months. OSP establishes the standards, trains the team, and either runs the program or hands it off with the governance documentation to maintain it.</li>
+          <li><strong>The AI layer is native, not bolted on.</strong> Because OSP architects the hub with AI readiness in mind from the start &mdash; structured content, plain-language answers, clear taxonomy &mdash; the schema and Markdown mirror work follows naturally. It&rsquo;s not a separate project; it&rsquo;s the same project in a different format.</li>
+        </ul>
+
+        <p>OSP can engage at three different levels depending on what the client needs:</p>
+        <div class="scope-grid">
+          <div class="scope-card scope-card--foundation">
+            <div class="scope-card__tier">Tier 1</div>
+            <div class="scope-card__name">Foundation Only</div>
+            <ul class="scope-card__items">
+              <li>Hub taxonomy &amp; topic map</li>
+              <li>Article brief templates</li>
+              <li>Editorial standards guide</li>
+              <li>Governance playbook</li>
+              <li>Client team builds content</li>
+            </ul>
+          </div>
+          <div class="scope-card scope-card--build">
+            <div class="scope-card__tier">Tier 2</div>
+            <div class="scope-card__name">Full Build</div>
+            <ul class="scope-card__items">
+              <li>Everything in Tier 1</li>
+              <li>OSP writes all hub articles</li>
+              <li>Schema markup per article</li>
+              <li>Markdown mirror of each piece</li>
+              <li>Client maintains going forward</li>
+            </ul>
+          </div>
+          <div class="scope-card scope-card--program">
+            <div class="scope-card__tier">Tier 3</div>
+            <div class="scope-card__name">Ongoing Program</div>
+            <ul class="scope-card__items">
+              <li>Everything in Tier 2</li>
+              <li>Quarterly content planning</li>
+              <li>Ongoing article creation</li>
+              <li>Annual hub audit &amp; refresh</li>
+              <li>AI citation monitoring</li>
+            </ul>
+          </div>
+        </div>
+        <div class="highlight-box amber">
+          <strong>The honest pitch:</strong> Any competent writer can fill a blog. Building a knowledge hub &mdash; one that compounds, stays coherent, and works for humans, search engines, and AI &mdash; requires a combination of strategic, editorial, and architectural skills that takes years to develop. That&rsquo;s what OSP brings to this, and why it&rsquo;s a meaningful differentiator in the market.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="ai-readiness.html" class="footer-link"><span class="arrow">&larr;</span> AI Readiness</a>
+    </div>
+    <div class="footer-nav">
+      <a href="index.html" class="footer-link">Back to Hub <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+</body>
+</html>
