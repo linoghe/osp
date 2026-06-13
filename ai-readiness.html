@@ -182,6 +182,15 @@
     .path-card--ramp   .path-card__label { color: var(--c-amber); }
     .path-card--outsource { background: var(--c-coral-light); }
     .path-card--outsource .path-card__label { color: var(--c-coral); }
+    .skill-tag {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--c-text-light);
+      margin-top: 2px;
+    }
     @media (max-width: 800px) {
       .path-grid { grid-template-columns: 1fr; }
       .pillar-grid { grid-template-columns: 1fr 1fr; }
@@ -228,12 +237,9 @@
     <a href="gantt.html" class="nav-link">
       <span class="nav-num">08</span> Timeline
     </a>
-    <a href="whitepaper.html" class="nav-link">
-      <span class="nav-num">09</span> Why a Site Mirror
-    </a>
     <details class="nav-group" id="navGroup10">
       <summary class="nav-link nav-group__toggle">
-        <span class="nav-num">10</span> AI Readiness Program <span class="nav-arrow">&#x203A;</span>
+        <span class="nav-num">09</span> AI Readiness Program <span class="nav-arrow">&#x203A;</span>
       </summary>
       <div class="nav-group__children">
         <a href="ai-readiness-overview.html" class="nav-link nav-child">Overview</a>
@@ -242,9 +248,6 @@
         <a href="whitepaper.html" class="nav-link nav-child">Why a Site Mirror</a>
       </div>
     </details>
-    <a href="knowledge-hubs.html" class="nav-link">
-      <span class="nav-num">11</span> Knowledge Hubs
-    </a>
     <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" class="nav-link" target="_blank" style="margin-top: 12px; border-top: 1px solid var(--c-border-light); padding-top: 12px;">
       <span class="nav-num">&#x2197;</span> Google Sheet
     </a>
@@ -438,6 +441,72 @@
               <td class="col-role">&mdash;</td>
               <td class="col-role"><span class="badge badge-A">A</span></td>
               <td class="col-role"><span class="own-yes">✓ own &amp; maintain</span></td>
+            </tr>
+
+            <!-- KNOWLEDGE HUB CONTENT PROGRAM -->
+            <tr class="cat-row"><td colspan="7">Knowledge Hub Content Program (Pillar 1)</td></tr>
+            <tr>
+              <td class="col-task">Hub information architecture &mdash; topic cluster map, content hierarchy, internal linking model</td>
+              <td class="col-skill">IA / content strategy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ with IA training</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Hub topic &amp; question mapping &mdash; aligning hub content to customer questions and AI query targets</td>
+              <td class="col-skill">Content strategy</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="own-part">~ with OSP template</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Hub article brief &amp; editorial standards &mdash; article format, length, voice, and linking conventions</td>
+              <td class="col-skill">Editorial / content strategy</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-I">I</span></td>
+              <td class="col-role"><span class="own-part">~ once documented</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Foundation section authoring &mdash; first hub section (5&ndash;10 articles), OSP-delivered</td>
+              <td class="col-skill">Copywriting / editorial</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-no">✗ OSP first build</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Ongoing hub article additions &mdash; new articles, case studies, service deep-dives, updates</td>
+              <td class="col-skill">Copywriting / editorial</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-A">A</span></td>
+              <td class="col-role"><span class="own-part">~ long-term with OSP style guide</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Editorial calendar &amp; publishing pipeline &mdash; scheduling, prioritization, seasonal planning</td>
+              <td class="col-skill">Content ops</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="own-yes">✓ own this</span></td>
+            </tr>
+            <tr>
+              <td class="col-task">Hub performance &amp; AI citation review &mdash; is hub content surfacing in AI answers? what&rsquo;s working?</td>
+              <td class="col-skill">AI literacy / analytics</td>
+              <td class="col-role"><span class="badge badge-C">C</span></td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role">&mdash;</td>
+              <td class="col-role"><span class="badge badge-R">R</span></td>
+              <td class="col-role"><span class="own-yes">✓ own this</span></td>
             </tr>
 
             <!-- SCHEMA.ORG -->
@@ -704,43 +773,50 @@
           <div class="path-card path-card--learn">
             <div class="path-card__label">✓ Own these now</div>
             <ul class="path-card__items">
-              <li>AI query testing &amp; hallucination audits</li>
-              <li>Citation tracking &mdash; is the client showing up?</li>
-              <li>Google Search Console</li>
-              <li>Schema validation (free tools)</li>
-              <li>FAQ development &amp; maintenance</li>
-              <li>Customer-facing glossary</li>
-              <li>Policy documents in plain text</li>
-              <li>llms.txt maintenance</li>
-              <li>New-content publish checklist</li>
-              <li>Content update &rarr; mirror sync</li>
+              <li>AI query testing &amp; hallucination audits<span class="skill-tag">AI literacy</span></li>
+              <li>Citation tracking &mdash; is the client showing up?<span class="skill-tag">AI literacy / analytics</span></li>
+              <li>Hub performance &amp; AI citation review<span class="skill-tag">AI literacy / analytics</span></li>
+              <li>Editorial calendar &amp; publishing pipeline<span class="skill-tag">Content ops</span></li>
+              <li>Google Search Console<span class="skill-tag">Technical SEO</span></li>
+              <li>Schema validation (free tools)<span class="skill-tag">Technical QA</span></li>
+              <li>FAQ development &amp; maintenance<span class="skill-tag">Content strategy</span></li>
+              <li>Customer-facing glossary<span class="skill-tag">Copywriting</span></li>
+              <li>Policy documents in plain text<span class="skill-tag">Copywriting / legal review</span></li>
+              <li>llms.txt maintenance<span class="skill-tag">Content strategy</span></li>
+              <li>New-content publish checklist<span class="skill-tag">Content ops</span></li>
+              <li>Content update &rarr; mirror sync<span class="skill-tag">Content ops</span></li>
             </ul>
           </div>
           <div class="path-card path-card--ramp">
             <div class="path-card__label">~ Ramp up with support</div>
             <ul class="path-card__items">
-              <li>Content audit &amp; inventory</li>
-              <li>Customer question gap analysis</li>
-              <li>Brand voice &amp; tone</li>
-              <li>Core narrative copywriting</li>
-              <li>Schema strategy (after OSP spec)</li>
-              <li>robots.txt AI directives</li>
-              <li>Markdown page drafting (with style guide)</li>
-              <li>Quarterly AI readiness audit</li>
-              <li>Team training (deliver yourself eventually)</li>
-              <li>Crawlability checks (Screaming Frog)</li>
+              <li>Hub topic &amp; question mapping (with OSP template)<span class="skill-tag">Content strategy</span></li>
+              <li>Ongoing hub article additions (with style guide)<span class="skill-tag">Copywriting / editorial</span></li>
+              <li>Hub IA &mdash; topic clusters &amp; linking (after OSP training)<span class="skill-tag">IA / content strategy</span></li>
+              <li>Content audit &amp; inventory<span class="skill-tag">Content strategy</span></li>
+              <li>Customer question gap analysis<span class="skill-tag">Content strategy</span></li>
+              <li>Brand voice &amp; tone<span class="skill-tag">Content strategy</span></li>
+              <li>Core narrative copywriting<span class="skill-tag">Copywriting</span></li>
+              <li>Schema strategy (after OSP spec)<span class="skill-tag">Structured data strategy</span></li>
+              <li>robots.txt AI directives<span class="skill-tag">Technical SEO</span></li>
+              <li>Markdown page drafting (with style guide)<span class="skill-tag">Copywriting</span></li>
+              <li>Quarterly AI readiness audit<span class="skill-tag">Strategy + AI literacy</span></li>
+              <li>Team training (deliver yourself eventually)<span class="skill-tag">Training / content strategy</span></li>
+              <li>Crawlability checks (Screaming Frog)<span class="skill-tag">Technical SEO</span></li>
             </ul>
           </div>
           <div class="path-card path-card--outsource">
             <div class="path-card__label">✗ Keep outsourcing</div>
             <ul class="path-card__items">
-              <li>Schema implementation in CMS/code</li>
-              <li>Product/room/service schema per page</li>
-              <li>Markdown pipeline build (automated)</li>
-              <li>Static hosting for mirror files</li>
-              <li>Site architecture &amp; crawlability review</li>
-              <li>Annual full schema review &amp; cleanup</li>
-              <li>Any engineering-layer technical SEO</li>
+              <li>Hub foundation authoring &mdash; first section build<span class="skill-tag">Copywriting / editorial</span></li>
+              <li>Hub article brief &amp; editorial standards<span class="skill-tag">Editorial / content strategy</span></li>
+              <li>Schema implementation in CMS/code<span class="skill-tag">Engineering</span></li>
+              <li>Product/room/service schema per page<span class="skill-tag">Technical SEO / engineering</span></li>
+              <li>Markdown pipeline build (automated)<span class="skill-tag">Engineering</span></li>
+              <li>Static hosting for mirror files<span class="skill-tag">DevOps</span></li>
+              <li>Site architecture &amp; crawlability review<span class="skill-tag">Technical SEO</span></li>
+              <li>Annual full schema review &amp; cleanup<span class="skill-tag">Technical SEO / strategy</span></li>
+              <li>Any engineering-layer technical SEO<span class="skill-tag">Engineering</span></li>
             </ul>
           </div>
         </div>
