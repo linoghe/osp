@@ -19,7 +19,8 @@ const HTML_FILES = [
   'gantt.html',
   'whitepaper.html',
   'ai-readiness.html',
-  'knowledge-hubs.html'
+  'knowledge-hubs.html',
+  'bibliography.html'
 ];
 
 const CSS_FILE = '_shared.css';

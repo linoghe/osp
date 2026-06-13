@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bibliography | Peer Pricing Review | OSP</title>
+  <link rel="stylesheet" href="_shared.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    .bib-section {
+      margin-bottom: 40px;
+    }
+    .bib-section h3 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-text-light);
+      margin: 0 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .bib-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .bib-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--c-border-light);
+      font-size: 14px;
+      line-height: 1.6;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+    }
+    .bib-list li:last-child {
+      border-bottom: none;
+    }
+    .bib-ref {
+      color: var(--c-text);
+    }
+    .bib-ref strong {
+      color: var(--c-text);
+    }
+    .bib-ref .bib-desc {
+      color: var(--c-text-mid);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+    .bib-ref a {
+      color: var(--c-blue);
+      text-decoration: none;
+    }
+    .bib-ref a:hover {
+      text-decoration: underline;
+    }
+    .bib-year {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--c-text-light);
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+    .bib-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .bib-tag--book   { background: #f3e8ff; color: #7c3aed; }
+    .bib-tag--report { background: var(--c-blue-light); color: var(--c-blue); }
+    .bib-tag--article{ background: var(--c-teal-light); color: var(--c-teal); }
+    .bib-tag--data   { background: var(--c-amber-light); color: var(--c-amber); }
+    .bib-tag--tool   { background: #dcfce7; color: #16a34a; }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <header class="app-topbar">
+    <a href="index.html" class="topbar-brand">Open Strategy Partners</a>
+    <div class="topbar-sep"></div>
+    <span class="topbar-breadcrumb">Peer Pricing Review</span>
+    <span class="topbar-tag topbar-tag--live">Confidential</span>
+  </header>
+
+  <!-- NAV -->
+  <nav class="app-nav" aria-label="Document navigation">
+    <a href="index.html" class="nav-link"><span class="nav-num">00</span> Hub</a>
+    <a href="engagement.html" class="nav-link"><span class="nav-num">01</span> Engagement</a>
+    <a href="scope.html" class="nav-link"><span class="nav-num">02</span> Phased Scope</a>
+    <a href="scope-markdown.html" class="nav-link"><span class="nav-num">03</span> Markdown Site</a>
+    <a href="effort.html" class="nav-link"><span class="nav-num">04</span> Effort &amp; Role</a>
+    <a href="context.html" class="nav-link"><span class="nav-num">05</span> Pricing Context</a>
+    <a href="questions.html" class="nav-link"><span class="nav-num">06</span> Pricing Guidance</a>
+    <a href="pricing-model.html" class="nav-link"><span class="nav-num">07</span> Pricing Model</a>
+    <a href="gantt.html" class="nav-link"><span class="nav-num">08</span> Timeline</a>
+    <a href="whitepaper.html" class="nav-link"><span class="nav-num">09</span> Why a Site Mirror</a>
+    <a href="ai-readiness.html" class="nav-link"><span class="nav-num">10</span> AI Readiness</a>
+    <a href="knowledge-hubs.html" class="nav-link"><span class="nav-num">11</span> Knowledge Hubs</a>
+    <a href="https://docs.google.com/spreadsheets/d/1FfICAZMobv50akjHXcW-HYN7EBOOaIwSMStAPrYvokA/edit" class="nav-link" target="_blank" style="margin-top: 12px; border-top: 1px solid var(--c-border-light); padding-top: 12px;">
+      <span class="nav-num">&#x2197;</span> Google Sheet
+    </a>
+    <a href="bibliography.html" class="nav-link active" style="border-top: 1px solid var(--c-border-light); padding-top: 12px;">
+      <span class="nav-num">&#x2615;</span> Bibliography
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="page-head">
+      <p class="page-eyebrow">References</p>
+      <h1 class="page-title">Bibliography</h1>
+      <p class="page-subtitle">Sources consulted across pages 09 (Why a Site Mirror), 10 (AI Readiness), and 11 (Knowledge Hubs). Includes direct citations, background research, and supporting data.</p>
+    </div>
+
+    <!-- KNOWLEDGE HUBS & CONTENT STRATEGY -->
+    <section class="section" id="content-strategy">
+      <div class="section-label">Content Strategy, Editorial &amp; Information Architecture</div>
+      <div class="bib-section">
+        <ul class="bib-list">
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--book">Book</span>
+              <strong>Halvorson, K. &amp; Rach, M.</strong> <em>Content Strategy for the Web</em>, 2nd ed. New Riders.
+              <div class="bib-desc">The foundational practitioner reference. Defines content strategy as the practice of planning for the creation, delivery, and governance of useful, usable content. Identifies editorial strategy, content strategy, and IA as distinct disciplines — and the practitioner who spans them as &ldquo;a rare breed.&rdquo; Original essay: <a href="https://alistapart.com/article/thedisciplineofcontentstrategy/" target="_blank">A List Apart, 2009</a>.</div>
+            </div>
+            <span class="bib-year">2012</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--book">Book</span>
+              <strong>Rosenfeld, L. &amp; Morville, P.</strong> <em>Information Architecture for the World Wide Web</em>. O&rsquo;Reilly.
+              <div class="bib-desc">Established IA as a formal discipline. Rosenfeld later described the content strategy relationship: &ldquo;If IA is the spatial side of information, content strategy is the temporal side of the same coin.&rdquo; Cited in <a href="https://uxmag.com/articles/content-strategy-and-ux-a-modern-love-story" target="_blank">UX Magazine</a>.</div>
+            </div>
+            <span class="bib-year">1998</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Arango, J.</strong> <a href="https://jarango.com/2024/09/15/whats-the-difference-between-information-architecture-and-content-strategy/" target="_blank">&ldquo;What&rsquo;s the Difference Between Information Architecture and Content Strategy?&rdquo;</a> jarango.com.
+              <div class="bib-desc">Clear modern demarcation: content strategy focuses on the work; IA focuses on the frame. &ldquo;Content strategy is to copywriting as information architecture is to design.&rdquo; Directly addresses why both are necessary and why they are not interchangeable.</div>
+            </div>
+            <span class="bib-year">2024</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Information Architecture Authority.</strong> <a href="https://informationarchitectureauthority.com/information-architecture-vs-content-strategy/" target="_blank">&ldquo;Information Architecture vs. Content Strategy.&rdquo;</a>
+              <div class="bib-desc">Comprehensive breakdown of scope boundaries: IA deliverables are structural (sitemaps, taxonomies, metadata frameworks); content strategy deliverables are editorial and operational (content audits, governance models, voice guides). &ldquo;Conflating the two produces organizational gaps.&rdquo;</div>
+            </div>
+            <span class="bib-year">2025</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>UX Magazine.</strong> <a href="https://uxmag.com/articles/content-strategy-and-ux-a-modern-love-story" target="_blank">&ldquo;Content Strategy and UX: A Modern Love Story.&rdquo;</a>
+              <div class="bib-desc">Practical observation: &ldquo;an IA is rarely responsible for editorial, workflow, or governance components of content planning and development&rdquo; — the exact areas that, when overlooked, blow up project timelines and compromise content quality.</div>
+            </div>
+            <span class="bib-year">n.d.</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Kelly, W.</strong> <a href="https://willkelly.substack.com/p/why-so-many-technical-and-marketing" target="_blank">&ldquo;Why So Many Technical and Marketing Content Initiatives Fail.&rdquo;</a> Substack.
+              <div class="bib-desc">Frames the discipline separation as a structural design problem, not a personnel one. References Nielsen Norman Group: without explicit ownership spanning strategy, editorial, and architecture, content defaults to whoever absorbs the work — &ldquo;a temporary patch on a permanent governance gap.&rdquo;</div>
+            </div>
+            <span class="bib-year">2024</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ORGANIZATIONAL STRUCTURE & GOVERNANCE -->
+    <section class="section" id="governance">
+      <div class="section-label">Organizational Structure &amp; Content Governance</div>
+      <div class="bib-section">
+        <ul class="bib-list">
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--report">Report</span>
+              <strong>Pope, L.</strong> <a href="https://lapope.com/2025/09/22/unlocking-content-potential-a-report-on-organising-structures-and-capability/" target="_blank">&ldquo;Unlocking Content Potential: A Report on Organising Structures and Capability.&rdquo;</a> La Pope Ltd.
+              <div class="bib-desc">Survey of 72 content teams. Finds siloed work and lack of collaboration among the most common structural failures. 1 in 5 content teams are fully decentralised — a &ldquo;disappointing signal&rdquo; associated with poor content quality and brand inconsistency.</div>
+            </div>
+            <span class="bib-year">2025</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--data">Data</span>
+              <strong>Forrester Research</strong> (via Essey Marketing). <a href="https://esseymarketing.com/blog/organizational-silos-marketing/" target="_blank">&ldquo;Organizational Silos in Marketing.&rdquo;</a>
+              <div class="bib-desc">77% of marketing leaders say organizational silos make aligning on a content strategy difficult. Only 1% describe their content planning and execution as seamless.</div>
+            </div>
+            <span class="bib-year">2023</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--report">Report</span>
+              <strong>Content Science.</strong> <a href="https://review.content-science.com/what-is-the-state-of-content-operations-in-2025/" target="_blank">&ldquo;What Is the State of Content Operations in 2025?&rdquo;</a>
+              <div class="bib-desc">Research across 100+ content team members at organizations including Amazon, Fidelity, Mayo Clinic, and Thomson Reuters. Finds persistent challenges around lack of integrated strategy and poor cross-team communication. Full 95-page report available.</div>
+            </div>
+            <span class="bib-year">2025</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--report">Report</span>
+              <strong>AirOps.</strong> <a href="https://www.airops.com/report/state-of-content-teams" target="_blank">&ldquo;The State of Content Teams in 2025.&rdquo;</a>
+              <div class="bib-desc">51% of content teams struggle with upskilling gaps; 82% cite quality control as their biggest challenge. Technical fluency (IA, content systems, AI integration) is now as important as editorial or domain expertise. New roles — content engineers, AI strategists, prompt specialists — are emerging to bridge the gap.</div>
+            </div>
+            <span class="bib-year">2025</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--report">Report</span>
+              <strong>WG Content / Researchscape.</strong> <a href="https://wgcontent.com/wp-content/uploads/2024/04/WG-Content_white-paper_2024-state-of-content-planning.pdf" target="_blank">&ldquo;The 2024 State of Content Planning.&rdquo;</a>
+              <div class="bib-desc">~170 respondents. Top challenge: getting subject matter experts involved in content creation (39%). 85% outsource at least some content writing. Finds persistent gaps between strategy and execution, and between internal knowledge holders and content producers.</div>
+            </div>
+            <span class="bib-year">2024</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Aprimo.</strong> <a href="https://www.aprimo.com/blog/content-governance-ultimate-guide" target="_blank">&ldquo;Ultimate Guide to Content Governance Strategy.&rdquo;</a>
+              <div class="bib-desc">63% of enterprise marketers struggle to attribute ROI to content efforts due to governance gaps. Organizations using AI for content report 68% ROI increase but only 43% have established responsible AI governance councils. Siloed content and teams identified as the most common governance barrier.</div>
+            </div>
+            <span class="bib-year">2025</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>23HubLab.</strong> <a href="https://23hublab.com/lack-of-central-topic-ownership-in-ai-workflows/" target="_blank">&ldquo;Lack of Central Topic Ownership in AI Workflows.&rdquo;</a>
+              <div class="bib-desc">AI removes natural production constraints, making the absence of a central topic owner catastrophic. Without a governance layer defining topic ownership and content hierarchy, AI pipelines become &ldquo;factories without foremen.&rdquo; Directly relevant to knowledge hub governance requirements.</div>
+            </div>
+            <span class="bib-year">2025</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- AI SITE MIRRORS & STRUCTURED DATA -->
+    <section class="section" id="ai-mirrors">
+      <div class="section-label">AI Site Mirrors, Structured Data &amp; LLM Discoverability</div>
+      <div class="bib-section">
+        <ul class="bib-list">
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--tool">Spec</span>
+              <strong>Howard, J.</strong> <a href="https://llmstxt.org/" target="_blank">The /llms.txt file.</a> llmstxt.org.
+              <div class="bib-desc">Original proposal for an LLM-friendly site index file: a markdown file at the site root that gives AI tools a structured, low-noise map of important content. Elegant in concept; adoption remains unconfirmed by major AI providers as of Q1 2026.</div>
+            </div>
+            <span class="bib-year">2024</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--data">Data</span>
+              <strong>SE Ranking.</strong> 300,000-domain study on llms.txt.
+              <div class="bib-desc">Found no statistically significant correlation between having an llms.txt file and AI citation frequency. The strongest predictors of AI citation remain content depth, schema markup, and structured plain-text availability.</div>
+            </div>
+            <span class="bib-year">2026</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--data">Data</span>
+              <strong>Rankeo.</strong> <a href="https://rankeo.io/blog/schema-markup-ai-engines-optimization" target="_blank">&ldquo;How to Optimize Schema Markup for AI Engines.&rdquo;</a>
+              <div class="bib-desc">60% of AI Overview citations come from pages with schema markup, vs. 38% for unstructured HTML alone. Pages with comprehensive schema receive 28% more AI citations than pages without it.</div>
+            </div>
+            <span class="bib-year">2026</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Derivatex Agency.</strong> <a href="https://derivatex.agency/blog/llms-txt-guide/" target="_blank">&ldquo;LLMs.txt Guide: What It Does and Doesn&rsquo;t Do.&rdquo;</a>
+              <div class="bib-desc">Comprehensive analysis of adoption, limitations, and real-world impact of the llms.txt specification. Concludes that structured content and schema remain the more reliable path to AI discoverability.</div>
+            </div>
+            <span class="bib-year">2026</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Zenn / c12o.</strong> <a href="https://zenn.dev/c12o/articles/729af21b769bb1?locale=en" target="_blank">&ldquo;Why llms.txt Won&rsquo;t Boost Your AI Search Ranking.&rdquo;</a>
+              <div class="bib-desc">AEO priorities beyond llms.txt. Argues that AI Engine Optimization requires a complete content architecture approach, not a single file. Consistent with the three-layer model (schema + mirror + governance).</div>
+            </div>
+            <span class="bib-year">2026</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--tool">Reference</span>
+              <strong>Schema.org.</strong> <a href="https://schema.org/DataFeed" target="_blank">DataFeed specification.</a>
+              <div class="bib-desc">Structured feed specification for machine-readable entity catalogs. Used for hotel room inventory, product listings, and other regularly updated structured content.</div>
+            </div>
+            <span class="bib-year">n.d.</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Google Search Central.</strong> <a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content" target="_blank">&ldquo;Creating Helpful, Reliable, People-First Content.&rdquo;</a>
+              <div class="bib-desc">Google&rsquo;s official guidance defining &ldquo;search engine-first content&rdquo; as a failure mode. Directly supports the argument that AI-readable content and customer-first content are the same thing.</div>
+            </div>
+            <span class="bib-year">2025</span>
+          </li>
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Article</span>
+              <strong>Bing Webmaster Guidelines.</strong> <a href="https://www.bing.com/webmasters/help/webmasters-guidelines-30fba23a" target="_blank">Webmaster Guidelines.</a>
+              <div class="bib-desc">Content must &ldquo;fully satisfy user intent&rdquo; for Copilot grounding. Establishes that Microsoft&rsquo;s AI systems use the same quality signals as its search index.</div>
+            </div>
+            <span class="bib-year">2026</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- OSP INTERNAL -->
+    <section class="section" id="osp">
+      <div class="section-label">OSP &amp; Internal Reference</div>
+      <div class="bib-section">
+        <ul class="bib-list">
+          <li>
+            <div class="bib-ref">
+              <span class="bib-tag bib-tag--article">Internal</span>
+              <strong>Ogden, L.</strong> <a href="https://lino-strategy-apps.vercel.app/t5/cx-first-vs-seo-first" target="_blank">&ldquo;Design for the Customer. The Rankings Follow.&rdquo;</a>
+              <div class="bib-desc">OSP&rsquo;s CX-First vs. SEO-First strategic brief. Primary source for the argument that customer-first content and AI-readable content are the same investment. Cited directly in the Site Mirror whitepaper (page 09).</div>
+            </div>
+            <span class="bib-year">2026</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="app-footer">
+    <div class="footer-nav">
+      <a href="knowledge-hubs.html" class="footer-link"><span class="arrow">&larr;</span> Knowledge Hubs</a>
+    </div>
+    <div class="footer-nav">
+      <a href="index.html" class="footer-link">Back to Hub <span class="arrow">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">&lsaquo;</button>
+  <script>
+  (function() {
+    var key = '_osp_nav_collapsed';
+    var body = document.body;
+    var nav = document.querySelector('.app-nav');
+    var btn = document.getElementById('navToggle');
+    if (localStorage.getItem(key) === '1') {
+      body.classList.add('nav-collapsed');
+      nav.classList.add('collapsed');
+    }
+    btn.addEventListener('click', function() {
+      var collapsed = nav.classList.toggle('collapsed');
+      body.classList.toggle('nav-collapsed');
+      localStorage.setItem(key, collapsed ? '1' : '0');
+    });
+  })();
+  </script>
+
+</body>
+</html>
